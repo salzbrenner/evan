@@ -1,0 +1,17 @@
+{
+  "name": "@evan/tokens",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "ts-node ./scripts/parse-figma.ts && pnpm style-dictionary",
+    "style-dictionary": "ts-node config.ts"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.7",
+    "style-dictionary": "^3.8.0",
+    "ts-node": "^10.9.1"
+  }
+}

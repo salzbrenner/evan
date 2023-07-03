@@ -1,0 +1,170 @@
+{
+  "hslBase": {
+    "color": {
+      "text": {
+        "primary": {
+          "h": {
+            "value": "0"
+          },
+          "s": {
+            "value": "0%"
+          },
+          "l": {
+            "value": "80%"
+          }
+        }
+      },
+      "brand": {
+        "primary": {
+          "h": {
+            "value": "61"
+          },
+          "s": {
+            "value": "100%"
+          },
+          "l": {
+            "value": "71%"
+          }
+        }
+      },
+      "ui": {
+        "error": {
+          "h": {
+            "value": "346"
+          },
+          "s": {
+            "value": "84%"
+          },
+          "l": {
+            "value": "61%"
+          }
+        },
+        "accent": {
+          "h": {
+            "value": "0"
+          },
+          "s": {
+            "value": "0%"
+          },
+          "l": {
+            "value": "25%"
+          }
+        },
+        "bg": {
+          "h": {
+            "value": "0"
+          },
+          "s": {
+            "value": "0%"
+          },
+          "l": {
+            "value": "9%"
+          }
+        },
+        "success": {
+          "h": {
+            "value": "162"
+          },
+          "s": {
+            "value": "46%"
+          },
+          "l": {
+            "value": "65%"
+          }
+        }
+      }
+    }
+  },
+  "color": {
+    "text": {
+      "primary": {
+        "10": {
+          "value": "hsl({hslBase.color.text.primary.h}, {hslBase.color.text.primary.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.text.primary.h}, {hslBase.color.text.primary.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.text.primary.h}, {hslBase.color.text.primary.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.text.primary.h}, {hslBase.color.text.primary.s}, {hslBase.color.text.primary.l})"
+        }
+      }
+    },
+    "brand": {
+      "primary": {
+        "10": {
+          "value": "hsl({hslBase.color.brand.primary.h}, {hslBase.color.brand.primary.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.brand.primary.h}, {hslBase.color.brand.primary.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.brand.primary.h}, {hslBase.color.brand.primary.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.brand.primary.h}, {hslBase.color.brand.primary.s}, {hslBase.color.brand.primary.l})"
+        }
+      }
+    },
+    "ui": {
+      "error": {
+        "10": {
+          "value": "hsl({hslBase.color.ui.error.h}, {hslBase.color.ui.error.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.ui.error.h}, {hslBase.color.ui.error.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.ui.error.h}, {hslBase.color.ui.error.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.ui.error.h}, {hslBase.color.ui.error.s}, {hslBase.color.ui.error.l})"
+        }
+      },
+      "accent": {
+        "10": {
+          "value": "hsl({hslBase.color.ui.accent.h}, {hslBase.color.ui.accent.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.ui.accent.h}, {hslBase.color.ui.accent.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.ui.accent.h}, {hslBase.color.ui.accent.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.ui.accent.h}, {hslBase.color.ui.accent.s}, {hslBase.color.ui.accent.l})"
+        }
+      },
+      "bg": {
+        "10": {
+          "value": "hsl({hslBase.color.ui.bg.h}, {hslBase.color.ui.bg.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.ui.bg.h}, {hslBase.color.ui.bg.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.ui.bg.h}, {hslBase.color.ui.bg.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.ui.bg.h}, {hslBase.color.ui.bg.s}, {hslBase.color.ui.bg.l})"
+        }
+      },
+      "success": {
+        "10": {
+          "value": "hsl({hslBase.color.ui.success.h}, {hslBase.color.ui.success.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.ui.success.h}, {hslBase.color.ui.success.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.ui.success.h}, {hslBase.color.ui.success.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.ui.success.h}, {hslBase.color.ui.success.s}, {hslBase.color.ui.success.l})"
+        }
+      }
+    }
+  }
+}

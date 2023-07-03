@@ -1,0 +1,16 @@
+:root {
+  --text-heading-1: 400 3rem/120.00000762939453% 'Fake Receipt';
+  --text-heading-2: 400 2.5rem/120.00000762939453% 'Fake Receipt';
+  --text-heading-3: 400 2rem/120.00000762939453% 'Fake Receipt';
+  --text-primary-default-normal: 400 1rem/150% 'Inter';
+  --text-primary-default-strong: 600 1rem/150% 'Inter';
+  --text-primary-lg-normal: 400 1.125rem/150% 'Inter';
+  --text-primary-lg-strong: 600 1.125rem/150% 'Inter';
+  --text-primary-sm-normal: 400 0.875rem/150% 'Inter';
+  --text-primary-sm-strong: 500 0.875rem/150% 'Inter';
+  --text-primary-xs-normal: 400 0.75rem/150% 'Inter';
+  --text-accent-default: 400 1rem/150% 'Fake Receipt';
+  --text-accent-lg: 400 1.125rem/150% 'Fake Receipt';
+  --text-accent-sm: 400 0.875rem/150% 'Fake Receipt';
+  --text-accent-xs: 400 0.75rem/150% 'Fake Receipt';
+}

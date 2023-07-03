@@ -1,0 +1,20 @@
+.light {
+  --hsl-base-color-text-primary-h: 150;
+  --hsl-base-color-text-primary-s: 14%;
+  --hsl-base-color-text-primary-l: 15%;
+  --hsl-base-color-ui-bg-h: 60;
+  --hsl-base-color-ui-bg-s: 27%;
+  --hsl-base-color-ui-bg-l: 91%;
+  --hsl-base-color-ui-error-h: 8;
+  --hsl-base-color-ui-error-s: 67%;
+  --hsl-base-color-ui-error-l: 52%;
+  --hsl-base-color-ui-accent-h: 60;
+  --hsl-base-color-ui-accent-s: 27%;
+  --hsl-base-color-ui-accent-l: 85%;
+  --hsl-base-color-ui-success-h: 171;
+  --hsl-base-color-ui-success-s: 33%;
+  --hsl-base-color-ui-success-l: 40%;
+  --hsl-base-color-brand-primary-h: 324;
+  --hsl-base-color-brand-primary-s: 84%;
+  --hsl-base-color-brand-primary-l: 65%;
+}

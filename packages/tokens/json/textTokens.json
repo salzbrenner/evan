@@ -1,0 +1,60 @@
+{
+  "text": {
+    "heading": {
+      "1": {
+        "value": "400 3rem/120.00000762939453% 'Fake Receipt'"
+      },
+      "2": {
+        "value": "400 2.5rem/120.00000762939453% 'Fake Receipt'"
+      },
+      "3": {
+        "value": "400 2rem/120.00000762939453% 'Fake Receipt'"
+      }
+    },
+    "primary": {
+      "default": {
+        "normal": {
+          "value": "400 1rem/150% 'Inter'"
+        },
+        "strong": {
+          "value": "600 1rem/150% 'Inter'"
+        }
+      },
+      "lg": {
+        "normal": {
+          "value": "400 1.125rem/150% 'Inter'"
+        },
+        "strong": {
+          "value": "600 1.125rem/150% 'Inter'"
+        }
+      },
+      "sm": {
+        "normal": {
+          "value": "400 0.875rem/150% 'Inter'"
+        },
+        "strong": {
+          "value": "500 0.875rem/150% 'Inter'"
+        }
+      },
+      "xs": {
+        "normal": {
+          "value": "400 0.75rem/150% 'Inter'"
+        }
+      }
+    },
+    "accent": {
+      "default": {
+        "value": "400 1rem/150% 'Fake Receipt'"
+      },
+      "lg": {
+        "value": "400 1.125rem/150% 'Fake Receipt'"
+      },
+      "sm": {
+        "value": "400 0.875rem/150% 'Fake Receipt'"
+      },
+      "xs": {
+        "value": "400 0.75rem/150% 'Fake Receipt'"
+      }
+    }
+  }
+}
