@@ -1,5 +1,10 @@
-import "./globals.css";
+import "@evan/tokens/css/text.css";
+import "@evan/tokens/css/theme.css";
 import "@evan/tokens/css/lightTheme.css";
+import "@evan/ui/css/tailwind.css";
+
+import "./globals.css";
+// import "@evan/tokens/css/lightTheme.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
