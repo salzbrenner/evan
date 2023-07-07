@@ -39,7 +39,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={"py-9 border-2 border-purple-600"}
+      className={"text-color-brand-primary font-accent"}
       {...props}
     >
       {label}

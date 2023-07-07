@@ -5,6 +5,7 @@ import "../../tokens/css/text.css";
 import "../../tokens/css/theme.css";
 import "../../tokens/css/lightTheme.css";
 import "../css/tailwind.css";
+import "../css/global.css";
 
 export const decorators = [
   withThemeByDataAttribute({

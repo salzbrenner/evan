@@ -1,4 +1,4 @@
-.light {
+:root.light {
   --hsl-base-color-text-primary-h: 150;
   --hsl-base-color-text-primary-s: 14%;
   --hsl-base-color-text-primary-l: 15%;

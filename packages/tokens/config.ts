@@ -72,5 +72,5 @@ generateTokens({
 generateTokens({
   tokenJsonPaths: [`./json/lightTokens.json`],
   destination: "./css/lightTheme.css",
-  selector: ".light",
+  selector: ":root.light",
 });

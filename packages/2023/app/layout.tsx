@@ -2,12 +2,23 @@ import "@evan/tokens/css/text.css";
 import "@evan/tokens/css/theme.css";
 import "@evan/tokens/css/lightTheme.css";
 import "@evan/ui/css/tailwind.css";
+import localFont from "next/font/local";
 
 import "./globals.css";
 // import "@evan/tokens/css/lightTheme.css";
 import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const fakeReceipt = localFont({
+  src: "./FakeReceipt-Regular.woff2",
+  display: "swap",
+  variable: "--font-fake-receipt",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -21,7 +32,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.variable} ${fakeReceipt.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
