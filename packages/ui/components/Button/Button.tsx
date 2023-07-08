@@ -39,7 +39,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={"text-color-brand-primary font-accent"}
+      className={"text-clr-ui-error font-accent-sm"}
       {...props}
     >
       {label}

@@ -2,7 +2,7 @@
   "name": "@evan/tokens",
   "version": "1.0.0",
   "scripts": {
-    "build": "ts-node ./scripts/parse-figma.ts && pnpm style-dictionary",
+    "build": "ts-node ./scripts/parse-figma.ts && pnpm style-dictionary && pnpm toTw",
     "toTw": "ts-node ./scripts/css-to-tailwind.ts",
     "style-dictionary": "ts-node config.ts"
   },

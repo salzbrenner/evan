@@ -5,7 +5,6 @@ import "@evan/ui/css/tailwind.css";
 import localFont from "next/font/local";
 
 import "./globals.css";
-// import "@evan/tokens/css/lightTheme.css";
 import { Inter } from "next/font/google";
 
 const fakeReceipt = localFont({
