@@ -3,6 +3,9 @@ import { font } from "../tokens/tw/fonts";
 import defaultTheme from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
+const DOT_SIZE = "0.4px";
+const DOT_SPACE = "5px";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./components/**/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
@@ -27,7 +30,7 @@ module.exports = {
   },
   plugins: [
     // custom font selector to pick up the shorthand font property
-    plugin(function ({ matchUtilities, theme }) {
+    plugin(function ({ matchUtilities, theme, addUtilities, addComponents }) {
       matchUtilities(
         {
           font: (value) => ({
@@ -36,6 +39,13 @@ module.exports = {
         },
         { values: theme("font") }
       );
+      addComponents({
+        ".bg-dot": {
+          "background-image": `radial-gradient(var(--color-text-primary) ${DOT_SIZE}, transparent 0)`,
+          "background-color": "var(--color-ui-accent)",
+          "background-size": `${DOT_SPACE} ${DOT_SPACE}`,
+        },
+      });
     }),
   ],
 };

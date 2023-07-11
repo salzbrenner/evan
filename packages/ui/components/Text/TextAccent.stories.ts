@@ -16,7 +16,7 @@ const COPY = "The quick brown fox jumps over the lazy dog";
 
 export const AccentXSmall: Story = {
   args: {
-    type: "accent",
+    accent: true,
     children: COPY,
     size: "xs",
   },
@@ -24,7 +24,7 @@ export const AccentXSmall: Story = {
 
 export const AccentSmall: Story = {
   args: {
-    type: "accent",
+    accent: true,
     children: COPY,
     size: "sm",
   },
@@ -32,14 +32,14 @@ export const AccentSmall: Story = {
 
 export const Accent: Story = {
   args: {
-    type: "accent",
+    accent: true,
     children: COPY,
   },
 };
 
 export const AccentLarge: Story = {
   args: {
-    type: "accent",
+    accent: true,
     children: COPY,
     size: "lg",
   },

@@ -1,103 +1,112 @@
 import { cva, type VariantProps } from "cva";
-import { ButtonHTMLAttributes, HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
 
-const text = cva("text-clr-text-primary ", {
+const textDecorationCommon = `underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed
+underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed hover:text-clr-brand-primary`;
+
+const text = cva("", {
   variants: {
-    type: {
-      primary: [],
-      accent: [],
-    },
     size: {
       sm: [],
       xs: [],
       def: [],
       lg: [],
     },
+    accent: {
+      true: [],
+    },
     strong: {
       true: [],
     },
-    lh: {
+    leading: {
       none: ["!leading-none"],
+    },
+    intent: {
+      link: [` transition-all hover:underline ${textDecorationCommon}`],
+      inlineLink: [
+        `underline ${textDecorationCommon}  transition-colors text-clr-brand-primary hover:text-clr-text-primary`,
+      ],
     },
   },
   compoundVariants: [
     {
-      type: "primary",
+      accent: undefined,
       size: "xs",
       strong: undefined,
       className: "font-primary-xs",
     },
     {
-      type: "primary",
       size: "sm",
+      accent: undefined,
       strong: undefined,
       className: "font-primary-sm",
     },
     {
-      type: "primary",
+      accent: undefined,
       size: "sm",
       strong: true,
       class: "font-primary-sm-strong",
     },
     {
-      type: "primary",
+      accent: undefined,
       strong: undefined,
       size: "def",
       class: "font-primary",
     },
     {
-      type: "primary",
+      accent: undefined,
       strong: true,
       size: "def",
       class: "font-primary-strong",
     },
     {
-      type: "primary",
+      accent: undefined,
       strong: undefined,
       size: "lg",
       class: "font-primary-lg",
     },
     {
-      type: "primary",
+      accent: undefined,
       strong: true,
       size: "lg",
       class: "font-primary-lg-strong",
     },
     // accent
     {
-      type: "accent",
+      accent: true,
       size: "xs",
       strong: undefined,
       className: "font-accent-xs",
     },
     {
-      type: "accent",
+      accent: true,
       size: "sm",
       strong: undefined,
       className: "font-accent-sm",
     },
     {
-      type: "accent",
+      accent: true,
       size: "def",
       strong: undefined,
       className: "font-accent",
     },
     {
-      type: "accent",
+      accent: true,
       size: "lg",
       strong: undefined,
       className: "font-accent-lg",
     },
   ],
   defaultVariants: {
-    type: "primary",
+    accent: undefined,
     size: "def",
   },
 });
 
 export interface TextProps
-  extends HTMLAttributes<
-      HTMLParagraphElement | HTMLSpanElement | HTMLDivElement
+  extends Omit<
+      HTMLAttributes<HTMLParagraphElement | HTMLSpanElement | HTMLDivElement>,
+      "color"
     >,
     VariantProps<typeof text> {
   as?: "p" | "span" | "div";
@@ -105,17 +114,30 @@ export interface TextProps
 
 export const Text = ({
   className,
-  type,
+  // type,
+  accent,
   size,
   strong,
-  lh,
+  leading,
   as = "p",
+  intent,
   ...props
 }: TextProps) => {
   const As = as;
+
   return (
     <>
-      <As className={text({ type, size, strong, className, lh })} {...props} />
+      <As
+        className={text({
+          size,
+          accent,
+          strong,
+          className,
+          leading,
+          intent,
+        })}
+        {...props}
+      />
     </>
   );
 };

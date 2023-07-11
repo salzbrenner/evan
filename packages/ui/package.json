@@ -26,6 +26,7 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
+    "cva": "npm:class-variance-authority@^0.6.1",
     "postcss": "8.4.24",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
@@ -36,6 +37,14 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "cva": "npm:class-variance-authority@^0.6.1"
+    "@react-three/drei": "^9.64.0",
+    "@react-three/fiber": "^8.12.0",
+    "@react-three/postprocessing": "^2.7.1",
+    "@types/three": "^0.150.1",
+    "glsl-noise": "^0.0.0",
+    "glslify-loader": "^2.0.0",
+    "leva": "^0.9.34",
+    "raw-loader": "^4.0.2",
+    "three": "^0.151.3"
   }
 }

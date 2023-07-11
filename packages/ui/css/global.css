@@ -1,3 +1,4 @@
 html {
   background: var(--color-ui-bg);
+  color: var(--color-text-primary);
 }

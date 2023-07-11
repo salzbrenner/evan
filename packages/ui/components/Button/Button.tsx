@@ -1,48 +1,45 @@
-import React from "react";
+import { cva, type VariantProps } from "cva";
+import { ButtonHTMLAttributes } from "react";
+import { Text } from "../Text/Text";
 
-interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: "small" | "medium" | "large";
-  /**
-   * Button contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
+const buttonVariants = cva("text-clr-text-primary border-clr-text-primary", {
+  variants: {
+    size: {
+      sm: ["px-3 py-2 rounded-[1.25rem]"],
+      def: ["px-4 py-3 rounded-[1.5rem] "],
+    },
+    defaultVariants: {
+      size: "def",
+    },
+  },
+});
+
+export interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   onClick?: () => void;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  primary = false,
-  size = "medium",
-  backgroundColor,
-  label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary
-    ? "storybook-button--primary py-8"
-    : "storybook-button--secondary";
+export const Button = ({ size = "def", className, children }: ButtonProps) => {
+  const textSize = size === "sm" ? "xs" : "sm";
   return (
     <button
       type="button"
-      className={"text-clr-ui-error font-accent-sm"}
-      {...props}
+      className={buttonVariants({
+        size,
+        className: `border 
+          border-dashed 
+          hover:border-solid 
+          hover:bg-dot
+         `,
+      })}
     >
-      {label}
+      <Text accent size={textSize} leading={"none"}>
+        {children}
+      </Text>
     </button>
   );
 };
