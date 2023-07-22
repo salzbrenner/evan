@@ -7,10 +7,6 @@ module.exports = {
     ...config.theme,
     extend: {
       ...config.theme.extend,
-      fontFamily: {
-        primary: ["var(--font-inter)"],
-        accent: ["var(--font-fake-receipt)"],
-      },
     },
   },
   content: [

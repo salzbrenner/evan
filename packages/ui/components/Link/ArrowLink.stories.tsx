@@ -6,7 +6,6 @@ import { Text } from "../Text/Text";
 const meta = {
   title: "UI/ArrowLink",
   component: ArrowLink,
-  tags: ["autodocs"],
 } satisfies Meta<typeof ArrowLink>;
 
 export default meta;

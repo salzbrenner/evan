@@ -6,7 +6,6 @@ import { Text } from "../Text/Text";
 const meta = {
   title: "UI/InlineLink",
   component: InlineLink,
-  tags: ["autodocs"],
 } satisfies Meta<typeof InlineLink>;
 
 export default meta;

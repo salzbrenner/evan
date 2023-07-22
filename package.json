@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "style-dictionary": "pnpm --filter ./packages/tokens run build",
-    "dev": "pnpm -r --parallel run dev"
+    "dev": "pnpm -r --parallel run dev",
+    "ui": "pnpm --filter ./packages/ui dev"
   },
   "workspaces": [
     "packages/*"

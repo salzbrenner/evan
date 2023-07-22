@@ -1,22 +1,32 @@
 "use client";
-import { useEffect, useMemo, RefObject, useCallback } from "react";
+import { useEffect, useMemo, RefObject, useCallback, useState } from "react";
 
 export const isSSR: boolean = !(
   typeof window !== "undefined" && window.document?.createElement
 );
 
 interface Props {
-  callback?: () => void;
+  onChange?: (theme: "light" | "dark") => void;
 }
 
-export const useOnThemeChanged = ({ callback }: Props): void => {
-  const handleMutations = useCallback((mutations: MutationRecord[]) => {
-    mutations.forEach(({ type, target }) => {
-      if (type === "attributes") {
-        callback?.();
-      }
-    });
-  }, []);
+export const useOnThemeChanged = ({ onChange: callback }: Props) => {
+  const [theme, setTheme] = useState("");
+  const handleMutations = useCallback(
+    (mutations: MutationRecord[]) => {
+      mutations.forEach(({ type, target }) => {
+        if (type === "attributes") {
+          const theme = (target as Element)
+            .getAttribute("class")
+            ?.includes("dark")
+            ? "dark"
+            : "light";
+          callback?.(theme);
+          setTheme(theme);
+        }
+      });
+    },
+    [callback]
+  );
 
   const observer = useMemo(
     () =>
@@ -33,7 +43,11 @@ export const useOnThemeChanged = ({ callback }: Props): void => {
 
     if (observer && element) {
       // call once for load
-      callback?.();
+      const theme = document.querySelector("html")?.className?.includes("dark")
+        ? "dark"
+        : "light";
+      callback?.(theme);
+      setTheme(theme);
 
       observer.observe(element, {
         attributes: true,
@@ -42,4 +56,6 @@ export const useOnThemeChanged = ({ callback }: Props): void => {
       return () => observer.disconnect();
     }
   }, [observer, callback]);
+
+  return theme;
 };

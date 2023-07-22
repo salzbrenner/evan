@@ -1,27 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "./Button";
+import { Field } from "./Field";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: "UI/Button",
-  component: Button,
-  // tags: ["autodocs"],
-} satisfies Meta<typeof Button>;
+  title: "Lab/Field",
+  component: Field,
+} satisfies Meta<typeof Field>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Primary: Story = {
-  args: {
-    children: "Button",
-  },
-};
-
-export const PrimarySmall: Story = {
-  args: {
-    size: "sm",
-    children: "Button",
-  },
+export const _Field: Story = {
+  render: (args) => (
+    <div style={{ height: "218px", width: "218px", border: "solid 1px blue" }}>
+      <Field {...args} />
+    </div>
+  ),
 };

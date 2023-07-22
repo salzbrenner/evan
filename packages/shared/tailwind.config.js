@@ -18,8 +18,8 @@ module.exports = {
       ...font,
     },
     fontFamily: {
-      primary: ["Inter", ...defaultTheme.fontFamily.sans],
-      accent: ["Fake Receipt", ...defaultTheme.fontFamily.sans],
+      // primary: ["Inter", ...defaultTheme.fontFamily.sans],
+      // accent: ["Fake Receipt", ...defaultTheme.fontFamily.sans],
     },
     extend: {
       // colors pointing to the css variables
