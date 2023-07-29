@@ -1,12 +1,12 @@
-"use client";
 import { useEffect, useMemo, RefObject, useCallback, useState } from "react";
+import { THEME } from "./useSwitchTheme";
 
 export const isSSR: boolean = !(
   typeof window !== "undefined" && window.document?.createElement
 );
 
 interface Props {
-  onChange?: (theme: "light" | "dark") => void;
+  onChange?: (theme: typeof THEME) => void;
 }
 
 export const useOnThemeChanged = ({ onChange: callback }: Props) => {
@@ -17,10 +17,10 @@ export const useOnThemeChanged = ({ onChange: callback }: Props) => {
         if (type === "attributes") {
           const theme = (target as Element)
             .getAttribute("class")
-            ?.includes("dark")
-            ? "dark"
-            : "light";
-          callback?.(theme);
+            ?.includes(THEME.dark)
+            ? THEME.dark
+            : THEME.light;
+          callback?.(theme as unknown as typeof THEME);
           setTheme(theme);
         }
       });
@@ -43,10 +43,12 @@ export const useOnThemeChanged = ({ onChange: callback }: Props) => {
 
     if (observer && element) {
       // call once for load
-      const theme = document.querySelector("html")?.className?.includes("dark")
-        ? "dark"
-        : "light";
-      callback?.(theme);
+      const theme = document
+        .querySelector("html")
+        ?.className?.includes(THEME.dark)
+        ? THEME.dark
+        : THEME.light;
+      callback?.(theme as unknown as typeof THEME);
       setTheme(theme);
 
       observer.observe(element, {

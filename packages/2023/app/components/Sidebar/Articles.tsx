@@ -1,9 +1,6 @@
 import { ArrowLink, Button } from "@evan/ui";
-import { Text } from "@evan/ui/components/Text/Text";
 import NextLink from "next/link";
 import { BracketedTitle } from "../BracketedTitle";
-import { useFadeInUp } from "@/app/hooks/useFadeInUp";
-import { FadeInUp } from "../FadeInUp";
 
 const DATA = [
   {
@@ -19,7 +16,7 @@ const DATA = [
 
 export function ArticlesBlock() {
   return (
-    <FadeInUp className="px-3 pt-9" delay={600}>
+    <div className="px-3 pt-9">
       <div className="pb-9">
         <BracketedTitle title="Articles" />
       </div>
@@ -39,6 +36,6 @@ export function ArticlesBlock() {
         );
       })}
       <Button size={"sm"}>All Writing</Button>
-    </FadeInUp>
+    </div>
   );
 }

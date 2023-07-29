@@ -1,10 +1,10 @@
 import { Edges } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Select, Selection } from "@react-three/postprocessing";
-import { useControls } from "leva";
 import { useCallback, useRef } from "react";
 import { getColorsForBlob, hslToRgb } from "./utils";
 import { useOnThemeChanged } from "../../hooks/useOnThemeSwitch";
+import { useDevControls } from "../../hooks/useDevControls";
 
 export const Rings = ({
   cutterScale,
@@ -15,10 +15,10 @@ export const Rings = ({
 }) => {
   const outerRingMesh = useRef<THREE.Mesh<THREE.RingGeometry>>(null!);
   const innerRingMesh = useRef<THREE.Mesh<THREE.RingGeometry>>(null!);
-  const [{ color }, set] = useControls("Rings", () => ({
+  const [{ color }, set] = useDevControls("Rings", () => ({
     color: {
       label: "rings color",
-      value: hslToRgb(getColorsForBlob().brand as string),
+      value: hslToRgb(getColorsForBlob().brand),
     },
   }));
   const { r, g, b } = color;
@@ -26,7 +26,7 @@ export const Rings = ({
   useOnThemeChanged({
     onChange: useCallback(() => {
       set({
-        color: hslToRgb(getColorsForBlob().brand as string),
+        color: hslToRgb(getColorsForBlob().brand),
       });
     }, [set]),
   });

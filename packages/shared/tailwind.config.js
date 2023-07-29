@@ -1,6 +1,5 @@
 import { color } from "../tokens/tw/colors";
 import { font } from "../tokens/tw/fonts";
-import defaultTheme from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 const DOT_SIZE = "0.4px";

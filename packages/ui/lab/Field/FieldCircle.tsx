@@ -4,12 +4,10 @@ import {
   useSpringRef,
   SpringRef,
 } from "@react-spring/three";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { HEIGHT } from "./constants";
 import { useOnThemeChanged } from "../../hooks/useOnThemeSwitch";
-import { useControls } from "leva";
 import { getColorsForBlob } from "../blob/utils";
-import { Schema } from "leva/dist/declarations/src/types";
 
 type Props = {
   pos: [number, number, number];
@@ -17,11 +15,11 @@ type Props = {
   refArray: SpringRef[];
   debug?: boolean;
 };
+const inConfig = { friction: 10, tension: 320 };
 
 export function FieldCircle({ pos, index, refArray, debug = false }: Props) {
   const ref = useSpringRef<THREE.Mesh>();
   const inDelay = 5 * index;
-  const inConfig = { friction: 10, tension: 320 };
 
   const { scale } = useSpring<any>({
     delay: inDelay,
@@ -42,29 +40,17 @@ export function FieldCircle({ pos, index, refArray, debug = false }: Props) {
 
   useEffect(() => {
     if (debug) return;
+    if (refArray.includes(ref as unknown as SpringRef)) return;
     refArray.push(ref as unknown as SpringRef);
-  }, [refArray, ref, debug]);
+  }, []);
 
-  const [{ color }, set] = useControls(
-    "circle color",
-    () =>
-      ({
-        color: getColorsForBlob().gray30,
-      } as Schema)
-  );
+  const [color, setColor] = useState(getColorsForBlob().gray40);
 
   useOnThemeChanged({
-    onChange: useCallback(
-      (theme: "light" | "dark") => {
-        const isDark = theme === "dark";
-        set({
-          color: isDark
-            ? (getColorsForBlob().gray40 as string)
-            : (getColorsForBlob().gray30 as string),
-        });
-      },
-      [set]
-    ),
+    onChange: useCallback((theme: "light" | "dark") => {
+      const isDark = theme === "dark";
+      setColor(isDark ? getColorsForBlob().gray40 : getColorsForBlob().gray30);
+    }, []),
   });
 
   return (
@@ -85,7 +71,7 @@ export function FieldCircle({ pos, index, refArray, debug = false }: Props) {
       ) : (
         <>
           <circleGeometry args={[HEIGHT / 20000, 68]} />
-          <animated.meshBasicMaterial color={color as string} />
+          <animated.meshBasicMaterial color={color} />
         </>
       )}
     </animated.mesh>

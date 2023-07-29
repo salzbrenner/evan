@@ -5,7 +5,7 @@ interface GraphCoordinates {
   y: number;
 }
 
-const useCoordinateGraph = (): GraphCoordinates => {
+export const useCoordinateGraph = (): GraphCoordinates => {
   const maxX = 2.5;
   const maxY = 2.5;
   const { width: wWidth, height: wHeight } = useWindowSize();

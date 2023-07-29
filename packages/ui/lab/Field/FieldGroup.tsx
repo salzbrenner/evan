@@ -1,5 +1,11 @@
-"use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FieldCircle } from "./FieldCircle";
 import {
   circleDegrees,
@@ -10,7 +16,7 @@ import {
 } from "./utils";
 import { useFrame } from "@react-three/fiber";
 import { HEIGHT } from "./constants";
-import { SpringRef } from "@react-spring/three";
+import { Lookup, SpringRef } from "@react-spring/three";
 import useCoordinateGraph, { useOnPointerUpDown } from "./hooks";
 
 const OFFSET = HEIGHT / 1400;
@@ -51,19 +57,12 @@ function useOnMouseMove() {
   });
 }
 
-function useCompareCoords({
-  ref,
-}: {
-  ref: React.MutableRefObject<THREE.Mesh | null>;
-}) {}
-
 export const FieldGroup = ({ debug = false, useIntersects = false }) => {
   const planeRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHover] = useState<boolean | null>(null);
   const [down, setDown] = useState<boolean | null>(null);
   const ogRefArray = useRef<SpringRef[]>([]);
-  const refArray = ogRefArray.current;
   const { x: windowX, y: windowY } = useCoordinateGraph();
 
   useFrame(({ raycaster, mouse, camera }) => {
@@ -96,7 +95,7 @@ export const FieldGroup = ({ debug = false, useIntersects = false }) => {
 
         const ogXPos = positions[index][0];
         const ogYPos = positions[index][1];
-        const ref = refArray[index];
+        const ref = ogRefArray.current[index];
 
         // distance from current postiion of mesh
         const mouseDistance = distance(
@@ -160,9 +159,10 @@ export const FieldGroup = ({ debug = false, useIntersects = false }) => {
       if (!groupRef.current) return;
       groupRef.current.children.forEach((mesh, index) => {
         if (!positions[index]) return;
+
         const ogXPos = positions[index][0];
         const ogYPos = positions[index][1];
-        refArray[index].start({
+        ogRefArray.current[index].start({
           to: { position: [ogXPos, ogYPos, 0] },
           config: { mass: 1.5, friction: 26, tension: 250 },
         });
@@ -193,7 +193,9 @@ export const FieldGroup = ({ debug = false, useIntersects = false }) => {
         <meshPhongMaterial opacity={debug ? 1 : 0} transparent />
       </mesh>
       <group ref={groupRef}>
-        {positions.map((pos, index) => {
+        <CircleMap2 refArray={ogRefArray.current} />
+
+        {/* {positions.map((pos, index) => {
           return (
             <FieldCircle
               pos={pos}
@@ -203,12 +205,12 @@ export const FieldGroup = ({ debug = false, useIntersects = false }) => {
               debug={false}
             />
           );
-        })}
+        })} */}
         {debug && (
           <FieldCircle
             pos={positions[120]}
             index={120}
-            refArray={refArray}
+            refArray={ogRefArray.current}
             debug={debug}
           />
         )}
@@ -216,3 +218,36 @@ export const FieldGroup = ({ debug = false, useIntersects = false }) => {
     </>
   );
 };
+
+const CircleMap = ({ refArray }: { refArray: SpringRef<Lookup<any>>[] }) => {
+  const f = useRef(refArray);
+  return useMemo(() => {
+    return positions.map((pos, index) => {
+      return (
+        <FieldCircle
+          pos={pos}
+          index={index}
+          refArray={f.current}
+          key={index}
+          debug={false}
+        />
+      );
+    });
+  }, []);
+};
+
+const CircleMap2 = memo(({ refArray }: { refArray: SpringRef[] }) => {
+  return positions.map((pos, index) => {
+    return (
+      <FieldCircle
+        pos={pos}
+        index={index}
+        refArray={refArray}
+        key={index}
+        debug={false}
+      />
+    );
+  });
+});
+
+CircleMap2.displayName = "CircleMap2";

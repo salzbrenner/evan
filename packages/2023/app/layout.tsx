@@ -3,6 +3,8 @@ import "@evan/tokens/css/theme.css";
 import "@evan/tokens/css/lightTheme.css";
 import "@evan/ui/css/tailwind.css";
 import "@evan/ui/css/global.css";
+import "@/app/globals.css";
+
 // import localFont from "next/font/local";
 
 // import { Inter } from "next/font/google";
@@ -35,7 +37,6 @@ export default function RootLayout({
       return window?.localStorage.getItem("es_theme") ?? "dark";
     }
     document.documentElement.classList.add(getUserPreference())
-    setTimeout(() => document.documentElement.classList.add('theme-transition'), 1000)
   `;
   return (
     <>
@@ -68,7 +69,7 @@ export default function RootLayout({
         />
       </head>
       {/* suppressHydrationWarning b/c the script adds a `class` attr and i get a warning i dont care about */}
-      <html lang="en" className="" suppressHydrationWarning>
+      <html lang="en" className="theme-transition" suppressHydrationWarning>
         <body className={`flex`}>
           <script async dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
           <Sidebar />

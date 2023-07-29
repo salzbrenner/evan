@@ -22,9 +22,9 @@ const text = cva("", {
       none: ["!leading-none"],
     },
     intent: {
-      link: [` transition-all hover:underline ${textDecorationCommon}`],
+      link: [`hover:underline ${textDecorationCommon}`],
       inlineLink: [
-        `underline ${textDecorationCommon}  transition-colors text-clr-brand-primary hover:text-clr-text-primary`,
+        `underline ${textDecorationCommon} text-clr-brand-primary hover:text-clr-text-primary`,
       ],
     },
   },

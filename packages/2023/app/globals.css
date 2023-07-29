@@ -1,1 +1,4 @@
-
+.theme-transition {
+  transition-duration: 350ms;
+  transition-timing-function: ease;
+}

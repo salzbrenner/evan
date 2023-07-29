@@ -1,7 +1,4 @@
 export function getColorsForBlob() {
-  if (typeof window === "undefined") {
-    return {};
-  }
   return {
     bg: getComputedStyle(document.documentElement).getPropertyValue(
       "--color-ui-bg"

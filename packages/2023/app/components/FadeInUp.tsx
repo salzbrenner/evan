@@ -1,5 +1,4 @@
-import { useFadeInUp } from "@/app/hooks/useFadeInUp";
-import { animated } from "@react-spring/web";
+import { motion } from "framer-motion";
 
 export function FadeInUp({
   children,
@@ -10,12 +9,14 @@ export function FadeInUp({
   className?: string;
   delay?: number;
 }) {
-  const style = useFadeInUp({
-    delay,
-  });
   return (
-    <animated.div className={className} style={style} suppressHydrationWarning>
+    <motion.div
+      className={className}
+      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 10, opacity: 0 }}
+      transition={{ delay: delay ? delay / 1000 : 0 }}
+    >
       {children}
-    </animated.div>
+    </motion.div>
   );
 }
