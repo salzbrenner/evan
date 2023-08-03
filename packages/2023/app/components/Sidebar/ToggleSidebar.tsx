@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Icon, IconTypes } from "@evan/ui";
+import { Icon, IconTypes } from "@evan/ui-vite";
 export const ToggleSidebar = ({
   onClick,
   isSidebarOpen,

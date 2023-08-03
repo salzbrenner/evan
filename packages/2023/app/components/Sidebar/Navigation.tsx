@@ -1,10 +1,10 @@
 "use client";
-import { Icon, IconTypes, Link, useSwitchTheme } from "@evan/ui";
+import { Icon, IconTypes, Link, useSwitchTheme } from "@evan/ui-vite";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
 import { useRef, useState } from "react";
-import { THEME } from "@evan/ui";
+import { THEME } from "@evan/ui-vite";
 
 function NavIcon({ type, href }: { type: IconTypes; href: string }) {
   const pathname = usePathname();

@@ -38,6 +38,7 @@ export const Button = ({ size = "def", className, children }: ButtonProps) => {
       })}
     >
       <Text accent size={textSize} leading={"none"}>
+        <h1>wow</h1>
         {children}
       </Text>
     </button>

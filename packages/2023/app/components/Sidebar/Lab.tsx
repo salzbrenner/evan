@@ -1,13 +1,13 @@
 "use client";
-import { Text, useCoordinateGraph } from "@evan/ui";
-import { HideLeva } from "@evan/ui/lab/HideLeva";
+import { Text, useCoordinateGraph } from "@evan/ui-vite";
+import { HideLeva } from "@evan/ui-vite/lab/HideLeva";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-const Field = dynamic(() => import("@evan/ui/lab/Field/Field"), {
+const Field = dynamic(() => import("@evan/ui-vite/lab/Field/Field"), {
   ssr: false,
 });
-const Blob = dynamic(() => import("@evan/ui/lab/blob/index"), {
+const Blob = dynamic(() => import("@evan/ui-vite/lab/blob/index"), {
   ssr: false,
 });
 
@@ -89,7 +89,7 @@ function Time() {
   const requestRef = useRef<number>();
 
   useEffect(() => {
-    const animate = (_) => {
+    const animate = () => {
       // The 'state' will always be the initial value here
       setTime(Date.now());
       requestRef.current = requestAnimationFrame(animate);

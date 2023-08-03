@@ -1,14 +1,15 @@
 import "@evan/tokens/css/text.css";
 import "@evan/tokens/css/theme.css";
 import "@evan/tokens/css/lightTheme.css";
-import "@evan/ui/css/tailwind.css";
-import "@evan/ui/css/global.css";
+// import "@evan/ui-vite/css/tailwind.css";
+// import "@evan/ui-vite/css/global.css";
 import "@/app/globals.css";
+import { Test } from "./components/Test";
 
 // import localFont from "next/font/local";
 
 // import { Inter } from "next/font/google";
-import { Sidebar } from "./components/Sidebar/Sidebar";
+// import { Sidebar } from "./components/Sidebar/Sidebar";
 
 // const fakeReceipt = localFont({
 //   src: "./FakeReceipt-Regular.woff2",
@@ -71,8 +72,9 @@ export default function RootLayout({
       {/* suppressHydrationWarning b/c the script adds a `class` attr and i get a warning i dont care about */}
       <html lang="en" className="theme-transition" suppressHydrationWarning>
         <body className={`flex`}>
+          <Test />
           <script async dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
-          <Sidebar />
+          {/* <Sidebar /> */}
           {children}
         </body>
       </html>

@@ -6,8 +6,9 @@ import { ArticlesBlock } from "./Articles";
 import { motion } from "framer-motion";
 import { FadeInUp } from "../FadeInUp";
 import dynamic from "next/dynamic";
-import { Text } from "@evan/ui/components/Text/Text";
+import { Text } from "@evan/ui-vite";
 import { Details } from "./Details";
+import { Button } from "@evan/ui-vite";
 
 const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
@@ -41,6 +42,7 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
       `}
       >
         <div>
+          <Button>HELLO WORLD</Button>
           <FadeInUp delay={300}>
             <NavigationBar />
           </FadeInUp>

@@ -1,7 +1,9 @@
+const { withContentlayer } = require("next-contentlayer");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    externalDir: true,
+    // externalDir: true,
   },
   // output: "export", // for static site generation
   // Optional: Add a trailing slash to all paths `/about` -> `/about/`
@@ -10,4 +12,4 @@ const nextConfig = {
   // distDir: 'dist',
 };
 
-module.exports = nextConfig;
+module.exports = withContentlayer(nextConfig);

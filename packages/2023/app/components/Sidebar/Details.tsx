@@ -1,4 +1,4 @@
-import { Icon, IconTypes, Text } from "@evan/ui";
+import { Icon, IconTypes, Text } from "@evan/ui-vite";
 
 export function Details() {
   return (

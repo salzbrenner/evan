@@ -1,4 +1,4 @@
-import { Text } from "@evan/ui/components/Text/Text";
+import { Text } from "@evan/ui-vite/components/Text/Text";
 
 export function BracketedTitle({ title }: { title: string }) {
   return (

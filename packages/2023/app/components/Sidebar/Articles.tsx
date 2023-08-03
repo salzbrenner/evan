@@ -1,4 +1,4 @@
-import { ArrowLink, Button } from "@evan/ui";
+import { ArrowLink, Button } from "@evan/ui-vite";
 import NextLink from "next/link";
 import { BracketedTitle } from "../BracketedTitle";
 
