@@ -22,6 +22,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       <h1>sdf</h1>
+      <h1>sdf</h1>
+      <h1>sdf</h1>
       {post.title}
       <MDXContent />
     </div>

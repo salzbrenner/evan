@@ -1,10 +1,13 @@
-import { Icon, IconTypes, Text } from "@evan/ui-vite";
+import { Icon, IconTypes, Text } from "@evan/ui";
 
 export function Details() {
   return (
-    <div className="flex h-16 justify-">
-      <div className="flex items-center mr-auto px-4">
-        <div className="text-clr-gray-40 dark:text-clr-gray-50">
+    <div className="flex h-16 ">
+      <div className="flex items-center justify-center w-16 text-clr-ui-accent border-r border-clr-ui-accent">
+        <Icon type={IconTypes.logo} />
+      </div>
+      <div className="flex items-center justify-center m-auto px-4 text-center">
+        <div className="text-clr-text-secondary text-center">
           <Text size={"xs"} accent>
             evan.salzbrenner @ gmail.com
           </Text>
@@ -13,8 +16,7 @@ export function Details() {
           </Text>
         </div>
       </div>
-      <div className="flex items-center justify-center w-16 text-clr-ui-accent border-l border-r border-clr-ui-accent bg-clr-text-primary opacity-[0.05] dark:opacity-100 dark:bg-clr-gray-11" />
-      <div className="flex items-center justify-center w-16 text-clr-gray-40 dark:text-clr-ui-accent ">
+      <div className="flex items-center justify-center w-16 text-clr-ui-accent border-r border-clr-ui-accent rotate-180">
         <Icon type={IconTypes.logo} />
       </div>
     </div>

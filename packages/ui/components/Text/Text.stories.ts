@@ -64,3 +64,11 @@ export const PrimaryLargeStrong: Story = {
     strong: true,
   },
 };
+
+export const PrimaryResponsive: Story = {
+  args: {
+    children: COPY,
+    size: "body",
+    strong: true,
+  },
+};

@@ -14,31 +14,31 @@
     "primary": {
       "default": {
         "normal": {
-          "value": "400 1rem/150% 'Inter'"
+          "value": "400 1rem/175% 'Inter'"
         },
         "strong": {
-          "value": "600 1rem/150% 'Inter'"
+          "value": "600 1rem/175% 'Inter'"
         }
       },
       "lg": {
         "normal": {
-          "value": "400 1.125rem/150% 'Inter'"
+          "value": "400 1.125rem/175% 'Inter'"
         },
         "strong": {
-          "value": "600 1.125rem/150% 'Inter'"
+          "value": "600 1.125rem/175% 'Inter'"
         }
       },
       "sm": {
         "normal": {
-          "value": "400 0.875rem/150% 'Inter'"
+          "value": "400 0.875rem/175% 'Inter'"
         },
         "strong": {
-          "value": "500 0.875rem/150% 'Inter'"
+          "value": "500 0.875rem/175% 'Inter'"
         }
       },
       "xs": {
         "normal": {
-          "value": "400 0.75rem/150% 'Inter'"
+          "value": "400 0.75rem/175% 'Inter'"
         }
       }
     },
@@ -54,6 +54,9 @@
       },
       "xs": {
         "value": "400 0.75rem/150% 'Fake Receipt'"
+      },
+      "xxs": {
+        "value": "400 0.625rem/150% 'Fake Receipt'"
       }
     }
   }

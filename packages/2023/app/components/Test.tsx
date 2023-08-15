@@ -1,5 +1,5 @@
 "use client";
-import { Button, Blob, Field } from "@evan/ui-vite";
+import { Button, Blob, Field } from "@evan/ui";
 export function Test() {
   return (
     <>

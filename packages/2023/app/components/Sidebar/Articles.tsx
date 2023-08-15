@@ -1,4 +1,4 @@
-import { ArrowLink, Button } from "@evan/ui-vite";
+import { ArrowLink, Button } from "@evan/ui";
 import NextLink from "next/link";
 import { BracketedTitle } from "../BracketedTitle";
 
@@ -16,7 +16,7 @@ const DATA = [
 
 export function ArticlesBlock() {
   return (
-    <div className="px-3 pt-9">
+    <div className="px-6 pt-10">
       <div className="pb-9">
         <BracketedTitle title="Articles" />
       </div>

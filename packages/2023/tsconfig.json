@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./*"],
       "contentlayer/generated": ["./.contentlayer/generated"],
-      "@evan/ui-vite": ["../ui-vite"]
+      "@evan/ui": ["../ui"]
     }
   },
   "include": [

@@ -5,6 +5,9 @@
   --hsl-base-color-text-primary-h: 0;
   --hsl-base-color-text-primary-s: 0%;
   --hsl-base-color-text-primary-l: 80%;
+  --hsl-base-color-text-secondary-h: 0;
+  --hsl-base-color-text-secondary-s: 0%;
+  --hsl-base-color-text-secondary-l: 50%;
   --hsl-base-color-brand-primary-h: 61;
   --hsl-base-color-brand-primary-s: 100%;
   --hsl-base-color-brand-primary-l: 71%;
@@ -124,6 +127,10 @@
   --color-text-primary-20: hsl(var(--hsl-base-color-text-primary-h), var(--hsl-base-color-text-primary-s), 20%);
   --color-text-primary-30: hsl(var(--hsl-base-color-text-primary-h), var(--hsl-base-color-text-primary-s), 30%);
   --color-text-primary: hsl(var(--hsl-base-color-text-primary-h), var(--hsl-base-color-text-primary-s), var(--hsl-base-color-text-primary-l));
+  --color-text-secondary-10: hsl(var(--hsl-base-color-text-secondary-h), var(--hsl-base-color-text-secondary-s), 10%);
+  --color-text-secondary-20: hsl(var(--hsl-base-color-text-secondary-h), var(--hsl-base-color-text-secondary-s), 20%);
+  --color-text-secondary-30: hsl(var(--hsl-base-color-text-secondary-h), var(--hsl-base-color-text-secondary-s), 30%);
+  --color-text-secondary: hsl(var(--hsl-base-color-text-secondary-h), var(--hsl-base-color-text-secondary-s), var(--hsl-base-color-text-secondary-l));
   --color-brand-primary-10: hsl(var(--hsl-base-color-brand-primary-h), var(--hsl-base-color-brand-primary-s), 10%);
   --color-brand-primary-20: hsl(var(--hsl-base-color-brand-primary-h), var(--hsl-base-color-brand-primary-s), 20%);
   --color-brand-primary-30: hsl(var(--hsl-base-color-brand-primary-h), var(--hsl-base-color-brand-primary-s), 30%);

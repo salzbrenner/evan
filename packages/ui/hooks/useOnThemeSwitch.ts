@@ -6,7 +6,7 @@ export const isSSR: boolean = !(
 );
 
 interface Props {
-  onChange?: (theme: typeof THEME) => void;
+  onChange?: (theme: keyof typeof THEME) => void;
 }
 
 export const useOnThemeChanged = ({ onChange: callback }: Props) => {
@@ -20,7 +20,7 @@ export const useOnThemeChanged = ({ onChange: callback }: Props) => {
             ?.includes(THEME.dark)
             ? THEME.dark
             : THEME.light;
-          callback?.(theme as unknown as typeof THEME);
+          callback?.(theme);
           setTheme(theme);
         }
       });
@@ -48,7 +48,7 @@ export const useOnThemeChanged = ({ onChange: callback }: Props) => {
         ?.className?.includes(THEME.dark)
         ? THEME.dark
         : THEME.light;
-      callback?.(theme as unknown as typeof THEME);
+      callback?.(theme);
       setTheme(theme);
 
       observer.observe(element, {

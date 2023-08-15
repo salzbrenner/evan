@@ -1,17 +1,23 @@
 "use client";
-import { Icon, IconTypes, Link, useSwitchTheme } from "@evan/ui-vite";
+import { Icon, IconTypes, Link, useSwitchTheme } from "@evan/ui";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useAnimate } from "framer-motion";
 import { useRef, useState } from "react";
-import { THEME } from "@evan/ui-vite";
+import { THEME } from "@evan/ui";
+import {
+  useSpring,
+  animated,
+  Controller,
+  useSpringRef,
+} from "@react-spring/web";
 
 function NavIcon({ type, href }: { type: IconTypes; href: string }) {
   const pathname = usePathname();
   const active =
     (href === "/" && pathname === "/") ||
     (pathname !== "/" && href.includes(pathname))
-      ? "border-clr-ui-accent text-clr-text-primary"
+      ? "text-clr-text-primary  dark:bg-clr-gray-15 border-clr-ui-accent"
       : "border-transparent text-clr-gray-60";
 
   return (
@@ -21,10 +27,10 @@ function NavIcon({ type, href }: { type: IconTypes; href: string }) {
       <div
         className={`
         p-2
-        border
-        border-dashed 
         ${active}
+        border
         hover:border-clr-text-primary
+        hover:border-dashed
         rounded
         `}
       >
@@ -47,26 +53,69 @@ export const NavigationBar = ({ children }: { children?: React.ReactNode }) => {
   );
 };
 
+const offset = 5;
+
 function ThemeToggle() {
-  const [lightCircle, animate] = useAnimate();
-  const darkCircle = useRef(null);
   const { theme, switchTheme } = useSwitchTheme();
   const isDarkTheme = theme === THEME.dark;
+  const lightRef = useSpringRef();
+  const lightProps = useSpring({
+    ref: lightRef,
+    from: { x: offset },
+    to: [
+      {
+        x: 0,
+        config: {
+          duration: 100,
+        },
+      },
+      {
+        zIndex: isDarkTheme ? 0 : 1,
+        config: {
+          duration: 0,
+        },
+      },
+      {
+        x: offset,
+        config: {
+          duration: 100,
+        },
+      },
+    ],
+  });
+
+  const darkRef = useSpringRef();
+  const darkProps = useSpring({
+    ref: darkRef,
+    from: {
+      x: 0,
+    },
+    to: [
+      {
+        x: offset,
+        config: {
+          duration: 100,
+        },
+      },
+      {
+        zIndex: isDarkTheme ? 1 : 0,
+        config: {
+          duration: 0,
+        },
+      },
+      {
+        x: 0,
+        config: {
+          duration: 100,
+        },
+      },
+    ],
+  });
 
   async function onClick() {
     switchTheme();
-    const offset = 5;
-    animate(lightCircle.current, { x: offset }).then(async () => {
-      await animate(lightCircle.current, { x: 0 });
-      await animate(lightCircle.current, {
-        x: offset,
-        zIndex: isDarkTheme ? 0 : 1,
-      });
-    });
-
-    await animate(darkCircle.current, { x: 0 });
-    await animate(darkCircle.current, { x: offset });
-    await animate(darkCircle.current, { x: 0, zIndex: isDarkTheme ? 1 : 0 });
+    darkRef.start();
+    lightRef.start();
   }
 
   return (
@@ -74,25 +123,13 @@ function ThemeToggle() {
       className="flex items-center justify-center  hover:bg-opacity-80 translate-x-[-10px]"
       onClick={onClick}
     >
-      <motion.div
-        // variants={variants}
-        // animate={isDark ? "rotate" : "stop"}
-        animate={{
-          x: 5,
-          zIndex: isDarkTheme ? 1 : 0,
-        }}
-        // initial={{ x: 0 }}
-        // exit={{ x: 0 }}
-        ref={lightCircle}
-        className="rounded-full w-4 h-4 border border-clr-gray-25 bg-transparent dark:bg-clr-gray-70 dark:border-clr-gray-70"
+      <animated.div
+        style={lightProps}
+        className="rounded-full w-4 h-4 border border-clr-ui-accent-30 bg-transparent dark:bg-clr-gray-55 dark:border-clr-gray-55"
       />
-      <motion.div
-        animate={{
-          x: 0,
-          zIndex: isDarkTheme ? 0 : 1,
-        }}
-        ref={darkCircle}
-        className="rounded-full w-4 h-4 border border-clr-gray-25 bg-clr-gray-25 dark:bg-transparent dark:border-clr-gray-50"
+      <animated.div
+        style={darkProps}
+        className="rounded-full w-4 h-4 border border-clr-ui-accent-30 bg-clr-ui-accent-30 dark:bg-transparent dark:border-clr-ui-accent-55"
       />
     </button>
   );

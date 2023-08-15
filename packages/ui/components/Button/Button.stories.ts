@@ -25,3 +25,10 @@ export const PrimarySmall: Story = {
     children: "Button",
   },
 };
+
+export const PrimaryXSmall: Story = {
+  args: {
+    size: "xs",
+    children: "Button",
+  },
+};

@@ -14,6 +14,14 @@ type Story = StoryObj<typeof meta>;
 
 const COPY = "The quick brown fox jumps over the lazy dog";
 
+export const AccentXXSmall: Story = {
+  args: {
+    accent: true,
+    children: COPY,
+    size: "xxs",
+  },
+};
+
 export const AccentXSmall: Story = {
   args: {
     accent: true,

@@ -1,15 +1,20 @@
 "use client";
-import { Text, useCoordinateGraph } from "@evan/ui-vite";
-import { HideLeva } from "@evan/ui-vite/lab/HideLeva";
-import { motion } from "framer-motion";
+import { Text, Toggle } from "@evan/ui";
+import { HideLeva, useCoordinateGraph } from "@evan/lab";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-const Field = dynamic(() => import("@evan/ui-vite/lab/Field/Field"), {
+import { useCallback, useEffect, useRef, useState } from "react";
+import { animated, useSpring, useTransition } from "@react-spring/web";
+
+const Field = dynamic(() => import("@evan/lab/src/Field/Field"), {
   ssr: false,
 });
-const Blob = dynamic(() => import("@evan/ui-vite/lab/blob/index"), {
+const Blob = dynamic(() => import("@evan/lab/src/blob/index"), {
   ssr: false,
 });
+
+const ES_BLOB = "es_blob";
+
+const initialChecked = localStorage.getItem(ES_BLOB);
 
 export function Lab() {
   const [show, setShow] = useState(false);
@@ -19,31 +24,81 @@ export function Lab() {
   useEffect(() => {
     setTimeout(() => {
       setShow(true);
-    }, 3000);
+    }, 1000);
   }, []);
+
+  const [animation] = useSpring(
+    () => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      delay: 2000,
+
+      config: {
+        duration: 500,
+      },
+    }),
+    []
+  );
+
+  const [checked, setChecked] = useState<boolean | undefined>(
+    initialChecked ? JSON.parse(initialChecked) : true
+  );
+  const [showBlob, setShowBlob] = useState(checked);
+
+  if (checked) {
+    localStorage.setItem(ES_BLOB, "true");
+  } else {
+    localStorage.setItem(ES_BLOB, "false");
+  }
+
+  const animating = useRef(false);
+  const onCheckedChange = useCallback(() => {
+    if (animating.current) return;
+    animating.current = true;
+    setTimeout(() => {
+      animating.current = false;
+    }, 1000);
+    if (checked) {
+      setTimeout(() => {
+        setShowBlob((hideBlob) => !hideBlob);
+      }, 1000);
+    } else {
+      setShowBlob((hideBlob) => !hideBlob);
+    }
+    setChecked((checked) => !checked);
+  }, [checked]);
 
   return (
     <div className="relative">
       <HideLeva />
       {show && (
-        <motion.div
-          className="flex"
-          animate={{
-            opacity: 1,
-          }}
-          initial={{ opacity: 0 }}
-          transition={{
-            delay: 1.5,
-            duration: 0.5,
-          }}
-        >
-          <div style={{ height: "218px", width: "218px" }}>
-            <Blob fov={30} />
-            <div className="px-2 py-1  border-t border-clr-ui-accent">
+        <animated.div className="flex" style={animation}>
+          <div className="flex flex-col">
+            <div
+              style={{
+                height: "218px",
+                width: "218px",
+                opacity: checked ? 1 : 0,
+                transition: "opacity 300ms ease-out",
+                transitionDelay: checked ? "300ms" : "0",
+              }}
+            >
+              {showBlob && <Blob fov={30} />}
+            </div>
+            <div className="flex flex-grow items-center justify-between py-1 px-2 border-t border-clr-ui-accent">
               <Time />
+              <Toggle
+                label="hello"
+                id="blob"
+                srOnly
+                size={"sm"}
+                className="w-auto"
+                onCheckedChange={onCheckedChange}
+                checked={checked}
+              />
             </div>
           </div>
-          <div>
+          <div className="flex flex-col">
             <div
               className="relative"
               style={{ height: "218px", width: "218px" }}
@@ -54,7 +109,7 @@ export function Lab() {
               </div>
               <Field />
             </div>
-            <div className="flex justify-between px-2 py-1 border-l border-t border-clr-ui-accent">
+            <div className="flex justify-between flex-grow items-center py-1 px-2 border-l border-t border-clr-ui-accent">
               <Label>
                 {x < 0 ? "" : "+"}
                 {x.toFixed(4)}
@@ -65,7 +120,7 @@ export function Lab() {
               </Label>
             </div>
           </div>
-        </motion.div>
+        </animated.div>
       )}
     </div>
   );
@@ -76,7 +131,9 @@ export default Lab;
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <Text
-      className="relative !text-[10px] text-clr-gray-30 dark:text-clr-gray-40"
+      size={"xxs"}
+      leading={"none"}
+      className="relative text-clr-gray-30 dark:text-clr-gray-40"
       accent
     >
       {children}

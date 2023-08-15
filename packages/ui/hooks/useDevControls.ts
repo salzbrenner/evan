@@ -23,10 +23,10 @@ export function useDevControls<
   depsOrSettings?: React.DependencyList | HookSettings,
   depsOrUndefined?: React.DependencyList
 ) {
-  if (!process.env.NEXT_PUBLIC_HIDE_LEVA) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useControls(schemaOrFolderName, settingsOrDepsOrSchema);
-  }
+  // if (!import.meta.env.DEV) {
+  //   // eslint-disable-next-line react-hooks/rules-of-hooks
+  //   return useControls(schemaOrFolderName, settingsOrDepsOrSchema);
+  // }
   // TODO: exclude leva from production build
   // eslint-disable-next-line react-hooks/rules-of-hooks
   return useControls(schemaOrFolderName, settingsOrDepsOrSchema);

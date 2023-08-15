@@ -3,101 +3,119 @@ import { ToggleSidebar } from "./ToggleSidebar";
 import { useState } from "react";
 import { NavigationBar } from "./Navigation";
 import { ArticlesBlock } from "./Articles";
-import { motion } from "framer-motion";
 import { FadeInUp } from "../FadeInUp";
-import dynamic from "next/dynamic";
-import { Text } from "@evan/ui-vite";
+import { Text } from "@evan/ui";
 import { Details } from "./Details";
-import { Button } from "@evan/ui-vite";
+import dynamic from "next/dynamic";
+import { useSpring } from "@react-spring/web";
+import { animated } from "@react-spring/web";
+import { useWindowSize } from "@/app/hooks/useWindowSize";
 
 const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
 });
 
 export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
+  const windowSize = useWindowSize();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   function toggleSidebar() {
     setIsSidebarOpen(!isSidebarOpen);
+  }
+  const [borderHeight, api] = useSpring(
+    () => ({
+      from: { height: "0vh" },
+      to: { height: "100vh" },
+      config: {
+        duration: 500,
+      },
+    }),
+    []
+  );
+
+  const [flash] = useSpring(
+    () => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      loop: true,
+      config: {
+        duration: 500,
+      },
+    }),
+    []
+  );
+
+  const [flashWrapper] = useSpring(
+    () => ({
+      from: { opacity: 1 },
+      to: { opacity: 0 },
+      delay: 1500,
+
+      config: {
+        duration: 500,
+      },
+    }),
+    []
+  );
+
+  if (windowSize.width < 1024) {
+    return null;
   }
 
   return (
     <>
       <div
+        className={`lg:min-w-[436px]
+          lg:w-[436px]`}
+      ></div>
+      <FadeInUp
+        delay={500}
         className={`
-      absolute
-      top-0
-      h-full
-      w-full
-      ${isSidebarOpen ? "left-0" : "left-[-100%]"}
-      transition-all
-      flex
-      flex-col
-      justify-between
-      lg:w-auto
-      lg:min-w-[436px]
-      lg:w-[436px]
-      lg:left-0
-      lg:relative
-      lg:h-auto
+          fixed
+          top-0
+          bottom-0
+          h-screen
+          flex
+          flex-col
+          justify-between
+          bg-clr-ui-bg
+          lg:w-auto
+          lg:min-w-[436px]
+          lg:w-[436px]
+          lg:left-0
       `}
       >
         <div>
-          <Button>HELLO WORLD</Button>
-          <FadeInUp delay={300}>
-            <NavigationBar />
-          </FadeInUp>
-          <FadeInUp delay={600}>
-            <ArticlesBlock />
-          </FadeInUp>
+          <NavigationBar />
+          <ArticlesBlock />
         </div>
 
         <div>
-          <FadeInUp
-            delay={800}
-            className="flex relative border-t border-b border-clr-ui-accent mt-24 h-[242px]"
-          >
-            <motion.div
+          <div className="flex relative border-t border-b border-clr-ui-accent mt-24 h-[244px]">
+            <animated.div
               className="absolute bottom-2 left-2 flex gap-2 items-center"
-              animate={{
-                opacity: 0,
-              }}
-              transition={{
-                delay: 3.5,
-                duration: 0.5,
-              }}
+              style={flashWrapper}
             >
               <Text accent size={"xs"}>
                 {`> waking up`}
               </Text>
-              <motion.div
+              <animated.div
                 className="bg-clr-text-primary w-1.5 h-3"
-                animate={{
-                  opacity: [0, 1],
-                }}
-                transition={{
-                  delay: 0.5,
-                  repeat: Infinity,
-                  duration: 0.5,
-                }}
+                style={flash}
               />
-            </motion.div>
+            </animated.div>
             <LazyLab />
-          </FadeInUp>
-          <FadeInUp delay={1000} className="flex flex-col gap-2">
+          </div>
+          <div className="flex flex-col gap-2">
             <Details />
-          </FadeInUp>
+          </div>
         </div>
 
         {children}
-      </div>
-      <div className="rotate-180 h-[100vh]">
-        <motion.div
-          className="border-r border-clr-ui-accent"
-          animate={{
-            height: "100vh",
-          }}
-          initial={{ height: "0vh" }}
-          transition={{ delay: 0.2 }}
+      </FadeInUp>
+      <div className={`fixed rotate-180 h-screen left-[436px]`}>
+        <animated.div
+          className=" border-r border-clr-ui-accent"
+          style={borderHeight}
         />
       </div>
       <div className="lg:hidden">

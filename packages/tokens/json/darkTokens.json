@@ -12,6 +12,17 @@
           "l": {
             "value": "80%"
           }
+        },
+        "secondary": {
+          "h": {
+            "value": "0"
+          },
+          "s": {
+            "value": "0%"
+          },
+          "l": {
+            "value": "50%"
+          }
         }
       },
       "brand": {
@@ -89,6 +100,20 @@
         },
         "xxx-remove-xxx": {
           "value": "hsl({hslBase.color.text.primary.h}, {hslBase.color.text.primary.s}, {hslBase.color.text.primary.l})"
+        }
+      },
+      "secondary": {
+        "10": {
+          "value": "hsl({hslBase.color.text.secondary.h}, {hslBase.color.text.secondary.s}, 10%)"
+        },
+        "20": {
+          "value": "hsl({hslBase.color.text.secondary.h}, {hslBase.color.text.secondary.s}, 20%)"
+        },
+        "30": {
+          "value": "hsl({hslBase.color.text.secondary.h}, {hslBase.color.text.secondary.s}, 30%)"
+        },
+        "xxx-remove-xxx": {
+          "value": "hsl({hslBase.color.text.secondary.h}, {hslBase.color.text.secondary.s}, {hslBase.color.text.secondary.l})"
         }
       }
     },

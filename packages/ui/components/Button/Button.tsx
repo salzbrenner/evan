@@ -5,6 +5,7 @@ import { Text } from "../Text/Text";
 const buttonVariants = cva("text-clr-text-primary border-clr-text-primary", {
   variants: {
     size: {
+      xs: ["px-2.5 py-1.5 rounded-[1rem]"],
       sm: ["px-3 py-2 rounded-[1.25rem]"],
       def: ["px-4 py-3 rounded-[1.5rem] "],
     },
@@ -24,7 +25,7 @@ export interface ButtonProps
  * Primary UI component for user interaction
  */
 export const Button = ({ size = "def", className, children }: ButtonProps) => {
-  const textSize = size === "sm" ? "xs" : "sm";
+  const textSize = size === "xs" ? "xxs" : size === "sm" ? "xs" : "sm";
   return (
     <button
       type="button"
@@ -34,11 +35,11 @@ export const Button = ({ size = "def", className, children }: ButtonProps) => {
           border-dashed 
           hover:border-solid 
           hover:bg-dot
+          ${className}
          `,
       })}
     >
       <Text accent size={textSize} leading={"none"}>
-        <h1>wow</h1>
         {children}
       </Text>
     </button>

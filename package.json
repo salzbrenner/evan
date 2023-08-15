@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "style-dictionary": "pnpm --filter ./packages/tokens run build",
-    "dev": "pnpm -r --parallel run dev",
+    "sd": "pnpm --filter ./packages/tokens run build",
+    "dev": "pnpm -r --filter !./packages/lab --parallel run dev",
     "ui": "pnpm --filter ./packages/ui dev"
   },
   "workspaces": [

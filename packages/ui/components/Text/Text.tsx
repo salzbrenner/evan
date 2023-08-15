@@ -7,10 +7,13 @@ underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed hover:t
 const text = cva("", {
   variants: {
     size: {
+      xxs: [],
       sm: [],
       xs: [],
       def: [],
       lg: [],
+      // body text
+      body: ["font-primary-sm md:font-primary"],
     },
     accent: {
       true: [],
@@ -74,6 +77,12 @@ const text = cva("", {
     // accent
     {
       accent: true,
+      size: "xxs",
+      strong: undefined,
+      className: "font-accent-xxs",
+    },
+    {
+      accent: true,
       size: "xs",
       strong: undefined,
       className: "font-accent-xs",
@@ -99,7 +108,7 @@ const text = cva("", {
   ],
   defaultVariants: {
     accent: undefined,
-    size: "def",
+    size: "body",
   },
 });
 

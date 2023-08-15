@@ -44,6 +44,11 @@ module.exports = {
           "background-color": "var(--color-ui-accent)",
           "background-size": `${DOT_SPACE} ${DOT_SPACE}`,
         },
+        ".light .bg-dot": {
+          "background-image": `radial-gradient(var(--color-text-primary) ${DOT_SIZE}, transparent 0)`,
+          "background-color": "var(--color-ui-accent)",
+          "background-size": `${DOT_SPACE} ${DOT_SPACE}`,
+        },
       });
     }),
   ],
