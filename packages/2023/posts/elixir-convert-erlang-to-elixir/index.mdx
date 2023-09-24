@@ -1,0 +1,49 @@
+---
+title: Transcoding Erlang to Elixir
+date: '2022-01-02'
+tags: ['Elixir']
+files: []
+---
+
+Elixir compiles to bytecode that runs on the Erlang VM. That means any Erlang code or package will work in an Elixir app. This can be helpful if there is no existing Elixir library that provides the needed functionality.
+
+However, there are some things to consider when transcoding Erlang to Elixir:
+
+- Erlang modules in Elixir are always referenced as atoms. So `gen_tcp` in Erlang is `:gen_tcp` in Elixir.
+- Erlang variables are capitalized, while Elixir atoms are not.
+- Erlang atoms begin with a lowercase letter, while Elixir atoms start a colon `:`.
+- Where function calls in Erlang use `:`, Elixir uses `.`. `gen_tcp:listen` in Erlang is `:gen_tcp.listen` in Elixir
+- Elixir and Erlang handle strings differently. A double-quoted string in Erlang is a character list, while in Elixir it is a UTF-8 encoded binary, a sequency of bytes. So passing a double quoted string to an Erlang function from Elixir doesn't work. For Elixir, you have to use single quotes, which is a character list compatible with the Erlang double quote.
+
+Let's take a look at an example. The [gen_tcp](https://www.erlang.org/doc/man/gen_tcp.html#) module in Erlang provides functions for communicating with sockets using the TCP/IP protocol.
+
+This example from the docs shows a client connecting to a server on port 5678, transferring a binary, and closing the connection:
+
+```erlang
+client() ->
+    SomeHostInNet = "localhost", % to make it runnable on one machine
+    {ok, Sock} = gen_tcp:connect(SomeHostInNet, 5678,
+                                 [binary, {packet, 0}]),
+    ok = gen_tcp:send(Sock, "Some Data"),
+    ok = gen_tcp:close(Sock).
+```
+
+How can we use this in Elixir?
+
+First let's wrap it in a module definition
+
+```Elixir
+def client do
+    some_host_in_net = 'localhost', # lowercase variable, single quotes
+    # prefix atoms with `:`, replace cases for variables
+    {:ok, sock} = :gen_tcp(some_host_in_net, 5678,
+                            # {packet, 0} in Erlang -> {:packet, 0},
+                            # which can also be written as packet: 0
+                            [:binary, packet: 0])
+    # update function call to use `:` and `.`
+    :ok = :gen_tcp.send(sock, 'Some Data')
+    :ok = :gen_tcp.close(sock)
+end
+```
+
+Obviously this example would need to be expanded to provide real use, but it illustrates how easy Erlang can be converted to Elixir

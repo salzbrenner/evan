@@ -1,0 +1,30 @@
+---
+title: Linked Lists
+tags:
+  - data structures
+---
+
+## What's a linked list?
+
+A linked list data structure is a collection that contains a number of nodes. Each node contains a reference to the next node. The order of nodes within the list will not change - unless purposefully.
+
+The head node is the first node in a linked list, while the tail node is the last node. The tail node can be identified by the fact that it has no refrence to any other node (null reference).
+
+Each node contains 2 parts. The data contains any type of javascript value. A reference contains a pointer to the next node.
+
+<iframe
+  width="800"
+  height="350"
+  src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FKTraD66Uv1jbUML3BbDcbf%2FLinked-Lists%3Fnode-id%3D0%253A1"
+  allowFullScreen
+></iframe>
+
+```js
+const nodeOne = {
+  data: 'hello',
+}
+const nodeTwo = {
+  data: 'world',
+}
+nodeOne.next = nodeTwo
+```

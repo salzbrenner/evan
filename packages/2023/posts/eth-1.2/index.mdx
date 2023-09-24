@@ -1,0 +1,44 @@
+---
+title: Public Key Cryptography
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+## Symmetric Key
+
+- Same key on both sides - for both encryption and decryption
+- This allows you to communicate securely over an unsecured channel
+- AES - Advanced Encryption Standard is an example of a symmetric key algorithm
+- The big con is that both sides must have the key beforehand
+- If you wanted to talk to a stranger over, you would have to send the key over an unsecured channel
+
+## Asymmetric Key (Public Key)
+
+- Whit Diffie had idea to split key in two - public and private
+  - This went against traditional cryptography, which was based on the idea that the key should be kept secret
+- With a public/private keypair:
+  1. Authenticate: The private key signs, the public key verifies
+  2. Encrypt: The public key encrypts, the private key decrypts
+- The public key is published and can be used by anyone to encrypt a message
+
+## 1. Public Key Encryption
+
+- Bob provides his public key
+- Bob secures his private key
+- Alice encrypts a message with Bob's public key, and only Bob can read it, decrypting it with his private key
+- Eve could not read/decrypt this message
+
+## 2. Public Key Authentication
+
+- Bob provides his public key
+- Bob secures his private key
+- Alice (anyone) with Bob's public key can verify that a message was signed by Bob
+
+## 3. Public Key Cryptography and Web3
+
+- User signs a transaction with their private Key
+- User broadcasts the transaction to the network
+- Nodes on the network recover the public key from the signature, which is then used to derive the user's address

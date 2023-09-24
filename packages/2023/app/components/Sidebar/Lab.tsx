@@ -1,6 +1,6 @@
 "use client";
 import { Text, Toggle } from "@evan/ui";
-import { HideLeva, useCoordinateGraph } from "@evan/lab";
+import { useCoordinateGraph } from "@evan/lab";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { animated, useSpring, useTransition } from "@react-spring/web";
@@ -70,7 +70,6 @@ export function Lab() {
 
   return (
     <div className="relative">
-      <HideLeva />
       {show && (
         <animated.div className="flex" style={animation}>
           <div className="flex flex-col">
@@ -98,12 +97,28 @@ export function Lab() {
               />
             </div>
           </div>
+          {/* <div className="flex flex-col">
+            <div
+              className="relative"
+              style={{ height: "218px", width: "218px" }}
+            ></div>
+            <div className="flex justify-between flex-grow items-center py-1 px-2 border-l border-t border-clr-ui-accent">
+              <Label>
+                {x < 0 ? "" : "+"}
+                {x.toFixed(4)}
+              </Label>
+              <Label>
+                {y < 0 ? "" : "+"}
+                {y.toFixed(4)}
+              </Label>
+            </div>
+          </div> */}
           <div className="flex flex-col">
             <div
               className="relative"
               style={{ height: "218px", width: "218px" }}
             >
-              <div className="flex justify-center absolute left-0 right-0 top-0 bottom-0 border-l border-clr-ui-accent">
+              <div className="flex justify-center absolute left-0 right-0 top-0 bottom-0  border-l border-clr-ui-accent">
                 <div className="border-r border-clr-gray-85 dark:border-clr-gray-16"></div>
                 <div className="border-r rotate-90 border-clr-gray-85 dark:border-clr-gray-16"></div>
               </div>

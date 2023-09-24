@@ -1,0 +1,23 @@
+---
+title: Ethereum Nodes
+tags:
+  - cryptocurreny
+  - ethereum
+files: []
+---
+
+In an ideal world, all devs would be running a full eth node. This isn't that big of a deal if you're building something that is just reading queries, and/or low doing low volume of traffic/transactions.
+
+But at scale, this is a problem. Heavy traffic can bring down a node - if it's not up and running, can't communicate with the blockchain any longer.
+
+**Why can't you just add more nodes?**
+
+- if a node crashes during heavy traffic, you can't spin up more nodes at will - they can take long time (weeks) to sync
+- reliability - even if a node is 95% reliable, that's 1.5 days of downtime per month
+- data consistency - blockchains are networks of nodes. a load balancer won't work in this case, because the nodes can be out of sync with each other - they can have different latest blocks.
+
+Example: you buy an NFT on a marketplace. The marketplace is running on a load balancer, and you're hitting node A, with the latest block of 100, and that's where your transaction goes. You refresh the page, the load balancer hits node B, which is not fully synced and latest at block 99 - block 99 doesn't know about the NFT you just bought, and so the dApp doesn't know you have it either, even though you just purchased it there.
+
+**So, what's the solution?**
+
+Node infrastructures that have a whole bunch of shit under the hood. Services like Alchemy, Infura off "supernodes" that increases reliability, consistent data, scalability.

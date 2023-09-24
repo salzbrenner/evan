@@ -1,0 +1,45 @@
+---
+title: Memoization
+tags:
+  - complexity
+  - algorithms
+---
+
+Store the arguments of each function call along with the result. If the function is called again with the same arguments, return the precomputed result, rather than running the function again.
+
+An example with fibonacci. Caches and returns elements instead of running the `fib()` function on the same number multiple times.
+
+```js
+function fib(n, caches = {}) {
+  if (n <= 1) return n
+  if (caches[n]) return caches[n]
+  return (caches[n] = fib(n - 1, caches) + fib(n - 2, caches))
+}
+```
+
+A more generice memoization implementation:
+
+```
+(Slow function) - pass to -> (Memoizer function) - return -> (fast, memoized function)
+```
+
+```js
+// exponential time
+function fib(n) {
+  if (n <= 1) return n
+  return fib(n - 1) + fib(n - 2)
+}
+
+function memoize(fn) {
+  const caches = {}
+  return function (...args) {
+    if (caches[args]) return caches[args]
+    // apply() important b/c args is an array being passed
+    // alternate implementation would be fn(...args)
+    const result = fn.apply(this, args)
+    return result
+  }
+}
+
+fib = memoize(fib)
+```

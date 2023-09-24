@@ -2,86 +2,106 @@
 import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
-import { Text, BodyContainer, Button, ArrowLink, Heading } from "@evan/ui";
+import { Text, Button, ArrowLink, Heading } from "@evan/ui";
 import { BracketedTitle } from "./components/BracketedTitle";
 
 import NextLink from "next/link";
+import dynamic from "next/dynamic";
+import { useWindowSize } from "@evan/lab";
+import { MainLayout } from "./components/MainLayout";
+import { BodyContainer } from "./components/BodyContainer";
+
+const Blob = dynamic(() => import("@evan/lab/src/blob/index"), {
+  ssr: false,
+});
+
 export default function Home() {
-  const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  );
+  const windowSize = useWindowSize();
+
+  const mainPost = allPosts.filter((p) => p.main)[0];
 
   return (
-    <main className="flex min-h-screen px-12 py-24 ">
-      <div className="flex flex-col gap-12">
-        <BodyContainer>
-          <Text accent size={"lg"}>
-            This is some blog title
-          </Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            maxime nam suscipit iure aliquam atque cum sed, perferendis
-            consequuntur odit aliquid incidunt exercitationem eius accusantium
-            aspernatur ipsum eaque laboriosam fugit. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloremque ducimus nostrum placeat
-            nihil perspiciatis velit quaerat ullam sunt, mollitia quia
-            accusantium exercitationem in eum! Esse provident veritatis suscipit
-            reiciendis qui! Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit. Consequuntur possimus cupiditate magni blanditiis! Praesentium
-            rerum id atque quibusdam ut quae iure iste repellendus voluptate
-            soluta, labore fuga aperiam illo ullam.
-          </Text>
-          <ArrowLink
-            display="block"
-            textSize={"sm"}
-            anchor={({ children }) => (
-              <NextLink className="inline-block" href="/">
-                {children}
-              </NextLink>
-            )}
-          >
-            Continue reading
-          </ArrowLink>
-          <div className="pt-12">
-            <BracketedTitle title="about" />
-          </div>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            maxime nam suscipit iure aliquam atque cum sed, perferendis
-            consequuntur odit aliquid incidunt exercitationem eius accusantium
-            aspernatur ipsum eaque laboriosam fugit. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloremque ducimus nostrum placeat
-            nihil perspiciatis velit quaerat ullam sunt, mollitia quia
-            accusantium exercitationem in eum! Esse provident veritatis suscipit
-            reiciendis qui! Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit. Consequuntur possimus cupiditate magni blanditiis! Praesentium
-            rerum id atque quibusdam ut quae iure iste repellendus voluptate
-            soluta, labore fuga aperiam illo ullam.
-          </Text>
+    <main>
+      <MainLayout>
+        <div className="flex flex-col gap-12 items-center">
+          {windowSize.width < 1024 && (
+            <div className="border border-clr-ui-accent">
+              <div
+                style={{
+                  height: "218px",
+                  width: "218px",
+                }}
+              >
+                <Blob fov={30} />
+              </div>
+            </div>
+          )}
+          <BodyContainer>
+            <BracketedTitle title="Featured" />
+            <Heading size={1}>{mainPost.title}</Heading>
+            {/* <MDXContent components={mdxComponents} /> */}
+            <Text
+              dangerouslySetInnerHTML={{
+                __html: `${mainPost.body.raw.slice(0, 400)}`,
+              }}
+            />
 
-          <div className="pt-12">
-            <BracketedTitle title="experience" />
-          </div>
-          <div className="flex gap-32">
-            <div>
-              <Text>2020 - 2021</Text>
+            <ArrowLink
+              display="block"
+              textSize={"sm"}
+              intent="highlightLink"
+              anchor={({ children }) => (
+                <NextLink
+                  className="inline-block"
+                  href={`posts/${mainPost._raw.flattenedPath}`}
+                >
+                  {children}
+                </NextLink>
+              )}
+            >
+              Continue reading
+            </ArrowLink>
+            <div className="pt-12">
+              <BracketedTitle title="about" />
             </div>
-            <div>
-              <Text>HNT Labs</Text>
-              <Text className="text-clr-gray-50">Engineer</Text>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
+              maxime nam suscipit iure aliquam atque cum sed, perferendis
+              consequuntur odit aliquid incidunt exercitationem eius accusantium
+              aspernatur ipsum eaque laboriosam fugit. Lorem ipsum dolor sit
+              amet consectetur adipisicing elit. Doloremque ducimus nostrum
+              placeat nihil perspiciatis velit quaerat ullam sunt, mollitia quia
+              accusantium exercitationem in eum! Esse provident veritatis
+              suscipit reiciendis qui! Lorem ipsum dolor sit amet, consectetur
+              adipisicing elit. Consequuntur possimus cupiditate magni
+              blanditiis! Praesentium rerum id atque quibusdam ut quae iure iste
+              repellendus voluptate soluta, labore fuga aperiam illo ullam.
+            </Text>
+
+            <div className="pt-12">
+              <BracketedTitle title="experience" />
             </div>
-          </div>
-          <div className="flex gap-32">
-            <div>
-              <Text>2020 - 2021</Text>
+            <div className="flex gap-32">
+              <div>
+                <Text>2020 - 2021</Text>
+              </div>
+              <div>
+                <Text>HNT Labs</Text>
+                <Text className="text-clr-gray-50">Engineer</Text>
+              </div>
             </div>
-            <div>
-              <Text>HNT Labs</Text>
-              <Text className="text-clr-gray-50">Engineer</Text>
+            <div className="flex gap-32">
+              <div>
+                <Text>2020 - 2021</Text>
+              </div>
+              <div>
+                <Text>HNT Labs</Text>
+                <Text className="text-clr-gray-50">Engineer</Text>
+              </div>
             </div>
-          </div>
-        </BodyContainer>
-      </div>
+          </BodyContainer>
+        </div>
+      </MainLayout>
     </main>
   );
 }

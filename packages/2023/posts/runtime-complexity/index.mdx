@@ -1,0 +1,121 @@
+---
+title: Runtime Complexity
+tags:
+  - complexity
+  - algorithms
+---
+
+Runtime complexity describes the performance of an algorithm.
+
+How much more processing power or time is needed to run an algorithm if the input is doubled?
+
+## O(1)
+
+Contstant time. No matter the input, the algo will always take the same amount of time.
+
+## O(log(n))
+
+Logarithmic time. When doubling the number of elements you are iterating over does not double the amount of work. Always assume search operations are log(n).
+
+## O(n)
+
+Linear run time. Iterating through all the elements in a collection of data. Loops from 0 to array.length. Each additional element = 1 additional step through 1 loop.
+
+## O(n \* log(n))
+
+Quasilinear time. Doubling the elements you are iterating over doesn't double the amout of work. Adding one element adds something like 1 + \<1 more time/work.
+
+## O(n^2)
+
+Quadratic. n ^ 2. Each additional element has to interact with every other element. "Handshake problem" - each person in room has to shakes hands, and every new person has to shake everyone's hands.
+
+## O(2^n)
+
+Exponential time. If you add a single element, the processing power needed doubles (or dramtically increases if not doubles).
+
+## Identifying Runtime Complexity
+
+<table className="css-somehash">
+  <thead className="css-somehash">
+    <tr className="css-somehash">
+      <th align="left" className="css-somehash">
+        Action
+      </th>
+      <th align="right" className="css-somehash">
+        O
+      </th>
+    </tr>
+  </thead>
+  <tbody className="css-somehash">
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Iterating with simple loop through a single collection
+      </td>
+      <td align="right" className="css-somehash">
+        Likely O(n)
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Iterating through half a collection
+      </td>
+      <td align="right" className="css-somehash">
+        O(n)
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Iterating through 2 different collections with separate for loops
+      </td>
+      <td align="right" className="css-somehash">
+        O(n + m)
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Two nested loops iterating same collection
+      </td>
+      <td align="right" className="css-somehash">
+        O(n^2)
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Two nested loops iterating over different collections
+      </td>
+      <td align="right" className="css-somehash">
+        O(n*m)
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Sorting?
+      </td>
+      <td align="right" className="css-somehash">
+        O(n*log(n))
+      </td>
+    </tr>
+
+    <tr className="css-somehash">
+      <td align="left" className="css-somehash">
+        Searching a sorted array
+      </td>
+      <td align="right" className="css-somehash">
+        O(log(n))
+      </td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+## Space Complexity
+
+How much more memory is required by doubling the problem set?
+
+Not necessarily the same complexity as time for a given algo.

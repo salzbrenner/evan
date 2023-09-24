@@ -1,0 +1,49 @@
+---
+title: Getting to know Elixir
+draft: true
+files: []
+---
+
+Functional programming has intrigued me since I took a course at Auburn that focused on Clojure. The things that immediately pulled me in were the small, declarative functions and it's Lisp based syntax - which was new, confusing, and awesome. Thanks in part to a great instructor, it was probably my favorite course. I remember thinking I would be quite happy if I had a job writing Clojure.
+
+Alas, that didn't happen.
+
+Fast forward to now, and, like any developer, I'm at a point in my career where I'm ready for something different. As a frontend developer, I spend most of my time buried in JavaScript in one form or another. Rather than learning another JS framework or library, which often feel like a variation on something familiar, I'd like to dive into something totally unknown.
+
+So why Elixir? After briefly looking into various languages, I settled on it mostly because of apparent developer satisfaction and it's dynamic nature. But the main thing is that it's functional, I've wanted to explore functional programming more in-depth for a long time, and that I believe it will make me a better programmer overall.
+
+## Roots in Erlang
+
+Elixir is built on top of [Erlang](https://www.erlang.org/). Specifically, Elixir is compiled into bytecode and run on the Erlang virtual machine, aka BEAM. This is similar to Clojure, which runs on the JVM. And, just as Clojure can use Java code or libraries, so too can Elixir with Erlang.
+
+Erlang is a language developed by Ericsson in the 80s for building out telecommunications systems. Being used for telecommunications, it needed to be a robust language that could handle concurrency, scalability, distribution and high availability. Additional language development, known as the Open Telecommunications Platform (OTP), allowed for this functionality, and is bundled with the Erlang VM as part of the Elixir platform.
+
+## Concurrency & Robustness
+
+Elixir runs isolated code inside threads of execution (processes), sharing information via messages. The data sent in messages is immutable.
+
+These processes run concurrently in the same machine, and since they are run in isolation, are garbage collected independently, allowing the machine to be as resource efficient as possible (vertical scaling).
+
+These processes can also communicate with other processes on different machines in the same network. This allows for horizontal scaling, enabling developers to sync work across multiple nodes.
+
+This concurrent process system is Elixir's implementation of the actor model.
+
+Elixir acheives robust fault-tolerance using something called supervisors. These supervisors monitor a system and detail how to restart pieces of the system after they crash.
+
+## Immutable Data
+
+Elixir uses immutable data, or data that can't be changed. I'm familar with the practice as it's pretty big in the JS ecosystem, especially React.
+
+Instead of modifying input data, Elixir will transform the data into a new set of data for you to work with. Knowing that the data you are working with is not going to be manipulated elsewhere is a huge win for me. It's something that I run into on a near daily basis in my current place of work - the codebase is massive, data is passed all over that place, and it's often unclear where something was changed.
+
+## Dynamic Types
+
+Elixir is a dynamically-typed language. This is similar to JavaScript, which I work with most often (though I am a huge fan of TypeScript). I remember Clojure being dynamically typed as well.
+
+A dynamic language means that types are not checked at compile time, but runtime. Static types can make your code more bulletproof, but working with them can be less flexible. I very much like the idea of statically typing. The current codebase at my workplace uses JavaScript, is massive, and has no typing. There's no doubt that if it were to switch to TypeScript, a lot of issues would be caught earlier.
+
+I've worked with TypeScript in production, and highly enjoyed it. What I like about TypeScript is that you can enable it gradually, going from a lenient typing approach to a more strict one, as you and your team become more efficient with it. The only other typed languaged I've worked with is Java during my school work. I enjoyed working with it, but was development was slow - because it was a new language, but also because of it's statically typed nature, which took additional time to solve before my code would compile.
+
+For a language I'm working with in my free time, which may or may not lead to a career change, dynamically typed suits me fine. It's a tradeoff for sure, but one that I think will allow me to keep motivated and rapidly learning. My prime motivation for learning Elixir is to get a more gain a more functional mindset, and further explore web development outside of frontend.
+
+However, from the little Elixir I've learned so far, there are some methods for adding a kind of typing to your code, so I am eager to learn more about those.

@@ -1,0 +1,38 @@
+---
+title: Proof of Work & Mining
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+## Consensus Mechanisms
+
+With decentralized networks, some of the issues are:
+
+- How can all nodes agree on current and future state of user data and contract interaction?
+- Who can add new data to the network? How do we know its valid?
+- With no central authority, how are these things coordinated?
+
+This is where consensus mechanmis come into play. They are the rules that all nodes in the network follow to ensure that the network is secure and that all nodes are in agreement (typically 51%).
+
+For example, in a proof of work blockchain, typical consensus rules are:
+
+- No double spending
+- The "longest chain" is the correct chain
+
+## Pow Mining Algorithm
+
+1. Take current block's header
+2. Append a nonce, starting at 0
+3. Hash the result
+4. If the hash is less than the target (provided by protocol), we have a winner
+5. If not, increment the nonce and repeat
+
+## PoW + Mining:
+
+- PoW is a consensus mechanism to provide decentralized networks a way to come to consensus on what is valid
+  - Solves Byzantine Generals Problem
+- Mining secures the network against fraud - in short, the process of finding a nonce that satisfies the PoW
+  - First miner to find valid PoW gets the reward

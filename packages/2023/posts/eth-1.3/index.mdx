@@ -1,0 +1,36 @@
+---
+title: Blockchain structure
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+- genesis block - first block in the blockchain, with 0 index
+
+Each block stores:
+
+- index
+- timestamp
+- hash - not stored on block , but is a digital fingerprint representing block content
+
+The data is the combo of the index, timestamp, previous hash and nonce.
+
+```
+f ( index + previous hash + timestamp + data + nonce ) = hash
+
+```
+
+A valid hash is a hash that meets certain requirements. I.e. it starts with a certain number of zeros. The number of zeros is called the difficulty. The difficulty is adjusted every 2016 blocks (for Bitcoin). The difficulty is adjusted to ensure that blocks are added at a rate of one block every 10 minutes (for bitcoin).
+
+Since the data in a block (the content) is included in the hash for the block, the hash of the block changes if the content changes. If you change the content of a block, the hash changes, and the hash of the block after it changes, and so on. This is how the blockchain is immutable. This maintains data integrity, making sure the state of the blockchain is not corrupted.
+
+To add a new block, it needs to:
+
+- have the correct index (the index of the previous block + 1)
+- have the correct previous hash (the hash of the previous block should equal current block hash)
+- the hash of the block should meet the difficulty requirements
+- the hash is calculated correctly
+
+Every participant in the p2p network performs validation for every single new proposed block - if it meets the requirements, it is added to the blockchain, and all peers add it to their own ledger. If it doesn't, it is rejected.

@@ -1,0 +1,77 @@
+---
+title: Patricia Merkle Tries (Radix trie)
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+Bitcoin popularized the use of Merle trees. Ethereum is a different design, and while it does use Mekrle trees, it also uses another data structure: Patricia Merkle Tries.
+
+Merkle trees are a great data structure for static transactions - ones that don't change after being commited. The transaction hashes are locked via the Merkle hash root construction. Merkle trees are not efficient for updating, however. If you want to update a transaction, you have to recompute the entire tree. So you won't want to use a Merkle tree for editing.
+
+The primary purpose of a Merkle tree is to prove the consitency of the blockchain as it grows. You just need to construct the proof to show a transaction existed at a given point in time. And they are highly efficient at scale b/c they are fast to compute and require small chunks of data to be transmitted across the network.
+
+## Patricia Merkle Tries in Ethtereum
+
+Ethereum uses a data structure called Patricia or radix tries, and combines them with Merkle tries, to create a Patricia Merkle trie.
+
+### Radix Trie
+
+A radix trie is a tree-like data structure used for string search. It traverses a path of nodes that store keys (associated references) that when combined give the final value.
+
+> By grouping keys together, the radix trie can be used to store and retrieve data in a way that is more efficient than a binary tree.
+
+![diagram](https://upload.wikimedia.org/wikipedia/commons/6/63/An_example_of_how_to_find_a_string_in_a_Patricia_trie.png)
+
+### Patricia Merkle Trie
+
+A PMT is a radix trie that is also a Merkle tree. It is a tree that is used to store key-value pairs, like a hash-table. Like Radix trie, they store similar value nodes together in the tree.
+
+> Patricia Merkle Trees are basically Merkle trees on steroids! Efficient for data verification needs, but also efficient for editting that data.
+
+### Why does Ethereum use Patricia Merkle Tries?
+
+There are typically two data types: static and dynamic. Static data is data that doesn't change: static and ephemeral.
+
+**Static**
+
+Static data are like mined transactions. They're not going to change.
+
+**Ephemeral**
+
+Account state in Ethereum is ephemeral data - it changes all the time. I.e. a balance, nonce is not going to be the same from one block to the next.
+
+Static data and ephemeral data should be stored separately. PMTs are great for ephemeral data.
+
+## Ethereum Block Header
+
+The block header is the hash result of all the data elements in a block, and in Ethereum that's quite a bit of data.
+
+![eth graph](https://res.cloudinary.com/divzjiip8/image/upload/v1669868801/guides/Screen_Shot_2022-11-30_at_8.26.05_PM.png)
+
+![eth graph](https://blockchain-academy.hs-mittweida.de/wp-content/uploads/2021/09/Block_Structure_Ethereum-1024x765.jpg)
+
+### Ethereum nodes maintain four tries:
+
+- A state trie which contains information about Ethereum accounts
+- A storage trie which is where we can write persistent data from smart contracts
+- A transactions trie which contains the transactions stored in a block
+- A receipts trie which contains log/event information from contracts
+
+### State Root
+
+The state trie maps addresses to account states. The state trie is the global state, constantly updated by transactions. The state root is the hash of the state trie.
+
+### Transaction Root
+
+The transactions trie records transactions in Ethereum. Once a block is mined, the transaction trie is **_never updated_**. Each transaction record things like `gasPrice` and `value`. The transaction root is the hash of the transaction trie.
+
+### Receipt Root
+
+The receipts trie records the outcomes of transactions. Data like `gasUsed` and `logs` are stored in the receipts trie. Once a block is mined, the receipt trie is **_never updated_**. The receipt root is the hash of the receipts trie.
+
+Further reading:
+
+- [Merkling in Ethereum](https://blog.ethereum.org/2015/11/15/merkling-in-ethereum)

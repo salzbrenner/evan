@@ -1,0 +1,37 @@
+---
+title: RegEx
+tags:
+  - regex
+---
+
+`/slashes with rules inside/` - literal
+
+`new RegExp(/slashes with rules inside/, 'optional flags')` - constructor
+
+`/g` - global flag. matches for all occurrences. without it, matches only the first occurrence
+
+`[]` - brackets indicate a set of characters to match
+
+`"pizza".match(/[abcd]/) // matches a`
+
+`^` inside bracket negates what is between brackets
+`"pizza".match(/[^abcd]g/g) // matches [p,i,z,z]`
+
+`{}` - curly braces are used to specify exact amount of things to match
+
+```JavaScript
+'panama'.match(/na{2}/) // -> no match
+'banana'.match(/na{2}/) // -> matches 'nana'
+```
+
+`()` - represent remebered matches.
+
+```JavaScript
+'Firsty McLastname'.match(/([A-Za-z]+)\s([A-Za-z]+)/) // -> matches 'First McLastname' with 'Firsty' remembered as $1 and 'McLastname' as $2
+
+'Firsty McLastname'.replace(/([A-Za-z]+)\s([A-Za-z]+)/, '$1') // -> returns 'Firsty'
+
+'Firsty McLastname'.replace(/([A-Za-z]+)\s([A-Za-z]+)/, '$2, $1') // -> returns 'McLastname, Firsty'
+
+'Firstipher Lasterman'.replace(/([A-Za-z]+)\s([A-Za-z]+)/, '$&') // -> returns 'Firstipher Lasterman'
+```

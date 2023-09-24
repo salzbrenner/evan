@@ -1,0 +1,39 @@
+---
+title: "Elastic Beanstalk & EC2"
+date: '2019-06-30'
+description: A brief look at the difference between these two AWS services.
+tags: 
+    - AWS
+    - EC2
+    - Elastic Beanstalk
+---
+
+As I continue to explore AWS, I've been able to deploy a couple of projects using Elastic Beanstalk. At work, we have several projects that use EC2 (among other AWS offerings). EC2 and Elastic Beanstalk are not the same thing.
+
+## EC2
+
+EC2 (Elastic Cloud Compute) is a service that enables the creation of a server in the AWS cloud. You pay by the hour for what you use. This allows you to do whatever you want with this instance, and deploy any number of instances.
+
+## Elastic Beanstalk
+
+In AWS's words:
+
+> AWS Elastic Beanstalk is an easy-to-use service for deploying and scaling web applications and services developed with Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker on familiar servers such as Apache, Nginx, Passenger, and IIS...You can simply upload your code and Elastic Beanstalk automatically handles the deployment, from capacity provisioning, load balancing, auto-scaling to application health monitoring.
+
+Essentially, Elastic Beanstalk is an additional layer of abstraction that creates an environment that is easier to work with. It could contain EC2 instances, a database (via Amazon RDS), and/or other Amazon services like an Elastic Load Balancer, Security Group, etc.
+
+Elastic Beanstalk automates and manages the setup and provisioning of these components, which can be a time saver for someone (like me) unfamiliar with server configuration.
+
+Also important to note, there is no additional cost for using the Elastic Beanstalk service. You are only charged for the various resources being used through the service. I.e. Elastic Beanstalk sets up an EC2 instance for you application - you would pay by the hour for your usage. Same as if you'd set up an instance yourself.
+
+## Elastic Beanstalk vs. Heroku or other PaaS
+
+I don't have extensive experience with either EB or Heroku, but I have deployed a few (small) applications on each.
+
+Heroku, overall, was pretty quick to get started with after reading the documentation.
+
+Getting started with Elastic Beanstalk required significantly more time. I had to read more documentation (which sometimes seemed scattered and incomplete), and felt like I needed a general sense of what the various services contained within my EB component were, and how these worked with each other. After a year, I'll have to start paying for these services, but the cost point should remain around $6/month.
+
+I haven't needed to do any customization on either of the platforms - my projects have been pretty small/low-scale. However, EB offers a much greater flexibility than Heroku. After all, each component EB provisions is just its own Amazon service, allowing you to individually customize each if the need arises.
+
+Deploying to EB was a great learning experience. I got to become more familiar with Amazon's vast ecosystem of services, and overall I felt more accomplished. I'd like to become more proficient in AWS, so I'll continue using them for whatever projects I can.

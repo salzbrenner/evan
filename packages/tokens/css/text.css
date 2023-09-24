@@ -1,7 +1,7 @@
 :root {
-  --font-heading-1: 400 3rem/120.00000762939453% 'Fake Receipt';
-  --font-heading-2: 400 2.5rem/120.00000762939453% 'Fake Receipt';
-  --font-heading-3: 400 2rem/120.00000762939453% 'Fake Receipt';
+  --font-heading-1: 400 1.5rem/120.00000762939453% 'Fake Receipt';
+  --font-heading-2: 400 1.25rem/120.00000762939453% 'Fake Receipt';
+  --font-heading-3: 400 1.125rem/120.00000762939453% 'Fake Receipt';
   --font-primary-default-normal: 400 1rem/175% 'Inter';
   --font-primary-default-strong: 600 1rem/175% 'Inter';
   --font-primary-lg-normal: 400 1.125rem/175% 'Inter';

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Icon, IconTypes } from "@evan/ui";
 export const ToggleSidebar = ({
   onClick,

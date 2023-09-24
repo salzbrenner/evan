@@ -1,0 +1,162 @@
+---
+title: Building the AUCS Course Portal
+category: "nonsense"
+date: "2019-11-10"
+featured: true
+description: Analyzing the development of the Auburn Computer Science course portal
+main: true
+tags:
+  - AWS
+  - python
+  - javascript
+  - Azure
+---
+
+⚠️ **Update**: If you care to visit the site, it takes ~20 seconds for the API to respond as its hosted on a free Heroku instance.
+
+In this post I will describe the development of the <a href="https://aucs-classes.netlify.com" >AUCS Online Course Portal</a>, a side project that I worked on over the course of a few months at the end of 2019.
+
+## TLDR;
+
+- Backend/API: Flask/python
+- Frontend: Next.js
+- Auth: Microsoft Identity Platform
+- Database: Postgresql
+- Hosting: AWS, Netflify
+
+## Motivations
+
+Several things influenced the creation of this project.
+
+I'm a student in Auburn's online computer science program. Somewhere around the beginning of my last term for the year, I received an email from the program advisor with this image:
+
+![curriculum graph](coursePortalPrereqs)
+
+"Undirected graph!" I thought, my head still kaleidoscoping with the Algorithms course I'd just completed. Perhaps I could do something with this. I'd wanted to play around with d3.js force graphs for sometime, and this seemed like a great opportunity.
+
+Another source of inspiration came from the online program's (unofficial)
+Slack channel. A student in the community had taken it upon himself to create
+a [wiki](https://auonlinecs.com/) for the program, and every few months posted a survey for students to provide feedback.
+The results of the feedback were then posted on the wiki.
+
+I thought there might be a way of creating a simple voting mechanism that could be accessed by any student in the program at any time, and would update the feedback automatically. Also, I wanted to somehow tie in the feedback to the curriculum graph.
+
+Finally, one of my goals for the year had been to create two fullstack
+applications with a Python backend and a React frontend. Why? At my job, I get
+to spend a lot of time building frontends - mostly in Angular. I wanted to up
+my skills in DB and API design. Python is a language I've messed around with
+for a while, and I felt like it was time I put it to use to architect some
+simple applications. I'd already completed one - a Trello inspired Kanban board. This would be my chance to iterate on the same (roughly) stack, and see how my skills had improved.
+
+After kicking the idea around for a couple hours, I had an outline of what I wanted to accomplish:
+
+- Admin interface for creating/editing courses
+- Curriculum graph (d3)
+- Rating/feedback functionality for each course
+  - Display as pie charts
+- Microsoft Azure authentication
+  - Site/app publicly accessible, but enable feedback for students in program
+
+I started the project in late October. Taking off weeks at a time here and there for school/work/life, I got to a place I was comfortable with in mid December. Overall, I'm happy with the result and here are some things I learned along the way.
+
+## Getting Started
+
+With a [three-tier](https://en.wikipedia.org/wiki/Multitier_architecture#Common_layers) application in mind, I briefly sketched out the architecture:
+
+- Presentation Tier: Next.js
+  - I'd used Create React App for other side projects, and Gatsby professionally. I wanted to see how Next.js differed.
+- Application Tier: Flask
+  - A minimal web framework that I had some experience with
+- Data Tier: Postgresql
+  - I'm no expert in databases. Sometimes I query or modify them at work, but design them? My main goal here was to create relationship hierarchy that was understandable.
+
+Of the three tiers, it was clear to me that Data would push me farthest from my comfort zone. Before doing anything else, I wanted to have a solid outline of what the database would look like.
+
+## Database Schema
+
+I gave serious thought to designing the database, and spent a some time diagramming out the tables and relationships. After several rounds of revisions, and analyzing the pros and cons of a couple of different approaches, I had something that I thought would work. I tweaked the schema a few times during development, but overall the structure was similar to what I had envisioned.
+
+![curriculum graph](coursePortalDev)
+
+<div className="prose-sm">
+
+_A diagram of the implemented schema_
+
+</div>
+
+With my early diagrams in mind, I knew implementing the relationships between courses and prequisites, and users and ratings would be the most challenging aspect of the schema.
+
+The first thing I took on was the curriculum graph from above. Obviously, there would need to be a courses table with columns for description, etc. But I also knew that there would be a need for a prerequisites table that would be the key element in linking the nodes in the graph and making it interactive. For this, the prereqs table has both a req_id and a ref_group column, in addition to the course reference. All three of these make up the unique primary key for each row.
+
+The addition of the ref_group column (though not needed for the current curriculum) allows for multiple groups of prerequisites to be applied to a single course. So in the table below, the prequisites for 4444 are either [1111 AND 2222] OR 3333.
+
+<table className="table-auto">
+  <thead>
+    <tr>
+      <th>ref_id</th>
+      <th>ref_group</th>
+      <th>cid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1111</td>
+      <td>0</td>
+      <td>4444</td>
+    </tr>
+    <tr className="bg-white">
+      <td>2222</td>
+      <td>0</td>
+      <td>4444</td>
+    </tr>
+    <tr>
+      <td>3333</td>
+      <td>1</td>
+      <td>4444</td>
+    </tr>
+  </tbody>
+</table>
+
+For course ratings, the quality, difficulty and time_spent tables use the course and user IDs as primary keys - each user is allowed a single rating for each course. The Flask application uses an ORM (SQLAlchemy) to map classes to the database. The three feedback tables all inherit from a `RatingsBase` class; in retrospect, I probably could have consolidated these into a single table to simplify some of the queries/business logic.
+
+Rows in the users table are filled from the Microsoft Azure MSAL JWT. The user IDs are related to the ratings to provide a way for the application/presentation layer to determine if a user had voted for a course - rows would only exist in the ratings table if the user had submitted feedback.
+
+With the database completed, the next challenge was authentication.
+
+## Authentication
+
+Going into the project, I thought the database would be the most time consuming, but the auth may have taken just as long. The authentication and user accounts in this application were different then what I'd worked on until this point, either professionally or on side projects.
+
+For this app, I wouldn't need to authorize any routes (except for the admin role, which is handled separately). The purpose of authentication this time was simply to verify that a user was an Auburn student, so that they could provide feedback on the courses.
+
+Auburn uses the Micorsoft Identity Platform for managing students, via Azure AD provisioned accounts. Logging in to the platform with my school credentials, I was able to see a long list of registered applications, and this could have been where I decided to register mine as well. This would have made the authentication process much easier.
+
+However, I hesitated in creating an app with my school account, since I wasn't clear whether that would mean I had full control of it or not. I was doing this all on my own, and wasn't sure if some admin might delete the app, or what would happen when I was no longer a student.
+
+So, I registered the app with a personal account. Which meant I lost the ability to authenticate easily authenticate only Auburn students; if you belong to a work/school group you can enable authentication only for other members of the group. Doing this solo meant I would be building an app that would authenticate for any Microsoft user, whether they were a part of Auburn or not.
+
+For this to work, I would need to determine if the data passed from the Microsoft JWT could be used to selectively process users who logged in: if a user belonged to Auburn, the application would function as expected, but if the user logged in with an account not associated with Auburn, they would immediately be logged out, thus bypassing any course rating features.
+
+After a good deal of searching and reading, I found this <a href="https://robertoprevato.github.io/Validating-JWT-Bearer-tokens-from-Azure-AD-in-Python/" className="in-text-link" target="_blank">fantastic article</a> by Roberto Prevato detailing my exact use case. Highly informative and recommended reading.
+
+With the article as a guideline, I was able to implement a flow that took the JWT passed from the client, decoded it on the server, then compared those values to public RSA keys and metadata from Microsoft, which verified whether the user was part of a specific group (in this case Auburn), then sent an approval or rejection back to the client.
+
+This was definitely the most extensive and informative work I've done with JWTs, and I really enjoyed implementing this unique auth flow.
+
+## Next.js & d3.js
+
+I won't write too much about the frontend, other than to say that it was my first time working with Next and d3's force graph, and that the state is all taken care of with React's Context API.
+
+Next differs from Gatsby's GraphQL schema generating approach, which I have more experience with, but it was relatively easy to get up to speed with it, as they're both React after all. I liked the `getInitialProps()` API, but some initial confusion caused a bit of refactoring late in the game. Exporting it to a static site was easy as well, but there was some tricky debugging that came up in the build artifact that hadn't been present on the dev build.
+
+## Hosting
+
+The flask app and database are on AWS. I used Docker to deploy them as an Elastic Beanstalk application. This was relatively easy to accomplish since I'd done the same thing before.
+
+The frontend is hosted on Netlify, super simple to get started with and always free.
+
+## Conclusion
+
+As a frontend engineer, most of my day is filled with consuming APIs, managing state, and composing user interfaces. Designing and developing a backend for this application was definitely a change of pace. It was insightful, challenging, and pretty fun. In particular I enjoyed how the database came together.
+
+This is also a side project that could potentially be used by other people. Yes, it's functionality is pretty trivial, but perhaps some Auburn computer science students, or those curious about the program, will be able to utilize it in a meaningful way.

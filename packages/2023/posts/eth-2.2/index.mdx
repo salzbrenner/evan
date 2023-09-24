@@ -1,0 +1,16 @@
+---
+title: Merkle Tree
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+A merkle tree is a data structure that allow for verifying that a particular set of data belongs to a larger set.
+
+The root of a merkle tree is a hash of the hashes of the data.
+
+This allows for easy comparisons in a p2p system, where one peer can ask if another for a matching root. If the root matches, then the data set must match.
+
+It also allows for easy verification of a single piece of data, without having all of the data in the tree. You only need to know the root, and the path to the data.

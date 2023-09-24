@@ -1,0 +1,57 @@
+---
+title: Blockchain and Crypto
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: ['../components/Mermaid.tsx']
+---
+
+import Mermaid from '../components/Mermaid'
+
+## Blockchains
+
+A blockchain's primary purpose is to create a network of computers that can all agree on a common state of data. Anyone that wants to participate in the network should be able to, and no person (or organization) should be able to control the network.
+
+A blockchain defines how data is stored and how it is accessed. Software implementing this protocol (blockchain clients) is hosted on a bunch of computers, creating the blockchain network. These computers, or nodes, that participate in the network are called peers. They participate by downloading and hosting the software, and verifying the transactions processed across the network (by proof of work, proof of stake, etc.). Peers can be individuals, organizations, or even other computers, and can be added or removed from the network at any time.
+
+The most popular application for blockchain is cryptocurrencies, but it can be used for many other things. And one of the most popular cryptocurrencies is Bitcoin.
+
+## Bitcoin
+
+Bitcoin was the first successful blockchain and cryptocurrency. It was created by Satoshi Nakamoto (a pseudonym), in a [whitepaper](https://bitcoin.org/bitcoin.pdf) that described a system for creating a peer-to-peer network for exchanging value via a chain of blocks that are cryptographically linked together.
+
+Before Bitcoin, much research and many attempts at creating a similar system had been made. Bitcoin leveraged this research to create its system of exchange. The components of Bitcoin include:
+
+- Proof of work - Security
+- Mining rewards - Financial Incentives
+- Public key cryptography - Authentication
+- Linked data structure - Chronology
+- Peer to peer network - Permisionless
+
+## Cryptocurrencies
+
+A cryptocurrency is a digital currecny built on top of a blockchain, using cryptography to secure transactions. The most popular cryptocurrency is Bitcoin, but there are a ton of others.
+
+So, why use a blockchain for a currency? To undestand, let's look at how a typical transaction might go down:
+
+1. Bob wants to send Alice $10
+2. Bob contacts Dave, his bookeeper, and tells him to send Alice $10
+3. Dave says sure, checks his ledger to see if Bob has enough money, and then sends Alice $10
+4. Alice receives the money, and Dave updates his ledger to reflect the transaction
+
+This is a pretty simple process, but it has a few problems:
+
+1. Dave is a single point of failure. If he goes out of business, or is hacked, Bob's money is gone
+2. Dave can't be trusted. He could steal Bob's money, or he could lie about the transaction
+3. Dave has to keep track of all the transactions, which is a lot of work
+
+A blockchain solves these problems by removing the need for a central authority. Instead of Dave, Bob sends his money directly to Alice. This is possible because of the blockchain's distributed nature - remember, the blockchain database is running across a network of computers that don't have a relation otherwise. Instead of a single ledger, there is a copy of the ledger on every node in the network. When Bob sends his money to Alice, he broadcasts the transaction to the network. Each node verifies the transaction, and then adds it to their copy of the ledger. Once the transaction is verified, it is added to the blockchain, and Bob's money is sent to Alice.
+
+Simply put, a blockchain solves the issue of trust - instead of trusting a single entity like a bank, person, or organization - you trust the network itself.
+
+## Smart Contract Blockchains
+
+Blockchains created the ability to create a trustless network of computers that could read and write transactions on a public ledger. But what if we could use this network to do something more? What if we wanted a network that could execute code? This is the idea behind smart contract blockchains.
+
+A smart contract is a computer program (a piece of code) that is stored on a blockchain. The code becomes publicly available on the blockchain, and the network is able to both execute the code, and verify its logic.

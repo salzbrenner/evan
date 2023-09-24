@@ -1,0 +1,161 @@
+---
+title: System Design - Scalability
+tags:
+  - system design
+---
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/-W9F__D3oY4"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+SFTP v FTP
+
+- look up
+- important to have username/passwords encrypted
+
+VPSs
+
+- virtual private server
+- slice of hardware to yourself, a virtual machine
+- data more private from other customers, but not from ISP or provider
+- AWS EC2
+
+## Vertical Scaling
+
+- look up
+- use more resources on your machine
+- a quad core machine can do 4 things at once
+
+## Horizontal Scaling
+
+- rather than a few or 1 great machines, get a lot of medium machines
+- use multiple servers to build out the system
+- this means handling an inbound request and routing them to the correct machine
+
+![load balancing](./system-design-01-scalability/load_balancing.png)
+
+The load balancer handles incoming requests, and distributes them to various servers, thus balancing load.
+
+- so the load balancer has a public IP address. All requests are routed to It
+- servers can have private IP addresses.
+
+  - Private IP addresses mean inaccesible to anyone outside of network
+  - can't be contacted by rest of world
+  - and public IPv4 addresses are running out, so private ones can have those
+
+- load balancer can route the request to the right server by checking against a criteria of deciding which server is appropriate
+
+  - sends a local req to the server
+  - server gets request
+  - sends it back to load balancer
+  - load balancer sends it back to requester
+
+- what are the selection critera for a load balancer to select a server?
+
+  - There are many different heuristics that could allow the load balancer to determine where to send a request
+  - one could have dedicated servers for each request type. i.e. all image requests go to image server, all html requests go to html server
+  - **ANOTHER IMPLEMENTATION: Round robin**
+    - acts like an intermediary DNS server
+    - the load balancer could just accept request and give back the server IP of the next in line. Each subsequent req would get the next IP until it loops back to first server in list
+    - ISSUES
+      - one con to this is that a single server could get a ton of expensive requests (by chance)
+      - sessions/cookies - a session for a given user might start on server 1, but later user is directed to server 2. they don't have any session data.
+      - another con is caching - a single user requests a site. the IP is cached. subsequent requests go to the same IP. That user is a power user. Their expensive requests keep going to the same server. You're not assigned to another server until TTL expires.
+
+## RAID
+
+- can keep a server dedicated to managing sessions
+- redundant array of independent disks
+- assumes you have multiple hard drives in your machine/server
+- data partially written across multiple hard drives, or completely copied across hard drives
+
+## Shared Storage
+
+- sticky sessions
+- sticky sessions means when you visit website multiple times, you end up with the same session object (or on the same backend server)
+- cookies? sessions?
+- store the id of the server in the cookie?
+  - what if ip (id) changes?
+  - also dont want to reveal to the world your ip Schema
+- instead just store a random number. and in the load balancer, map that number to a specific server
+
+## Caching
+
+- file based caching approach
+  - like craigslist (at least old one) serving dynamic .html
+  - saving file contents on disk or in DB, all Apache needs to do is serve bits, which is very fast and straightforward
+  - BUT there is redundancy (i.e. can't store header in one file like w/ PHP)
+    - so trying to change the aesthetics of the page (like without a `require`) and a ton of pages are supposed to look the same, it can be difficult to make style/layout changes across thousands of files.
+- MySqlQuery Cache
+  - enable it
+  - caches queries
+  - if row hasn't changed, comes back quickly
+- memcached
+  - a memory cached
+  - piece of software you run on a server (your web server or other)
+  - stores whatever you want in RAM
+  - eventually the cache could get so big it can no longer be stored on the server
+  - so starts garbage collecting expired objects (based on last accessed timestamps)
+- mySQL
+  - has different engines that optimize in different ways, have tradeoffs
+
+## Replication (in world of DBs)
+
+### active:passive
+
+- have master DB that you read/write from
+- master has 1 or more slave DBs that gets a copy of every row from master
+- in theory, master and slave are identical to each other
+
+![master slave](./system-design-01-scalability/master_slave.png)
+
+- if one DB fails (like master), can promote a slave
+- for a read heavy site, you could have something like all selects and reads go to slave DBs, and have all write requests go to master
+- A FAULT in this layout is if one of these dies, you could still have a single point of failure (like writes are down when master dies, and it takes some time to promote a slave)
+
+![master master](./system-design-01-scalability/master_master.png)
+
+Having 2 masters, you can reduce the single failure point.
+
+### active:active
+
+![active active](./system-design-01-scalability/architecture.png)
+
+The load balancer pictured above could be a single one, just listening for different connections.
+
+POINTS OF FAILURE from above: mySQL master, load balancer
+
+Having 2 load balancers that also listen to each other and can detect when the other has gone down, then if one is passive, it can promote itself. So having single load balancer is bad thing probably.
+
+### Partitioning
+
+![active active](./system-design-01-scalability/2_load_balancers.png)
+
+- breaking up users to specific load balancers based on criteria. i.e. last name of users, geographic location, email, etc.
+
+### High availibility
+
+![active active](./system-design-01-scalability/high_availability.png)
+
+- if one dies, the other takes on the full load - it's highly available
+
+### How to get sticky sessions easily?
+
+- use a cookie (via load balancer or whatever) - LB listens at HTTP level, when response comes back from server, LB inserts cookie so that user comes back to same server
+
+### Replication Conclusion
+
+Basically you can have replication/redundancy at all tiers/layers. All the way up to DNS level. So you could have multiple data centers, and load balancer could send users to totally different ones. There are pros and cons to everything, and requires a lot of orchestration. Try to avoid single points of failure.
+
+## Security
+
+- allow certain ports to access (80, 443, 22) server or load balancer
+- allow tcp 80 to go from LB to server (could manage SSL at LB level, and internal traffic could be unsecure)
+- tcp 3306 - from LB to DB
+- why add firewall to restrict ports? there's no need for anyone/thing to access stuff. On principle, just lock it down

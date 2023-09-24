@@ -59,13 +59,14 @@ export default function RootLayout({
       <html lang="en" className="theme-transition" suppressHydrationWarning>
         <body className={`flex`}>
           <script async dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
-          <div className="lg:hidden">
-            <MobileSidebar />
-          </div>
+
           <div className="hidden lg:flex">
             <Sidebar />
           </div>
           <MainWrapper>{children}</MainWrapper>
+          <div className="lg:hidden">
+            <MobileSidebar />
+          </div>
         </body>
       </html>
     </>

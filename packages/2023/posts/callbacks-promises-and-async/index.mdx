@@ -1,0 +1,309 @@
+---
+title: "Callbacks, Promises and Async"
+date: '2017-12-01'
+description: What the hell is asynchronous?
+tags: 
+    - javascript
+    - frontend
+    - interview
+---
+
+JavaScript is a synchronous, single-threaded language.  An operation blocks the execution of all other operations. In other words, only one operation can be in progress at a time.
+
+But what about long running, expensive operations, like making an API request? How can JavaScript allow the rest of the application to run while waiting for the response? JavaScript is not asynchronous by nature, but there are workarounds that allow it to behave in an async way.
+
+
+## Callbacks
+Callbacks are one way of allowing an asynchronous JavaScript workflow.  The term **callback** is not a keyword in JavaScript. Rather, it's a semantic term used to represent the behavior of a certain type of function parameter. What type of function parameter? A function! 
+
+In a nutshell, a callback is a function that is passed as a parameter to another function. Once this outer function performs some internal task, it can call the callback.
+
+The use of callbacks is widespread in JavaScript (such as array methods) and also in various Web APIs:
+
+```javascript
+
+// map() takes a function (callback) as a parameter
+
+const newArray = arr.map(el => {
+  return `${el} transformed`;
+})
+
+// setTimeout also takes a callback as a parameter
+setTimeout(_ => {
+  console.log("I'm in a callback")
+}, 1000)
+```
+
+The functions that accept the function parameter are known as **higher order functions**:
+
+```javascript
+
+function higherOrderFn(callback) {
+  // do a bunch of stuff
+  // do a bunch of stuff
+  // do a bunch of stuff
+  const response = 'I am the first response'
+  return callback(response);
+}
+
+function callback(success) {
+  console.log(`I am going to do stuff with: ${success}`);
+}
+
+higherOrderFn(callback);
+``` 
+
+Ignoring the `setTimeout` example, the other examples illustrate synchronous callback uses, whose primary use case is probably for transforming data. We give the higher order function some data, and a callback to change that data into something else.
+
+Asynchronous data fetching is the other primary use case for callbacks. Web pages and javascript applications typically don't contain all the data they need to display when initially loaded. What if we want to display most of the application, but some part of the UI needs some data that depends on an external resource? With callbacks, we can decide to update the UI when we want, without blocking the rest of the thread.
+
+Note that in the examples below we are using `setTimeout` to simulate long-running data fetching. `setTimeout` is **not** part of JavaScript core, but its runtime environment (in this case the browser. Node.js also has it's own timer implementations). This allows the operation to basically be offloaded to the browser, which maintains a reference to the JavaScript thread and allows the rest of the thread to continue executing (thus non-blocking). JavaScript itself isn't doing any multi-threading. The same concept applies to whatever request implementation we are using. In the past, that was `XMLHttpRequest`, popular with jQuery, but modern JavaScript uses `fetch`. These are also not core JavaScript; browsers, or Node, provides their own implementations.
+
+First, let's define some functions:
+
+```javascript
+
+// request to user endpoint
+function getUser(id, callback) {
+  // fake taking 1000ms
+  setTimeout(() => { 
+    const fakeResponse = { name: 'Evan', food: 'sushi' };
+    callback(fakeResponse);
+  }, 1000)
+}
+
+// request to a food endpoint
+function getFoodsOfType(food, callback) {
+  setTimeout(() => {
+  const fakeResponse = ['tuna', 'salmon', 'squid'];
+  callback(food, fakeResponse);
+  }, 1000)
+}
+
+function logFoods(foodType, varieties) {
+  console.log(`Some ${foodType} varieties are ${varieties.join(' ')}.`)
+}
+```
+
+When we have application logic that requires fetched data, callbacks can allow us to wait until the requested data is available before running that logic. `getUser` and `getFoodsOfType` are two higher order functions that request data. Each one will take 1 second. Note that after each response response, we execute the callback with the returned data.
+
+Using this in an application might look something like this:
+
+```javascript
+
+function getUserFoods(id) {
+  getUser(id, user => {
+    getFoodsOfType(user.food, (food, varieties) => {
+      logFoods(food, varieties);
+    })
+  })
+}
+
+getUserFoods(43);
+console.log("I continue executing")
+
+// I continue executing
+// ...wait 2 seconds
+// Some sushi varieties are tuna salmon squid.
+```
+
+Running the above code, the console will log "I continue executing" immediately, while the rest of the output will log 2 seconds later.
+
+With three nested callbacks, we can begin to see a a cone shape forming. What would the code look like if, instead of breaking out each callback into its own named function, they were defined anonymously within the body of `getUserFoods`? What if we had 5 or 10 callbacks? Code readability and maintainability would deteriorate rapidly into "callback hell".
+
+## Promises
+
+As callback hell and the "pyramid of doom" weren't always easy to work with, libraries (i.e Bluebird and Q) implemented ways to allow programmers to write code that appeared synchronous, while operating asynchronously.  These libraries and their "promises" proved so useful that they were eventually adopted into JavaScript core.
+
+So, what is a Promise? Basically, it is an object that represents the eventual completion (or failure) of some asynchronous operation (and its value). They provide a simpler alternative to callback based asynchronous workflows.
+
+There are three states to a Promise:
+ - **Pending**: async operation started/running
+ - **Fulfilled**: async operation completed successfully, Promise has a value
+ - **Rejected**: async operation failed
+ 
+ Promises always start in the `pending` state.
+ 
+ ```javascript
+const p = new Promise();
+console.log(p) // Promise{<pending>}
+```
+
+In order to transition to `fulfilled` or `rejected`, the promise needs to `resolve` or `reject` the operation. The Promise constructor takes a single function as a parameter (a callback!). This callback is passed two arguments, `resolve` and `reject`. As before, we will use `setTimeout` to mock a data fetching operation.
+
+```javascript
+const p = new Promise((resolve, reject) => {
+  // fetching data is going to take 2000ms
+  setTimeout(() => {
+    // we have our data, so now resolve
+    resolve();
+  }, 2000)
+})
+console.log(p) // Promise{<pending>}
+
+//...wait 2000ms
+console.log(p) // Promise{<resolved>: undefined}
+```
+Immediately after the Promise is invoked, it enters a `pending` state. After 2000ms we call `resolve`. If we logged the Promise after 2000ms (or any time thereafter), we would see a `resolved` status.
+
+How about that `undefined` value? When a Promise is resolved, it returns the resultant value. In our example, we returned nothing, so the value is `undefined`.
+
+If we wanted to have a `rejected` state, we would call `reject` instead of `resolve`.
+
+But how do we know when a Promise has transitioned from `pending` to one of the other states? Don't forget that Promises are objects. And, two methods are made available to use via its prototype: `then` and `catch`.  The `then` method is called once a Promise is `fulfilled`. It takes a callback that receives the resultant value as its argument. The `catch` method is called when a Promise is `rejected`. It also takes a callback as its argument, passing the resultant error to the callback.
+
+```javascript
+const p = new Promise((resolve, reject) => {
+  // fetching data is going to take 2000ms
+  setTimeout(() => {
+    // we have our data, so now resolve
+    resolve();
+  }, 2000)
+})
+
+p.then(val => console.log('Successfully finished')); // logs after 2000ms
+p.catch(error => console.log(error));
+```
+
+After creating a new Promise, we invoke the `resolve` method after 2000ms. This then invokes the `.then` method, logging our message.
+
+What if we want to run multiple operations on the returned data, similar to our nested callbacks? This is where chaining comes into play.
+
+### Chaining
+
+Both `.then` and `.catch` return new Promises. This means that each method can chain additional `.then` or `.catch` methods to works on the data in a step like manner.
+
+```javascript
+const promiseMaker = () => new Promise((resolve, reject) => {
+  // fetching data is going to take 2000ms
+  setTimeout(() => {
+    // we have our data, so now resolve
+    resolve();
+  }, 2000)
+})
+
+// simple chain
+promiseMaker()
+  .then(val => console.log('Successfully finished'))
+  .catch(error => console.log(error));
+
+promiseMaker()
+    .then(_ => console.log("Hello")) // "Hello",  promise returned
+    .then(_ => 'World') // promise returned, 'World' passed as argument to next callback
+    .then(msg => console.log(msg)) //"World", promise returned
+    // nothing done with final returned promise
+    
+```
+
+Now, this code starts to look a bit more synchronous then a nested callback pattern. Each chained promise is executed sequentially, which makes it a more readable and easier to reason with, especially when dealing with a large number of subsequent operations.
+
+Let's take a look at an actual data fetching request. The `fetch` API takes a url as a parameter, and returns a promise that resolves with an HTTP response.
+
+```javascript
+const url = 'https://evilinsult.com/generate_insult.php?lang=en&type=json';
+
+const req = fetch(url)
+
+req
+  .then(res => res.json()) // get json of response
+  .then(json => json.insult) // get prop from json
+  .then(insult => console.log(insult)) // randomly generated insult logged
+  .catch(err => console.log("There was an error")) // if any .then methods throw an error, the chain jumps here
+```
+
+What if we want to combine data from various sources? Since every `.then` returns a promise, we can just return and resolve our own promise, combining data as we see fit.
+
+```javascript
+const url = 'https://evilinsult.com/generate_insult.php?lang=en&type=json';
+
+const req = fetch(url)
+
+req.then(res => res.json())
+  .then(json => {
+    return new Promise((resolve, reject) => {
+      resolve({
+        insult: json.insult,
+        otherData: "From somewhere else"
+      })
+    })
+  })
+  .then(({insult, otherData}) => console.log(insult))
+  .catch(err => console.log("There was an error"))
+```
+
+In fact, you could even call other APIs:
+
+```javascript
+const url = 'https://evilinsult.com/generate_insult.php?lang=en&type=json';
+const chuckUrl = 'https://api.chucknorris.io/jokes/random';
+
+const getInsult = fetch(url)
+
+const getChuckNorrisQuoteWithInsult = firstInsult => fetch(chuckUrl)
+  .then(res => res.json())
+  .then(json => json.value)
+  .then(chuck => ({firstInsult, chuck}));
+
+getInsult.then(res => res.json())
+  .then(json => getChuckNorrisQuoteWithInsult(json.insult))
+  .then(data => console.log(data))
+  .catch(err => console.log("There was an error"))
+```
+
+Compared to nested callbacks, promises greatly improve the readability of asynchronous code.
+
+
+## Async/Await
+
+The sequential code of Promises is pretty good. But in the last example, we had to pass our first response's json as an argument into the `getChuckNorrisQuoteWithInsult`. Not such a big deal, but if you had more API calls, or complicated data processing/combining, it could get a little messy.
+
+Async/Await is syntactic sugar for promises. What does this mean? An `async` function is non-blocking, and returns an implicit Promise as its result. This means that when calling an `async` function, the rest of the thread outside of the function will continue executing. The `await` keyword can only be used within an `async` function, and it pauses the execution of the `async` function while the passed Promise resolves.
+
+Using our example from above:
+
+```javascript
+const getInsult = () => fetch(url)
+  .then(res => res.json()) // get json of response
+  .then(json => json.insult)
+ 
+const getChuckNorrisQuote = () => fetch(chuckUrl)
+  .then(res => res.json())
+  .then(json => json.value)
+
+const getData = async () => {
+  const insult = await getInsult(); // waits for request to resolve
+  const chuckQuote = await getChuckNorrisQuote(); // waits for request to resolve
+  
+  console.log({insult, chuckQuote});
+}
+
+getData();
+```
+
+With `async` and `await`, our code looks (and behaves) similar to synchronous code. Remember, async/await is just syntactic sugar for promises, meaning they are still being used under the hood. The resolved value of the promise is whatever we return from the function. If we wanted to access the returned value, we can still access is with `.then`:
+
+```javascript
+const getData = async () => {
+  const insult = await getInsult(); // waits for request to resolve
+  const chuckQuote = await getChuckNorrisQuote(); // waits for request to resolve
+  
+  return {insult, chuckQuote};
+}
+
+getData().then(data => console.log(data));
+```
+
+Error handling is also a bit different with async/await. With promises we used `.catch`. In async/await, it's typical to wrap code in a `try`/`catch` block:
+
+```javascript
+const getData = async () => {
+  try {
+      const insult = await getInsult(); // waits for request to resolve
+      const chuckQuote = await getChuckNorrisQuote(); // waits for request to resolve
+      
+      console.log({insult, chuckQuote});
+  } catch (e) {
+    console.log(e);
+  }
+}
+```

@@ -9,16 +9,13 @@ const DATA = [
   {
     title: "qwrefr ipsum dolor sit amet consectetur adipisicing elit",
   },
-  {
-    title: "etrt ipsum dolor sit amet consectetur adipisicing elit",
-  },
 ];
 
 export function ArticlesBlock() {
   return (
-    <div className="px-6 pt-10">
+    <div className="px-16 pt-10">
       <div className="pb-9">
-        <BracketedTitle title="Articles" />
+        <BracketedTitle title="Writing" />
       </div>
       {DATA.map((article) => {
         return (
@@ -35,7 +32,7 @@ export function ArticlesBlock() {
           </div>
         );
       })}
-      <Button size={"sm"}>All Writing</Button>
+      <Button size={"xs"}>All Writing</Button>
     </div>
   );
 }

@@ -1,0 +1,96 @@
+---
+title: Ethereum Briefly
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+Ethereum is a decentralized platform that runs smart contracts: applications that run exactly as programmed without any possibility of downtime, censorship, fraud or third party interference.
+
+**Techinical Definition**
+Ethereum is a deterministic state machine, with a globally accessible singleton state, and a virtual machine that modifies that state.
+
+**Practical definition**
+Ethereum is an open source, decentralized computing infrastructure that can run smart contracts. Nodes across the world use the EVM to perform operations on a blockchain and communicate with one another to keep the state in sync. The ether cryptocurrency is used to set resource costs.
+
+## Properties of Ethereum computing
+
+1. Global singleton. It doesn't matter where you are in the world, you can access the same state. It doesn't live on a single machine, or have a physical presence.
+2. Censorship resistant. Because of it's distributed nature, it's impossible to censor the network. You can't shut it down, or prevent people from accessing it.
+3. Accessible. Anyone can access it with internet.
+4. Natively Multi-User. It's designed to be used by many people at once. The `keccack256` hash function is used to generate unique addresses for each user. It has a range of 2^160, which basically means it's impossible to run out of addresses.
+5. Verifiable. Code deployed to Ethereum computer is always there, forever (unless explicity programmed to self destruct). It's impossible to change the code after it's been deployed. The code is stored on the blockchain, and can be verified by anyone.
+
+## Gas
+
+It costs some amount of ether to run a transaction - the gas fee. How much gas is used depends on the complexity of the transaction. Ethereum has a list of operation codes with a gas cost associated with each one. The EVM will run through the code and calculate the total gas cost. The sender of the transaction will need to pay that amount of ether to the miner who mines the block containing the transaction.
+
+Gas is the mechanism for preventing spam or denial of service attacks on the network.
+
+```javascript
+for (let i = 0; i >= 0; i++) {
+  console.log(i)
+}
+```
+
+Without gas, you could write a program that loops forever, and it would cost nothing to run.
+
+### Price
+
+The cost of gas changes with every block. Historically, gas prices were unpredicatble and sometimes very high. [EIP-1559](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md) was proposed in August 2021 that helped to stabilize this.
+
+Each block has maximum amount of gas that can be used. This determines how many transactions occur within a block. Each block has capacity for 30 million gas, but has a target of 15 million.
+
+The networks sets a `base fee`, which should be paid by every transaction. Ideally this fee would result in 15 million gas being consumed.
+
+But what happens is the price of gas is determined by demand. When the gas used in a block goes above 15 million, the price of gas goes up. When it goes below 15 million, the price of gas goes down.
+
+<div className="negative-container">
+
+![denomination](./eth-3.1/block-usage-image.png)
+
+</div>
+
+The `base fee` gets burned - it's destroyed. The `tip` is paid to the miner who mines the block. This creates defaltionary pressure on the network.
+
+The `tip` is ideally the minimum amount of gas that a miner would need to accept a transaction. If the `tip` is too low, the miner will ignore the transaction. The tip was set at 1gwei, but can fluctuate depending on how full blocks are.
+
+### Denominations
+
+<div className="negative-container">
+
+![denomination](./eth-3.1/ethereum-denomination.png)
+
+</div>
+
+## Forks
+
+Ethereum has the ability to perform upgrades to the protocol. This is done by forking the blockchain. A fork is when a new blockchain is created from an existing one. The new blockchain will have the same state as the old one, but will have a different set of rules for how to validate transactions.
+
+Most nodes will upgrade, continuing the chain. Some nodes may not upgrade, and continue on the old chain - a hard fork.
+
+## Accounts
+
+2 types of accounts: externally owned accounts (EOA) and contract accounts.
+
+### EOAs
+
+EOA are controlled by private keys. They can send transactions, and receive ether. Addresses are 40 character hexadecimal strings, unlike Bitcoin which is 26-35 alphanumeric characters.
+
+EOAs have a balance, whereas Bitcoin addressses do not. The state of the blockchain tracks how much ether every active address has. An active address is one that has interacted with the blockchain. If an address is not active, it's not stored the state tree.
+
+EOAs store **balance** and **nonce**.
+
+`BALACNE` is an operation to get the balance.
+
+**nonce** is the number of transactions sent from an address. It's used to prevent replay attacks. Number we're using once.
+
+### Contract Accounts
+
+aka smart contracts
+
+You can deploy smart contracts with your EOA, using the bytecode of the compiled smart contract. The contract will have an address, and will be stored in the state tree.
+
+Also have balance. Cannot be controlled by private key like EOA. Rather, EOAs make transactions to call functions on the contract, and the contract will execute the code, which could in turn call other functions on other contracts. The code can't change, but the storage can be update via transactions.

@@ -1,0 +1,70 @@
+---
+title: 'Flawed Data Visualizations'
+category: 'moar'
+date: '2019-06-20'
+featured: true
+description: When the data's right, but the visualization isn't.
+tags:
+  - UX
+  - DataViz
+files:
+  [
+    '../components/posts/flawed-data-visualizations/BubbleLayout.tsx',
+    '../components/posts/flawed-data-visualizations/BubbleChart.tsx',
+    '../components/posts/flawed-data-visualizations/Bubble.tsx',
+    '../components/ESListBox.tsx',
+    '../lib/utils.js',
+  ]
+---
+
+import BubbleLayout from '../components/posts/flawed-data-visualizations/BubbleLayout.tsx'
+
+For the past couple of years, I've been fortunate to work almost exclusively on a series of applications whose main purpose is data analysis/visualization.
+
+It has been a fascinating process to see how a massive amount of accumulated data can be organized into an effective, informative presentation, one that the client can make use of both internally and in public facing applications.
+
+Recently, I was tasked with creating a visualization similar to a bubble chart:
+
+<div className="flex justify-center">
+  ![Bubble Chart](./flawed-data-visualizations/bubble.png)
+</div>
+
+Basically, there would be two sets of data, each with their own bubble representation, laid out side by side so that the user could easily see the differences.
+
+Building out the component was easy enough and before long I had something presentable. I began testing the component with several sets of data. Numbers checked out.
+
+"Finished," I thought.
+
+## Something Isn't Right
+
+The component was built to spec and the UX behaved as expected. But something felt...off.
+
+The longer I stared at the chart, the more I had an uneasy suspicion that something was inherently flawed. The circles were vastly different sizes and just didn't feel like an accurate representation of the data.
+
+After a bit of Googling, I found <a className="in-text-link" href="https://coolinfographics.com/blog/2014/8/29/false-visualizations-sizing-circles-in-infographics.html"> an article about sizing circles in visualizations</a> by Randy Krum.
+
+In analyzing (and correcting) a viral inforgraphic, Krum identified the exact issue I'd encountered:
+
+> [Users] see the area of two-dimensional shapes on the page to represent the different values, but design software only allows width and height adjustments to size shapes. Designers make the mistake of adjusting the diameter of circles to match the data instead of the area, which incorrectly sizes the circles dramatically... The problem with this design is that the circle sizes don’t match the values shown.
+
+Krum's explanation for this mistake helped me diagnose what was wrong with my approach, and identify that the circles in my component were sized inaccurately. I was outputting circles like the "Original Design" below.
+
+<div className="flex justify-center">
+  ![False Visualiztion](./flawed-data-visualizations/false.jpg)
+</div>
+
+## Fixing the Bug
+
+In my implementation, I'd needed to determine the largest value from the two data sets, and base the size of all of the other circles off that value. I'd simply taken each subsequent (and smaller) value as a percentage of the whole (largest value), and used that to determine each circle's diameter.
+
+With Krum's explanation in mind, I refactored my code to determine the diameter of each using the area of the largest value. I was pleased to see that this resulted in a significantly more accurate visualization!
+
+Below is a simplified implementation of the component, with both the original and refactored approaches. Though the data sets are identical between the two, the visualizations are quite different. Try the dropdown for an additional data set.
+
+<br />
+
+<BubbleLayout />
+<br />
+<br />
+
+This was a good lesson in how data can be misrepresented, and a reminder that bugs don't solely exist in lines of code.

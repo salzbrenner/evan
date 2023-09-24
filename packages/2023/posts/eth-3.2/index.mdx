@@ -1,0 +1,61 @@
+---
+title: Reading data from Ethereum
+tags:
+  - cryptocurreny
+  - ethereum
+files: []
+---
+
+To communicate with Ethereum computer, use JSON-RPC.
+
+**Ethereum Clients**
+
+In order to run a node, you have to run a client. That means downloading and installing software. There are several clients available:
+
+- geth
+- erigon
+- more...
+
+These clients use JSON-RPC to communicate with Ethereum, implementing methods like `eth_getBlockByNumber` and `eth_getTransactionByHash`. These are queryable by any JSON-RPC compliant request.
+
+**REST**
+
+- Client sends request
+- Server/DB accepts request, updates resource, sends back response
+
+<div className="negative-container">
+![rest](./eth-3.2/Rest-API.png)
+
+</div>
+
+**JSON-RPC**
+
+JSON-RPC (remote procedure call) is a protocol for communicating with a server. It is a request-response protocol, meaning that the client sends a request to the server, and the server responds with a response. The request and response are both JSON objects.
+
+It's an API standard, like REST is.
+
+- client forms a json rpc request
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x1b4", true],
+  "id": 1
+}
+```
+
+- client sends request to Ethereumn provider - typically web3 wallet - which routes request to Ethereum node it is connected to
+- Eth node receives the request, processes it, and sends a response back to the Ethereum provider/client
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "0x1b4oseijfoiwfio",
+  "id": 1
+}
+```
+
+<div className="negative-container">
+  ![web3 architecture](./eth-3.2/architecture.png) ![rpc](./eth-3.2/rpc.png)
+</div>

@@ -1,5 +1,4 @@
 "use client";
-import { ToggleSidebar } from "./ToggleSidebar";
 import { useState } from "react";
 import { NavigationBar } from "./Navigation";
 import { ArticlesBlock } from "./Articles";
@@ -10,10 +9,12 @@ import dynamic from "next/dynamic";
 import { useSpring } from "@react-spring/web";
 import { animated } from "@react-spring/web";
 import { useWindowSize } from "@/app/hooks/useWindowSize";
+import { allPosts } from "@/.contentlayer/generated";
 
 const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
 });
+const mainPost = allPosts.filter((p) => p.main)[0];
 
 export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   const windowSize = useWindowSize();
@@ -60,6 +61,7 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   if (windowSize.width < 1024) {
     return null;
   }
+  const WIDTH = "436px";
 
   return (
     <>
@@ -86,7 +88,14 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
       >
         <div>
           <NavigationBar />
-          <ArticlesBlock />
+          <div className="flex justify-center items-center ">
+            {/* <Text
+              dangerouslySetInnerHTML={{
+                __html: `${mainPost.body.raw.slice(0, 400)}`,
+              }}
+            /> */}
+            <ArticlesBlock />
+          </div>
         </div>
 
         <div>
@@ -112,14 +121,12 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
 
         {children}
       </FadeInUp>
+
       <div className={`fixed rotate-180 h-screen left-[436px]`}>
         <animated.div
           className=" border-r border-clr-ui-accent"
           style={borderHeight}
         />
-      </div>
-      <div className="lg:hidden">
-        <ToggleSidebar onClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />
       </div>
     </>
   );

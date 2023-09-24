@@ -30,49 +30,13 @@ export const MobileSidebar = ({ children }: { children?: React.ReactNode }) => {
           bg-clr-ui-bg
       `}
       >
-        <div>
-          <FadeInUp delay={300}>
-            <NavigationBar />
-          </FadeInUp>
-          <FadeInUp delay={600}>
-            <ArticlesBlock />
-          </FadeInUp>
+        <div className="mt-12 border-t border-clr-ui-accent">
+          <NavigationBar />
+          <ArticlesBlock />
         </div>
 
-        <div>
-          <FadeInUp
-            delay={800}
-            className="flex relative border-t border-b border-clr-ui-accent mt-24 h-[242px]"
-          >
-            <motion.div
-              className="absolute bottom-2 left-2 flex gap-2 items-center"
-              animate={{
-                opacity: 0,
-              }}
-              transition={{
-                delay: 3.5,
-                duration: 0.5,
-              }}
-            >
-              <Text accent size={"xs"}>
-                {`> waking up`}
-              </Text>
-              <motion.div
-                className="bg-clr-text-primary w-1.5 h-3"
-                animate={{
-                  opacity: [0, 1],
-                }}
-                transition={{
-                  delay: 0.5,
-                  repeat: Infinity,
-                  duration: 0.5,
-                }}
-              />
-            </motion.div>
-          </FadeInUp>
-          <FadeInUp delay={1000} className="flex flex-col gap-2">
-            <Details />
-          </FadeInUp>
+        <div className="border-t  border-clr-ui-accent">
+          <Details />
         </div>
 
         {children}

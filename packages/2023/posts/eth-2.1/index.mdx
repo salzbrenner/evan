@@ -1,0 +1,54 @@
+---
+title: Tracking decentralized state with UXTO & account based models
+tags:
+  - cryptocurreny
+  - ethereum
+  - bitcoin
+files: []
+---
+
+Keeping track of user data is much simpler with web2. Tyou just store it in a database and you're done. With decentralized systems, it's more complex and is done using specific models: UTXO and account models.
+
+## Transactions
+
+Before diving into the models and how they track balances, let's first understand what a transaction is. A transaction consists of 3 major components:
+
+- amount
+- sender
+- receiver
+
+In addition, for a secure, cryptographic transaction, we need to add a final component:
+
+- sender authorization
+
+The authorization must be some non-impersonatable method for guaranteeing that the sender is the one who is sending the transaction. Typically, a private key hash.
+
+Transactions change the state of the system - moving funds from one account to another, and modifying the respective balances.
+
+## Account based models
+
+Account based models are the most common model used in blockchain systems - similar to a banking system. They are used in Ethereum, EOS, and many other systems.
+
+In this model, the system keeps track of each account balance, without tracking the history of the transactions. This means that the system doesn't know how the balance was reached, only the current balance.
+
+I.e., system knows Bob has 12 ETH, and tx will be valid if he sends an amount under 12 ETH. But it doesn't know that Bob received 10 ETH from Alice, and 2 ETH from a mining reward.
+
+To prevent replay attacks (in Ethereum anyway), each transaction must include a nonce - a number that is incremented for each transaction. This prevents a transaction from being replayed.
+
+## UTXO
+
+UTXO stands for Unspent Transaction Output. Bitcoin uses the UTXO model.
+
+In this model, the system keeps track of each transaction, and the balance of each account is calculated by summing the unspent transactions.
+
+Each BTC is not the same - actually each coin is an NFT. And "coin" is a misnomer - it's actually a transaction output. Each transaction output is a unique coin, and each coin is a unique transaction output.
+
+So if Bob has a UTXO for 10 BTC, and sends Alice 3 BTC, the system will create a new UTXO for Alice, and a new UTXO for Bob with 7 BTC.
+
+In Bitcoin, each UTXO has a script associated with it. The UTXO points to the previous UTXO that created it, and the script is a set of conditions that must be met in order to spend the UTXO.
+
+**Consensus rules**
+
+sum(inputs) <= sum(outputs)
+
+Can't spend more than you own.

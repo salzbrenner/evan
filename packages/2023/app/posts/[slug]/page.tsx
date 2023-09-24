@@ -1,7 +1,9 @@
+"use client";
+import { mdxComponents } from "@/app/components/customMDX";
+import { Heading } from "@evan/ui";
 import { allPosts } from "contentlayer/generated";
 import { getMDXComponent } from "next-contentlayer/hooks";
 import { notFound } from "next/navigation";
-import { useMemo } from "react";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -21,11 +23,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div>
-      <h1>sdf</h1>
-      <h1>sdf</h1>
-      <h1>sdf</h1>
-      {post.title}
-      <MDXContent />
+      <Heading size={1}>{post.title}</Heading>
+      <MDXContent components={mdxComponents} />
     </div>
   );
 }

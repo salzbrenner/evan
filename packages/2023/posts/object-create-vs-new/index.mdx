@@ -1,0 +1,49 @@
+---
+title: "Object.create vs. new"
+date: '2017-12-10'
+description: const what = Object.create(new World.prototype);
+tags: 
+    - javascript
+    - frontend
+    - interview
+---
+
+`Object.create()` will build a new object that has its prototype set (via `__proto__`) to whatever object is passed as the first argument.
+
+```javascript
+const first = {
+  hello: 'world'
+}
+
+const second = Object.create(first);
+console.log(second.hello) // 'world'
+
+``` 
+
+With prototypical inheritance, JS will look for the `hello` property on `second`. Since it can't find it, it will look to `first`.
+
+Let's look at using the `new` operator:
+
+```javascript
+
+function Third() {
+  this.x = "I'm an x"; 
+}
+
+const fourth = new Third();
+fourth.prototype.anotherProp = "Another prop";
+
+console.log(fourth.x); // "I'm an x"
+console.log(fourth.anotherProp); // "Another prop"
+```
+
+When invoking a constructor function with `new`, several things happen. In the execution context of `fourth = new Third()`, an empty `this` object is created. The `__proto__` property of `this` is set to the `prototype` of `Third`, i.e. `this.__proto__: Third.prototype`. Finally, `new` returns the `this` object, so `fourth = {x: "I'm an x"}`.
+
+So how does this differ from `Object.create()`? They both create new objects that inherit from a prototype. However, `Object.create()` **doesn't execute the constructor function** - it only assigns the newly created object a prototype reference.
+
+```javascript
+const fifth = Object.create(Third.prototype);
+console.log(fifth.x); // undefined
+console.log(fifth.anotherProp); // "Another prop"
+```
+So, with `Object.create()`, the newly created object only has reference to properties assigned on the passed in object (in this case the prototype of the constructor), and since it does not invoke the constructor, references to the properties assigned there are `undefined`

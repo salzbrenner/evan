@@ -1,0 +1,27 @@
+---
+title: Solidity and smart contracts
+tags:
+  - solidity
+  - ethereum
+files: []
+---
+
+Smart contracts are immutable programs that run deterministically in the EVM.
+
+- immutable - once deployed, they cannot be changed. The only way to modify is via a new deployment.
+
+- deterministic - the outcome of the execution of the contract is the same for everyone
+
+- EVM context - they have very limited context - they can access their own state, the context of the transaction that called them, and some info about the most recent blocks.
+
+## Creation
+
+Typically written in a high-level language like Solidity, and compiled to bytecode to be run on the EVM. The bytecode is then deployed to the blockchain as a special contract creation transaction to the address 0x0. A contract address is derived from the originating account and nonce.
+
+## ABI
+
+An Application Binary Interface is an interface between two program modules. Often this is between the operating system and user programs. ABIs define how data structures and functions are represented in binary form (machine code), as opposed to an API, which are human readable and defines how they are represented in source code.
+
+The ABI is a JSON object used to encode and decode function calls to and from the contract. It is also used to generate the contract's interface description to developers.
+
+All that is needed for an application to interact with a contract is an ABI and the address where the contract has been deployed.

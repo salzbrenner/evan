@@ -26,6 +26,7 @@ const text = cva("", {
     },
     intent: {
       link: [`hover:underline ${textDecorationCommon}`],
+      highlightLink: [`underline ${textDecorationCommon}`],
       inlineLink: [
         `underline ${textDecorationCommon} text-clr-brand-primary hover:text-clr-text-primary`,
       ],

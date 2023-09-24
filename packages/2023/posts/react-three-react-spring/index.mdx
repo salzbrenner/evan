@@ -1,0 +1,327 @@
+---
+title: 'Creating an Interactive Animation with React Spring + React Three Fiber'
+date: '2021-11-24'
+featured: true
+tags:
+  - JavaScript
+  - React
+files:
+  [
+    '../components/field/Field.tsx',
+    '../components/field/ClientField.tsx',
+    '../components/field/FieldCircle.tsx',
+    '../components/field/FieldGroup.tsx',
+    '../components/header/toggle/ThemeToggle.tsx',
+    '../components/header/toggle/MoonHole.tsx',
+    '../components/header/toggle/Ray.tsx',
+    '../components/header/toggle/SunCenter.tsx',
+    '../components/header/toggle/SunMoonSvg.tsx',
+    '../components/header/toggle/Ray.tsx',
+    '../components/header/toggle/atom.ts',
+    '../lib/utils.js',
+    '../lib/Sounds.ts',
+    '../lib/lightSwitchAudio.ts',
+  ]
+---
+
+import ClientField from '../components/field/ClientField.tsx'
+
+Recently I rebuilt my site with Next.js. For some time, I'd been curious about React Spring and React Three Fiber, and figured this would be a good opportunity to try them out. There's a lot of tutorials about both so I'm not really going to go into the details of each API here. Instead I'll discuss the approach I took and some of the issues I ran into while making this animation, which I'll refer to as the field:
+
+<ClientField />
+
+The animation consists of three components. A top-level `<Field />` consisting of a `<canvas />` and a `<FieldGroup />` component, which is an instance of `THREE.Group`. `<FieldCircle />` are instancess of `THREE.Mesh`, and create the actual circles.
+
+## `<FieldCircle />`
+
+This is the most atomic part of the field. It uses a `useSpringRef` from React Spring Three instead of React Spring because its applied to a `<mesh />`. The component takes care of animating itself in on load, and also adds itself to a passed in `refArray`, which is key for coordinating its movement in the parent `<FieldGroup />`.
+
+```jsx
+export function FieldCircle({ pos, index, refArray, debug = false }) {
+  const ref = useSpringRef()
+  const inDelay = 5 * index
+  const inConfig = { friction: 10, tension: 320 }
+
+  const { scale } = useSpring({
+    delay: inDelay,
+    config: inConfig,
+    from: {
+      scale: 0,
+    },
+    to: {
+      scale: 1,
+    },
+  })
+
+  const { position } = useSpring({
+    ref: ref,
+    delay: 4000 * index,
+    position: pos,
+  })
+
+  useEffect(() => {
+    refArray.push(ref)
+  }, [])
+
+  return (
+    <animated.mesh ref={ref} key={index} scale={scale} position={position}>
+      <>
+        <circleGeometry args={[0.05, 68]} />
+        <meshBasicMaterial />
+      </>
+    </animated.mesh>
+  )
+}
+```
+
+## `<FieldGroup />`
+
+After setting up the canvas, I needed to create a grid of coordinates to map to the circles:
+
+```JavaScript
+const OFFSET = 0.3
+const xPositions: number[] = Array(13)
+  .fill([])
+  .map((el, index) => {
+    const x = index * OFFSET - 1.8
+    return x
+  })
+
+export const positions: [number, number, number][] = Array(18)
+  .fill([])
+  .map((el, index) => {
+    const y = index * OFFSET - 2.6
+    return [y, 0]
+  })
+  .sort((a, b) => b[0] - a[0])
+  .map(([y, z]): [number, number, number][] => {
+    return xPositions.map((x) => [x, y, z])
+  })
+  .reduce((a, b) => {
+    return a.concat(b)
+  })
+```
+
+This gave back an 2-dimensional array of 234 items with each element something like `[-1.5, 2.5, 0]`, mapping to 13 columns and 18 rows. The first element in each inner array represents `x`, increasing from left to right, with second element representing `y`, increasing from top to bottom. The third element, `z`, is always zero.
+
+`<FieldGroup />` then takes those positions and renders a `<FieldCircle />`. It also renders another `<mesh />` that is responsible for tracking mouse movement and clicks.
+
+```jsx
+<mesh
+    ref={planeRef}
+    onPointerDown={onPointerDown}
+    onPointerUp={onPointerUp}
+    onPointerOver={onPointerOver}
+    onPointerOut={onPointerOut}
+>
+    <planeGeometry args={[9.3, 8]} />
+    <meshStandardMaterial opacity={debug ? 1 : 0} color={'black'} />
+</mesh>
+<group ref={groupRef}>
+    {positions.map((pos, index) => {
+        return (
+            <FieldCircle
+                pos={pos}
+                index={index}
+                refArray={refArray}
+                key={index}
+                debug={false}
+            />
+        )
+    })}
+</group>
+```
+
+The `<planeGeometry args={[9.3, 8]} />` gives dimensions to the wrapping `<mesh />`. Essentially, the `<planeGeometry />` acts as a hit area to receive pointer events. The field of `<FieldCircles />` is positioned overlaying the `<planeGeometry />`.
+
+The pointer events are just used to track state for some of the interactive logic.
+
+```js
+const [hovered, setHover] = useState(null)
+const [down, setDown] = useState(null)
+
+function onPointerDown() {
+  setDown(true)
+}
+
+function onPointerUp() {
+  setDown(false)
+}
+
+function onPointerOver() {
+  setHover(true)
+}
+
+function onPointerOut() {
+  setHover(false)
+}
+```
+
+The `refArray` is an array of refs that map to `<FieldCircle />` instances.
+
+```jsx
+const ogRefArray = useRef([])
+const refArray = ogRefArray.current
+```
+
+The `useFrame` hook from React Three Fiber allows you to execute code on every rendered frame, just like `requestAnimationFrame`. You receive the state model, which contains the default renderer, the scene, camera, pointer events, etc. When a component unmounts, its automatically unsubscribed from the rener-loop, which makes it pretty handy to work with.
+
+```jsx
+useFrame(({ raycaster, mouse, camera }) => {
+  if (!hovered) return
+  if (!planeRef.current) return
+
+  raycaster.setFromCamera(mouse, camera)
+
+  // tracks mouse position over the <planeGeometry />
+  const intersects = raycaster.intersectObjects([planeRef.current])
+  if (intersects.length === 1) {
+    // get mouse coordinates relative to <planeGeometry />
+    const { x: _x, y: _y } = intersects[0].point
+
+    const RADIUS = down ? 0.9 : 1.2
+
+    // generates an array of all points on the circumference of
+    // the current mouse position at given RADIUS.
+    // bascially, this creates a circle that follows the mouse
+    const allPointsInCircumference = circleDegrees.map((deg) =>
+      pointOnCircumference(_x, _y, RADIUS, radians(deg))
+    )
+
+    // iterate over each <FieldCircle />
+    groupRef.current.children.forEach((mesh: Mesh, index) => {
+      if (!hovered) return
+      if (!positions[index]) return
+
+      // grab their original positions
+      const ogXPos = positions[index][0]
+      const ogYPos = positions[index][1]
+
+      // grab the <FieldCircle /> ref object
+      const ref = refArray[index]
+
+      // distance of mouse from the <FieldCircle /> mesh's original position
+      const originalMouseDistance = distance(
+        _x,
+        _y,
+        ogXPos + groupRef.current.position.x,
+        ogYPos + groupRef.current.position.y
+      )
+
+      // distance of mouse from the <FieldCircle /> mesh as it animates
+      const mouseDistance = distance(
+        _x,
+        _y,
+        mesh.position.x + groupRef.current.position.x,
+        mesh.position.y + groupRef.current.position.y
+      )
+
+      // is the mouse within the RADIUS of the <FieldCircle />'s
+      // orignal position?
+      const inZone = getZone(originalMouseDistance, RADIUS)
+
+      // if so, need to animate it away
+      if (inZone) {
+        // grab the coordinate that is closest to this <FieldCircle />'s
+        // original position from the mouse's current circumference
+        const closestPoint = kClosest(
+          allPointsInCircumference,
+          1,
+          ogXPos,
+          ogYPos
+        )
+        // react-spring API
+        // animate to that closest point
+        ref.start({
+          to: { position: [closestPoint[0].x, closestPoint[0].y, 0] },
+          config: { mass: 1, friction: 15, tension: 300 },
+        })
+      }
+      // if not, need to animate it back to original position
+      else {
+        ref.start({
+          to: { position: [ogXPos, ogYPos, 0] },
+          delay: mouseDistance,
+          config: {
+            mass: 1.5,
+            friction: 50 / mouseDistance,
+            tension: 250,
+          },
+        })
+      }
+    })
+  }
+})
+```
+
+A few key functions were needed to get the above working properly. First, I needed to figure out a way to keep track of all the points surrounding the mouse as it moved. I was imagining an invisible circle following the mouse.
+
+```jsx
+// generate an array from 0 - 361
+const circleDegrees = Array(361)
+  .fill(0)
+  .map((el, idx) => idx)
+
+// calc degree in radians
+export const radians = (degrees) => {
+  return (degrees * Math.PI) / 180
+}
+
+// parabolic equation
+// given an x, y, radius and degree in radians,
+// calculates a given point on a circle
+// https://stackoverflow.com/questions/839899/how-do-i-calculate-a-point-on-a-circle-s-circumference
+const pointOnCircumference = (cx, cy, r, radians) => {
+  return { x: cx + r * Math.cos(radians), y: cy + r * Math.sin(radians) }
+}
+
+// The above are used to grab all points on
+// the circumference of the current mouse position
+const allPointsInCircumference = circleDegrees.map((deg) =>
+  pointOnCircumference(_x, _y, RADIUS, radians(deg))
+)
+```
+
+Now that I had the coordinates for this invisible circle, I needed to examine each point, and move each `<FieldCircle />` to whatever point was the closest to that circle's original position.
+
+```jsx
+// Calculate and return the squared Euclidean distance
+const squaredDistance = ({ x, y }, cx, cy) => (x - cx) ** 2 + (y - cy) ** 2
+
+// compares an array of points and sorts them by distance
+// returns the first sorted item, which is the closest
+const kClosest = function (points, k, cx, cy) {
+  // Sort the array with a custom lambda comparator function
+  points.sort((a, b) => squaredDistance(a, cx, cy) - squaredDistance(b, cx, cy))
+
+  // Return the first k elements of the sorted array
+  return points.slice(0, k)
+}
+
+// within useFrame, grabbing the closest point to the circle's original position
+const closestPoint = kClosest(allPointsInCircumference, 1, ogXPos, ogYPos)
+```
+
+## Debugging
+
+To help debug the animation as I worked on it, I added in some options for a clearer visualization. This really helped me in determining what a given circle was doing as the mouse moved over the field, and helped me identify some of the issues that arose with my first pass.
+
+<ClientField debug={true} />
+
+## Issues
+
+I ran into a couple time consuming issues as I worked on this. The first was that I wanted to tweak the colors of the field when toggling the theme. It took me some time to discover that [React context cannot be used between two renderes](https://docs.pmnd.rs/react-three-fiber/advanced/gotchas). After some reading I decided on using [jotai](https://github.com/pmndrs/jotai), from the creators of React Spring and React Three Fiber. This slightly increased the learning curve for what was supposed to be a simpler task. But, I was able to convert the needed state to use it relatively quickly.
+
+Another issue, which still persists, is a very mysterious bug in which the theme toggler only animates to its relevant state (sun/moon), when on the home page, where the `<Field />` exists in the DOM. Everything else about the theme toggle still works - the theme updates correctly. It's just that the animation, which is also using React Spring, doesn't update if you are on any other page.
+
+After much experimentation, it was only after commenting out some code in `<FieldGroup />` (specifically using an `<animatied.mesh />` within a `<group />`) was the toggle back working.
+
+This was quite maddening as removing `<Field />` entirely from the home page didn't fix the issue. I can only assume Spring and/or Fiber were somehow still evaluating and doing something with the code, so that its internal state was affected and caused issues with the animation.
+
+Probably I'm doing something wrong but I got tired of trying to figure out what.
+
+Anyway, the hack I implemented was to add a hidden, empty `<Canvas />` from React Fiber to the header, which is where the theme toggle lives, and that solved everything.
+
+## Conclusion
+
+While I enjoyed diving into React Spring and React Three Fiber and am quite happy with the result, I probably could have skipped using Fiber and instead used `svg` elements, and animated on those. I have a feeling React Spring could have handled that just fine, performance wise. This proably would have saved a lot of time for all issues I described above. But it did pique my interest about custom React renderers, something I'd like to take a look at in the future.

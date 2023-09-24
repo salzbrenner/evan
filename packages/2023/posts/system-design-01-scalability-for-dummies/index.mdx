@@ -1,0 +1,27 @@
+---
+title: System Design - Scalability For Dummies
+tags:
+  - system design
+---
+
+## [Clones](https://www.lecloud.net/post/7295452622/scalability-for-dummies-part-1-clones) (Horizontal Scaling)
+
+Public servers of a scalable web service are hidden behind a load balancer. This load balancer can send a user to whatever server.
+
+Regardless of user's server (i.e. between requests user routed to another server), the same results should always be returned.
+
+> That leads to the first golden rule for scalability: every server contains exactly the same codebase and does not store any user-related data, like sessions or profile pictures, on local disc or memory.
+
+Sessions should be stored in central data store accessible to all application servers. DB or external persistent cache like Redis.
+
+Once this is setup - the servers are independent of the session data - can create an image file (AMI) from one of the servers. A new server instance can spin up using this image file, and just use your latest application codebase.
+
+## [Database](https://www.lecloud.net/post/7994751381/scalability-for-dummies-part-2-database)
+
+Application grows, serves more requests, but keeps getting slower b/c of DB.
+
+2 Paths:
+
+- Hire DBA and do msater-slave replication (read from slaves, write to master)
+  - add RAM, more complicated stuff like "sharding", "denormalization" and SQL tuning
+- Denormalize from start. Use MySQL w/ out joins or use a NoSQL DB. Joins will need to be done in application code. But this too will get slow so eventually need to introduce cache. [more on denormalization](https://www.allbuttonspressed.com/blog/django/2010/09/joins-via-denormalization-for-nosql-coders-part-1-intro)
