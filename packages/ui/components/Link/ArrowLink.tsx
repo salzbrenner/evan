@@ -20,8 +20,8 @@ export const ArrowLink = ({
   const _intent = intent ?? (display === "inline" ? "inlineLink" : "link");
   return (
     <Link anchor={anchor}>
-      <span className={`${anchorDisplay} gap-1 items-center`}>
-        <span className={iconDisplay}>
+      <span className={`${anchorDisplay} gap-1 items-start`}>
+        <span className={`${iconDisplay} pt-1`}>
           <Icon type={IconTypes.arrowDownRight} />
         </span>
         <Text as="span" size={textSize} intent={_intent}>

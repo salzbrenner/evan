@@ -38,7 +38,7 @@ export default function RootLayout({
         </noscript>
         <link
           rel="preload"
-          href="./FakeReceipt-Regular.woff2"
+          href="/FakeReceipt-Regular.woff2"
           as="font"
           type="font/woff2"
           crossOrigin=""

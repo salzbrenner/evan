@@ -3,9 +3,7 @@ import { ToggleSidebar } from "./ToggleSidebar";
 import { useState } from "react";
 import { NavigationBar } from "./Navigation";
 import { ArticlesBlock } from "./Articles";
-import { motion } from "framer-motion";
-import { FadeInUp } from "../FadeInUp";
-import { Text } from "@evan/ui";
+import { useSpring, animated } from "@react-spring/web";
 import { Details } from "./Details";
 
 export const MobileSidebar = ({ children }: { children?: React.ReactNode }) => {
@@ -13,6 +11,15 @@ export const MobileSidebar = ({ children }: { children?: React.ReactNode }) => {
   function toggleSidebar() {
     setIsSidebarOpen(!isSidebarOpen);
   }
+
+  const [sidebar] = useSpring(
+    () => ({
+      from: { height: "0vh" },
+      to: { height: "100vh" },
+      delay: 200,
+    }),
+    []
+  );
 
   return (
     <>
@@ -42,13 +49,9 @@ export const MobileSidebar = ({ children }: { children?: React.ReactNode }) => {
         {children}
       </div>
       <div className="rotate-180 h-[100vh]">
-        <motion.div
+        <animated.div
           className="border-r border-clr-ui-accent"
-          animate={{
-            height: "100vh",
-          }}
-          initial={{ height: "0vh" }}
-          transition={{ delay: 0.2 }}
+          style={sidebar}
         />
       </div>
       <div className="lg:hidden">

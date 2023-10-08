@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const MDXContent = getMDXComponent(post.body.code);
 
   return (
-    <div>
+    <div className="post">
       <Heading size={1}>{post.title}</Heading>
       <MDXContent components={mdxComponents} />
     </div>

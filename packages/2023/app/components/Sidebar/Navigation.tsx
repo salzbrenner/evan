@@ -35,7 +35,7 @@ function NavIcon({ type, href }: { type: IconTypes; href: string }) {
 
 export const NavigationBar = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <div className="flex border-b border-clr-ui-accent w-full no-script h-14 items-center justify-between px-4">
+    <div className="flex border-b border-clr-ui-accent w-full no-script h-14 items-center justify-between px-8">
       <ThemeToggle />
       <div className="flex">
         <NavIcon type={IconTypes.home} href="/" />

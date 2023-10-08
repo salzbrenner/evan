@@ -1,27 +1,18 @@
 "use client";
-import { useState } from "react";
 import { NavigationBar } from "./Navigation";
 import { ArticlesBlock } from "./Articles";
 import { FadeInUp } from "../FadeInUp";
 import { Text } from "@evan/ui";
-import { Details } from "./Details";
 import dynamic from "next/dynamic";
-import { useSpring } from "@react-spring/web";
-import { animated } from "@react-spring/web";
+import { useSpring, animated } from "@react-spring/web";
 import { useWindowSize } from "@/app/hooks/useWindowSize";
-import { allPosts } from "@/.contentlayer/generated";
 
 const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
 });
-const mainPost = allPosts.filter((p) => p.main)[0];
 
 export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   const windowSize = useWindowSize();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  function toggleSidebar() {
-    setIsSidebarOpen(!isSidebarOpen);
-  }
   const [borderHeight, api] = useSpring(
     () => ({
       from: { height: "0vh" },
@@ -80,7 +71,6 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
           flex-col
           justify-between
           bg-clr-ui-bg
-          lg:w-auto
           lg:min-w-[436px]
           lg:w-[436px]
           lg:left-0
@@ -88,7 +78,7 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
       >
         <div>
           <NavigationBar />
-          <div className="flex justify-center items-center ">
+          <div className="flex justify-center items-center">
             {/* <Text
               dangerouslySetInnerHTML={{
                 __html: `${mainPost.body.raw.slice(0, 400)}`,
@@ -114,9 +104,9 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
             </animated.div>
             <LazyLab />
           </div>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <Details />
-          </div>
+          </div> */}
         </div>
 
         {children}

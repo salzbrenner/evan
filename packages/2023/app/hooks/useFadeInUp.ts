@@ -1,3 +1,4 @@
+"use client";
 import { useSpring } from "@react-spring/web";
 
 export function useFadeInUp({ delay = 0 }) {

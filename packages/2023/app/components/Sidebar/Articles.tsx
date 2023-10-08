@@ -13,7 +13,7 @@ const DATA = [
 
 export function ArticlesBlock() {
   return (
-    <div className="px-16 pt-10">
+    <div className="px-8 pt-10">
       <div className="pb-9">
         <BracketedTitle title="Writing" />
       </div>

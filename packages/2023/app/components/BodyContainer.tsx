@@ -3,5 +3,5 @@ export function BodyContainer({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) {
-  return <div className="max-w-xl space-y-8 md:space-y-10">{children}</div>;
+  return <div className="max-w-2xl space-y-8 md:space-y-10">{children}</div>;
 }
