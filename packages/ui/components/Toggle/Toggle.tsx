@@ -1,3 +1,4 @@
+"use client";
 import * as RadixSwitch from "@radix-ui/react-switch";
 import { cva, type VariantProps } from "cva";
 import { Text } from "../Text/Text";

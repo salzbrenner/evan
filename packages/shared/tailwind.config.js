@@ -25,6 +25,19 @@ module.exports = {
       // prefix with "clr-" to avoid conflicts with the default colors
       // i.e. "clr-brand-primary"
       colors: color,
+      keyframes: {
+        "fade-in-up": {
+          "0%": { transform: "translateY(20px)", opacity: 0 },
+          "100%": { transform: "translateY(0px)", opacity: 1 },
+        },
+        "fade-out": {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
+      },
+      animation: {
+        "fade-in-up": "fade-in-up 200ms ease-in forwards",
+      },
     },
   },
   plugins: [

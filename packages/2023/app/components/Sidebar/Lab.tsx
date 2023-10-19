@@ -29,7 +29,7 @@ export function Lab() {
 
   const [animation] = useSpring(
     () => ({
-      from: { opacity: 0 },
+      from: { opacity: 1 },
       to: { opacity: 1 },
       delay: 2000,
 

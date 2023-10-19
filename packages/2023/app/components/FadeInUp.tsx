@@ -1,6 +1,7 @@
 "use client";
 import { useFadeInUp } from "@/app/hooks/useFadeInUp";
 import { animated } from "@react-spring/web";
+import { useEffect } from "react";
 
 export function FadeInUp({
   children,
@@ -11,13 +12,16 @@ export function FadeInUp({
   className?: string;
   delay?: number;
 }) {
-  const style = useFadeInUp({
-    delay,
-  });
+  // const style = useFadeInUp({
+  //   delay,
+  // });
 
   return (
-    <animated.div className={className} style={style} suppressHydrationWarning>
+    <div
+      className={`${className} animate-[fade-in-up_200ms_ease-out_1]`}
+      suppressHydrationWarning
+    >
       {children}
-    </animated.div>
+    </div>
   );
 }

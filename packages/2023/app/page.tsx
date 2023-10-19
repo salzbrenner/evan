@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { useWindowSize } from "@evan/lab";
 import { MainLayout } from "./components/MainLayout";
 import { BodyContainer } from "./components/BodyContainer";
+import { FadeInUp } from "./components/FadeInUp";
 
 const Blob = dynamic(() => import("@evan/lab/src/blob/index"), {
   ssr: false,
@@ -37,30 +38,6 @@ export default function Home() {
             </div>
           )}
           <BodyContainer>
-            <BracketedTitle title="Featured" />
-            <Heading size={1}>{mainPost.title}</Heading>
-            {/* <MDXContent components={mdxComponents} /> */}
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: `${mainPost.body.raw.slice(0, 400)}`,
-              }}
-            />
-
-            <ArrowLink
-              display="block"
-              textSize={"sm"}
-              intent="highlightLink"
-              anchor={({ children }) => (
-                <NextLink
-                  className="inline-block"
-                  href={`posts/${mainPost._raw.flattenedPath}`}
-                >
-                  {children}
-                </NextLink>
-              )}
-            >
-              Continue reading
-            </ArrowLink>
             <div className="pt-12">
               <BracketedTitle title="about" />
             </div>
@@ -77,6 +54,30 @@ export default function Home() {
               blanditiis! Praesentium rerum id atque quibusdam ut quae iure iste
               repellendus voluptate soluta, labore fuga aperiam illo ullam.
             </Text>
+
+            {/* <BracketedTitle title="Featured" />
+            <Heading size={1}>{mainPost.title}</Heading>
+            <Text
+              dangerouslySetInnerHTML={{
+                __html: `${mainPost.body.raw.slice(0, 400)}`,
+              }}
+            /> */}
+
+            {/* <ArrowLink
+              display="block"
+              textSize={"sm"}
+              intent="highlightLink"
+              anchor={({ children }) => (
+                <NextLink
+                  className="inline-block"
+                  href={`posts/${mainPost._raw.flattenedPath}`}
+                >
+                  {children}
+                </NextLink>
+              )}
+            >
+              Continue reading
+            </ArrowLink> */}
 
             <div className="pt-12">
               <BracketedTitle title="experience" />
@@ -103,27 +104,5 @@ export default function Home() {
         </div>
       </MainLayout>
     </main>
-  );
-}
-function PostCard(post: Post) {
-  return (
-    <div className="mb-8">
-      <h2 className="mb-1 text-xl">
-        <Link
-          href={post.url}
-          className="text-blue-700 hover:text-blue-900 dark:text-blue-400"
-        >
-          {post.title}
-        </Link>
-      </h2>
-      <h1>wwoowowow pizza</h1>
-      <time dateTime={post.date} className="mb-2 block text-xs text-gray-600">
-        {format(parseISO(post.date), "LLLL d, yyyy")}
-      </time>
-      <div
-        className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0"
-        dangerouslySetInnerHTML={{ __html: post.title }}
-      />
-    </div>
   );
 }

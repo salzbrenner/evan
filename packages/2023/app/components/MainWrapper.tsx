@@ -1,6 +1,5 @@
 "use client";
 import { HideLeva } from "@evan/lab";
-import { FadeInUp } from "./FadeInUp";
 
 export function MainWrapper({
   children,
@@ -11,8 +10,8 @@ export function MainWrapper({
     <>
       <HideLeva />
 
-      <div className="flex-grow">
-        <FadeInUp delay={800}>{children}</FadeInUp>
+      <div className="flex-grow opacity-0 animate-[fade-in-up_300ms_ease-out_1_700ms_forwards]">
+        <div>{children}</div>
       </div>
     </>
   );

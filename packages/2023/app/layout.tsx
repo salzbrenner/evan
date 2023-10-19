@@ -31,7 +31,7 @@ export default function RootLayout({
         <noscript suppressHydrationWarning>
           <style>
             {`.no-script {
-                  opacity: 1 !important;
+                  // opacity: 1 !important;
                 }
               `}
           </style>
@@ -60,9 +60,7 @@ export default function RootLayout({
         <body className={`flex`}>
           <script async dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
 
-          <div className="hidden lg:flex">
-            <Sidebar />
-          </div>
+          <Sidebar />
           <MainWrapper>{children}</MainWrapper>
           <div className="lg:hidden">
             <MobileSidebar />

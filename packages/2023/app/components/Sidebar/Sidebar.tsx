@@ -11,11 +11,15 @@ const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
 });
 
+function za(delay: number) {
+  return `fade-in-up_2000ms_ease-out_1_${delay}ms_forwards`;
+}
+
 export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   const windowSize = useWindowSize();
   const [borderHeight, api] = useSpring(
     () => ({
-      from: { height: "0vh" },
+      from: { height: "100vh" },
       to: { height: "100vh" },
       config: {
         duration: 500,
@@ -26,7 +30,7 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
 
   const [flash] = useSpring(
     () => ({
-      from: { opacity: 0 },
+      from: { opacity: 1 },
       to: { opacity: 1 },
       loop: true,
       config: {
@@ -60,8 +64,7 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
         className={`lg:min-w-[436px]
           lg:w-[436px]`}
       ></div>
-      <FadeInUp
-        delay={500}
+      <div
         className={`
           fixed
           top-0
@@ -74,6 +77,10 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
           lg:min-w-[436px]
           lg:w-[436px]
           lg:left-0
+          border-r 
+          border-clr-ui-accent
+          opacity-0
+          animate-[fade-in-up_200ms_ease-out_1_500ms_forwards]
       `}
       >
         <div>
@@ -88,21 +95,17 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
           </div>
         </div>
 
-        <div>
+        <div className="relative">
           <div className="flex relative border-t border-b border-clr-ui-accent mt-24 h-[244px]">
-            <animated.div
-              className="absolute bottom-2 left-2 flex gap-2 items-center"
-              style={flashWrapper}
-            >
+            <LazyLab />
+          </div>
+          <div className="flex bg-clr-ui-bg border-t border-b border-clr-ui-accent mt-24 h-[244px] absolute animate-[fade-out_500ms_ease-in_1_2500ms_forwards] top-0 left-0 right-0 bottom-0">
+            <div className="absolute bottom-2 left-2 flex gap-2 items-center ">
               <Text accent size={"xs"}>
                 {`> waking up`}
               </Text>
-              <animated.div
-                className="bg-clr-text-primary w-1.5 h-3"
-                style={flash}
-              />
-            </animated.div>
-            <LazyLab />
+              <div className="bg-clr-text-primary w-1.5 h-3 animate-[pulse_300ms_ease-in-out_infinite]" />
+            </div>
           </div>
           {/* <div className="flex flex-col gap-2">
             <Details />
@@ -110,13 +113,6 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
         </div>
 
         {children}
-      </FadeInUp>
-
-      <div className={`fixed rotate-180 h-screen left-[436px]`}>
-        <animated.div
-          className=" border-r border-clr-ui-accent"
-          style={borderHeight}
-        />
       </div>
     </>
   );

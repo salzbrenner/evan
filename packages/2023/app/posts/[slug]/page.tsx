@@ -1,4 +1,3 @@
-"use client";
 import { mdxComponents } from "@/app/components/customMDX";
 import { Heading } from "@evan/ui";
 import { allPosts } from "contentlayer/generated";
