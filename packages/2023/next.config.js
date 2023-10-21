@@ -4,6 +4,7 @@ const { withContentlayer } = require("next-contentlayer");
 const nextConfig = {
   experimental: {
     externalDir: true,
+    appDir: true,
   },
   webpack: (
     config,
@@ -15,19 +16,19 @@ const nextConfig = {
     //   exclude: /node_modules/,
     //   use: ["raw-loader", "glslify-loader"],
     // });
-    config.module.rules.push({
-      test: /\.mdx?$/,
-      use: [
-        {
-          loader: "@mdx-js/loader",
-          /** @type {import('@mdx-js/loader').Options} */
-          options: {},
-        },
-      ],
-    });
+    // config.module.rules.push({
+    //   test: /\.mdx?$/,
+    //   use: [
+    //     {
+    //       loader: "@mdx-js/loader",
+    //       /** @type {import('@mdx-js/loader').Options} */
+    //       options: {},
+    //     },
+    //   ],
+    // });
     return config;
   },
-  // output: "export", // for static site generation
+  output: "export", // for static site generation
   // Optional: Add a trailing slash to all paths `/about` -> `/about/`
   // trailingSlash: true,
   // Optional: Change the output directory `out` -> `dist`

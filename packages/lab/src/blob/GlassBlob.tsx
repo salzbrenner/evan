@@ -31,7 +31,6 @@ export const GlassBlob = ({}) => {
     onChange: useCallback(
       (theme: keyof typeof THEME) => {
         const isDark = theme === THEME.dark;
-        // @ts-ignore
         set({
           roughness: isDark ? 0.3 : 0.3,
           ior: isDark ? 4 : 1.35,

@@ -7,7 +7,7 @@ export default function Posts() {
       <ul>
         {allPosts.map((post) => (
           <li key={post._id}>
-            <a href={`/posts/${post._raw.flattenedPath}`}>{post.title}</a>
+            <a href={`/writing/${post._raw.flattenedPath}`}>{post.title}</a>
           </li>
         ))}
       </ul>

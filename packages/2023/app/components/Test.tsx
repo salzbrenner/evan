@@ -1,10 +1,8 @@
 "use client";
-import { Button, Blob, Field } from "@evan/ui";
+import { Button } from "@evan/ui";
 export function Test() {
   return (
     <>
-      <Blob />
-      <Field />
       <Button>HELLO WORLD</Button>
     </>
   );

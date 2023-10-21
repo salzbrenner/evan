@@ -1,62 +1,20 @@
 "use client";
 import { NavigationBar } from "./Navigation";
 import { ArticlesBlock } from "./Articles";
-import { FadeInUp } from "../FadeInUp";
 import { Text } from "@evan/ui";
 import dynamic from "next/dynamic";
-import { useSpring, animated } from "@react-spring/web";
 import { useWindowSize } from "@/app/hooks/useWindowSize";
 
 const LazyLab = dynamic(() => import("./Lab"), {
   ssr: false,
 });
 
-function za(delay: number) {
-  return `fade-in-up_2000ms_ease-out_1_${delay}ms_forwards`;
-}
-
 export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   const windowSize = useWindowSize();
-  const [borderHeight, api] = useSpring(
-    () => ({
-      from: { height: "100vh" },
-      to: { height: "100vh" },
-      config: {
-        duration: 500,
-      },
-    }),
-    []
-  );
-
-  const [flash] = useSpring(
-    () => ({
-      from: { opacity: 1 },
-      to: { opacity: 1 },
-      loop: true,
-      config: {
-        duration: 500,
-      },
-    }),
-    []
-  );
-
-  const [flashWrapper] = useSpring(
-    () => ({
-      from: { opacity: 1 },
-      to: { opacity: 0 },
-      delay: 1500,
-
-      config: {
-        duration: 500,
-      },
-    }),
-    []
-  );
 
   if (windowSize.width < 1024) {
     return null;
   }
-  const WIDTH = "436px";
 
   return (
     <>
