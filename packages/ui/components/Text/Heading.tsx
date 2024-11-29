@@ -4,9 +4,9 @@ import { HTMLAttributes } from "react";
 const variants = cva("", {
   variants: {
     size: {
-      1: ["font-heading-alt-1"],
-      2: ["font-heading-alt-2"],
-      3: ["font-heading-alt-3"],
+      1: ["font-heading-1"],
+      2: ["font-heading-2"],
+      3: ["font-heading-3"],
     },
     defaultVariants: {},
   },

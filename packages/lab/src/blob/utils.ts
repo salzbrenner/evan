@@ -33,8 +33,14 @@ export function getColorsForBlob() {
   };
 }
 
-export function hslToRgb(hsl: string): { r: number; g: number; b: number } {
+export function hslToRgb(hsl: string | undefined): {
+  r: number;
+  g: number;
+  b: number;
+} {
   // Remove 'hsl(' and ')' from the string
+  if (!hsl) return { r: 0, g: 0, b: 0 };
+
   hsl = hsl.replace("hsl(", "").replace(")", "");
 
   // Split the HSL values into an array

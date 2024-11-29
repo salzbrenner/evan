@@ -17,11 +17,11 @@ export const ArrowLink = ({
   const anchorDisplay = display === "inline" ? "inline-flex" : "flex";
   const paddingLeft = display === "inline" ? "ml-5" : "";
   const iconDisplay = display === "inline" ? "absolute" : "block";
-  const _intent = intent ?? (display === "inline" ? "inlineLink" : "link");
+  const _intent = intent ?? (display === "inline" ? "gradientLink" : "gradientLink");
   return (
     <Link anchor={anchor}>
       <span className={`${anchorDisplay} gap-1 items-start`}>
-        <span className={`${iconDisplay} pt-1`}>
+        <span className={`${iconDisplay} pt-1 text-clr-gray-99`}>
           <Icon type={IconTypes.arrowDownRight} />
         </span>
         <Text as="span" size={textSize} intent={_intent}>

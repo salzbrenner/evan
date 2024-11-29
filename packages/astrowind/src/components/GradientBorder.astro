@@ -1,0 +1,11 @@
+---
+const { size = 'lg' } = Astro.props;
+const sizes = {
+  sm: 'rounded-sm',
+  md: 'rounded',
+  lg: 'rounded-lg'
+};
+---
+<div  class=`${sizes[size]} bg-gradient-to-br from-clr-text-primary via-clr-ui-accent to-clr-ui-accent p-[1px]`>
+    <slot />
+</div>

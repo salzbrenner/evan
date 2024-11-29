@@ -1,0 +1,40 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Footer from '~/components/Footer.astro';
+import LabCard from '~/components/LabCard.astro';
+import BodyContainer from '~/components/BodyContainer.astro';
+
+import { headerData, footerData } from '~/navigation';
+
+import type { MetaData } from '~/types';
+
+export interface Props {
+  metadata?: MetaData;
+  title: string;
+}
+
+const { metadata, title } = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <!-- <slot name="announcement">
+  </slot>
+  <slot name="header">
+    <Header {...headerData} isSticky showRssFeed showToggleTheme />
+  </slot> -->
+  <div class="">
+    <main class="flex justify-center pt-[228px]">
+      <BodyContainer>
+        <slot />
+      </BodyContainer>
+    </main>
+    <div class="fixed right-4 top-4">
+      <LabCard />
+    </div>
+  </div>
+
+  <slot name="footer">
+    <Footer title={title} />
+  </slot>
+</Layout>

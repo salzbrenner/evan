@@ -64,13 +64,13 @@ export function Toggle({
       <RadixSwitch.Root
         checked={checked}
         onCheckedChange={onCheckedChange}
-        className={`border border-dashed border-clr-text-secondary rounded-full ${outerSize} p-[2px] data-[state=checked]:bg-clr-ui-accent data-[state=checked]:border-solid bg-size-0`}
+        className={`border border-dashed border-clr-text-primary rounded-full ${outerSize} p-[2px] data-[state=checked]:bg-clr-ui-accent data-[state=checked]:border-solid bg-size-0`}
         id={id}
       >
         <RadixSwitch.Thumb
           className={layoutVariants({
             size,
-            className: `rounded-full bg-clr-text-secondary block ${translate} transition-transform`,
+            className: `rounded-full bg-clr-text-primary block ${translate} transition-transform`,
           })}
         />
       </RadixSwitch.Root>

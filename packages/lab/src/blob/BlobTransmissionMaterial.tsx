@@ -9,7 +9,7 @@ import * as React from "react";
 import { applyProps, extend, useFrame } from "@react-three/fiber";
 import { shaderMaterial, useFBO } from "@react-three/drei";
 // @ts-ignore
-import vertexDistort from "raw-loader!glslify-loader!./distort.glsl";
+import vertexDistort from "./distort.glsl";
 
 export const DiscardMaterial = shaderMaterial(
   {},

@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "cva";
 import { HTMLAttributes } from "react";
 
 const textDecorationCommon = `underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed
-underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed hover:text-clr-brand-primary`;
+underline-offset-4 decoration-clr-gray-50 decoration-1 decoration-dashed hover:text-clr-gray-99`;
 
 const text = cva("", {
   variants: {
@@ -28,8 +28,9 @@ const text = cva("", {
       link: [`hover:underline ${textDecorationCommon}`],
       highlightLink: [`underline ${textDecorationCommon}`],
       inlineLink: [
-        `underline ${textDecorationCommon} text-clr-brand-primary hover:text-clr-text-primary`,
+        `underline ${textDecorationCommon} text-clr-brand-primary`,
       ],
+      gradientLink: [`underline ${textDecorationCommon} text-transparent bg-clip-text bg-gradient-to-br from-clr-gray-99 to-clr-ui-accent-30`],
     },
   },
   compoundVariants: [

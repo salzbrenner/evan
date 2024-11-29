@@ -1,0 +1,42 @@
+---
+import { Blob, Field, HideLeva } from '../../../lab/index.ts';
+import GradientBorder from './GradientBorder.astro';
+
+// type Props = {
+//     SIZE: string
+// }
+
+const SIZE = '218px';
+// const {
+//     // SIZE = '218px'
+// } = Astro.props;
+---
+
+<GradientBorder>
+  <div
+    transition:persist
+    class=`w-[${SIZE + 2}px]`
+  >
+    <div
+      style={{
+        height: SIZE,
+        width: SIZE,
+      }}
+      class="rounded-t-lg bg-clr-ui-bg overflow-hidden"
+    >
+      <Blob fov={30} client:only="react" />
+    </div>
+    <div
+      style={{
+        height: SIZE,
+        width: SIZE,
+      }}
+      class="pt-[1px] rounded-b-lg overflow-hidden"
+    >
+      <div class="w-full h-full bg-clr-ui-bg">
+        <Field client:only="react" />
+      </div>
+    </div>
+    <HideLeva client:only="react" />
+  </div>
+</GradientBorder>

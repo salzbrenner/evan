@@ -5,6 +5,7 @@
   "scripts": {
     "sd": "pnpm --filter ./packages/tokens run build",
     "dev": "pnpm -r --filter !./packages/lab --parallel run dev",
+    "astro": "pnpm --filter ./packages/astrowind dev",
     "ui": "pnpm --filter ./packages/ui dev"
   },
   "workspaces": [

@@ -33,3 +33,27 @@ export const Inline_Link: Story = {
     </div>
   ),
 };
+
+export const Gradient_Link: Story = {
+  render: (args) => (
+    <div>
+      <Text as="p" size="sm">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit nemo ullam
+        sequi illum quam,{" "}
+        <InlineLink
+          textSize={"sm"}
+          intent={'gradientLink'}
+          anchor={({ children }) => (
+            <a href="https://google.com" target="_blank">
+              {children}
+            </a>
+          )}
+        >
+          this is another link
+        </InlineLink>{" "}
+        velit sed quis, corporis alias accusantium? Laborum quod esse nisi sunt
+        modi tenetur neque.
+      </Text>
+    </div>
+  ),
+};

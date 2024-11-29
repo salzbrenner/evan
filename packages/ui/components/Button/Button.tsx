@@ -7,7 +7,7 @@ const buttonVariants = cva("text-clr-text-primary border-clr-text-primary", {
     size: {
       xs: ["px-2.5 py-1.5 rounded-[1rem]"],
       sm: ["px-3 py-2 rounded-[1.25rem]"],
-      def: ["px-4 py-3 rounded-[1.5rem] "],
+      def: ["px-4 py-2 rounded-[1.5rem] "],
     },
     defaultVariants: {
       size: "def",
@@ -32,6 +32,7 @@ export const Button = ({ size = "def", className, children }: ButtonProps) => {
       className={buttonVariants({
         size,
         className: `border 
+          border-clr-text-primary
           border-dashed 
           hover:border-solid 
           hover:bg-dot

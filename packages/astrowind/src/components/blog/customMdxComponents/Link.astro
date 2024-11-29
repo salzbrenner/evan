@@ -1,0 +1,7 @@
+---
+import { InlineLink as UILink } from '@evan/ui/components';
+const props = Astro.props;
+---
+<UILink intent="gradientLink">
+  <a href={props.href}><slot /></a>
+</UILink>
