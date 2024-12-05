@@ -1,5 +1,5 @@
 ---
-import { IconTypes, Heading } from '@evan/ui/components';
+import { Heading } from '@evan/ui/components';
 import { NavigationBar } from './NavIcon.tsx';
 
 type Props = {
@@ -12,20 +12,20 @@ type Props = {
 const { title } = Astro.props;
 ---
 
-<div class="fixed bottom-0 left-0 right-0 flex justify-between items-center">
-  <div class="fixed bottom-0 left-0 right-0 h-32 backdrop-blur gradient-mask"></div>
-  <div class="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-clr-ui-bg from-20% to-transparent"></div>
+<div class="fixed bottom-0 left-0 right-0 flex items-center border-t border-clr-ui-accent backdrop-blur">
+  <!-- <div class="fixed bottom-0 left-0 right-0 h-32 backdrop-blur gradient-mask"></div> -->
+  <!-- <div class="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-clr-ui-bg from-20% to-transparent"></div> -->
   <!-- <ThemeToggle /> -->
-  {
-    title && (
-      <div class="relative ml-[50%] translate-x-[-50%]">
-        <Heading as="h1" size={3} className="text-center">
-          {title}
-        </Heading>
-      </div>
-    )
-  }
-  <div class="relative">
-    <NavigationBar currentPath={Astro.url.pathname} />
+
+  <div class="relative px-4 w-full grid grid-cols-3 gap-4 items-center">
+    <div></div>
+    <div>
+      <Heading as="h1" size={3} className="text-center">
+        {title}
+      </Heading>
+    </div>
+    <div class="justify-self-end">
+      <NavigationBar currentPath={Astro.url.pathname} />
+    </div>
   </div>
 </div>

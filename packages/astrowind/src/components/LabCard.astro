@@ -1,6 +1,7 @@
 ---
 import { Blob, Field, HideLeva } from '../../../lab/index.ts';
 import GradientBorder from './GradientBorder.astro';
+import { NavigationBar } from './NavIcon';
 
 // type Props = {
 //     SIZE: string
@@ -13,10 +14,7 @@ const SIZE = '218px';
 ---
 
 <GradientBorder>
-  <div
-    transition:persist
-    class=`w-[${SIZE + 2}px]`
-  >
+  <div transition:persist class=`w-[${SIZE + 2}px]`>
     <div
       style={{
         height: SIZE,
@@ -31,12 +29,15 @@ const SIZE = '218px';
         height: SIZE,
         width: SIZE,
       }}
-      class="pt-[1px] rounded-b-lg overflow-hidden"
+      class="pt-[1px] overflow-hidden"
     >
       <div class="w-full h-full bg-clr-ui-bg">
         <Field client:only="react" />
       </div>
     </div>
     <HideLeva client:only="react" />
+    <div class="bg-clr-ui-bg rounded-b-lg flex justify-center border-t border-clr-ui-accent px-4">
+      <NavigationBar currentPath={Astro.url.pathname} />
+    </div>
   </div>
 </GradientBorder>
