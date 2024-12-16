@@ -10,7 +10,7 @@
     "serve": "pnpm build && pnpx serve out"
   },
   "dependencies": {
-    "@evan/lab": "workspace:^",
+    "@evan/lab2": "workspace:^",
     "@evan/tokens": "workspace:^",
     "@evan/ui": "workspace:^",
     "@mdx-js/loader": "^2.3.0",

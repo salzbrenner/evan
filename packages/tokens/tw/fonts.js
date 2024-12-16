@@ -16,5 +16,7 @@ export const font= {
   "accent-lg": "var(--font-accent-lg)",
   "accent-sm": "var(--font-accent-sm)",
   "accent-xs": "var(--font-accent-xs)",
-  "accent-xxs": "var(--font-accent-xxs)"
+  "accent-xxs": "var(--font-accent-xxs)",
+  "accent-display-lg": "var(--font-accent-display-lg)",
+  "accent-display-sm": "var(--font-accent-display-sm)"
 }

@@ -9,6 +9,9 @@ export function getColorsForBlob() {
     brand30: getComputedStyle(document.documentElement).getPropertyValue(
       "--color-brand-primary-30"
     ),
+    textPrimary: getComputedStyle(document.documentElement).getPropertyValue(
+      "--color-text-primary"
+    ),
     gray: getComputedStyle(document.documentElement).getPropertyValue(
       "--color-gray"
     ),

@@ -68,6 +68,14 @@
       },
       "xxs": {
         "value": "400 0.625rem/150% 'Fake Receipt'"
+      },
+      "display": {
+        "lg": {
+          "value": "400 4.625rem/90% 'Fake Receipt'"
+        },
+        "sm": {
+          "value": "400 3rem/95% 'Fake Receipt'"
+        }
       }
     }
   }

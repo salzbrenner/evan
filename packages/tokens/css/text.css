@@ -17,4 +17,6 @@
   --font-accent-sm: 400 0.875rem/150% 'Fake Receipt';
   --font-accent-xs: 400 0.75rem/150% 'Fake Receipt';
   --font-accent-xxs: 400 0.625rem/150% 'Fake Receipt';
+  --font-accent-display-lg: 400 4.625rem/90% 'Fake Receipt';
+  --font-accent-display-sm: 400 3rem/95% 'Fake Receipt';
 }

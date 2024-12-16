@@ -1,6 +1,6 @@
 ---
+import { Text } from '@evan/ui/components';
 import { Blob, Field, HideLeva } from '../../../lab/index.ts';
-import GradientBorder from './GradientBorder.astro';
 import { NavigationBar } from './NavIcon';
 
 // type Props = {
@@ -13,14 +13,14 @@ const SIZE = '218px';
 // } = Astro.props;
 ---
 
-<GradientBorder>
+<div class="border border-clr-text-primary">
   <div transition:persist class=`w-[${SIZE + 2}px]`>
     <div
       style={{
         height: SIZE,
         width: SIZE,
       }}
-      class="rounded-t-lg bg-clr-ui-bg overflow-hidden"
+      class="bg-clr-ui-bg border-b border-clr-text-primary overflow-hidden"
     >
       <Blob fov={30} client:only="react" />
     </div>
@@ -36,8 +36,11 @@ const SIZE = '218px';
       </div>
     </div>
     <HideLeva client:only="react" />
-    <div class="bg-clr-ui-bg rounded-b-lg flex justify-center border-t border-clr-ui-accent px-4">
-      <NavigationBar currentPath={Astro.url.pathname} />
-    </div>
   </div>
-</GradientBorder>
+  <div class="bg-clr-ui-bg flex justify-center border-t border-clr-text-primary">
+    <NavigationBar currentPath={Astro.url.pathname} client:load />
+  </div>
+  <div class="flex justify-center border-t border-clr-text-primary cursor-move">
+    <div class="bg-dot h-4 w-full bg-clr-ui-bg"></div>
+  </div>
+</div>

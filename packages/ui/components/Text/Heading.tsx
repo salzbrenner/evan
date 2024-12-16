@@ -7,6 +7,8 @@ const variants = cva("", {
       1: ["font-heading-1"],
       2: ["font-heading-2"],
       3: ["font-heading-3"],
+      ['display-sm']: ["font-heading-display-sm"],
+      ['display-lg']: ["font-heading-display-lg"],
     },
     defaultVariants: {},
   },

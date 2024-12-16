@@ -14,6 +14,8 @@ const text = cva("", {
       lg: [],
       // body text
       body: ["font-primary-sm md:font-primary"],
+      ['display-sm']: [],
+      ['display-lg']: [],
     },
     accent: {
       true: [],
@@ -107,6 +109,18 @@ const text = cva("", {
       strong: undefined,
       className: "font-accent-lg",
     },
+    {
+      accent: true,
+      size: "display-sm",
+      strong: undefined,
+      className: "font-accent-display-sm",
+    },
+    {
+      accent: true,
+      size: "display-lg",
+      strong: undefined,
+      className: "font-accent-display-lg",
+    },
   ],
   defaultVariants: {
     accent: undefined,
@@ -120,7 +134,7 @@ export interface TextProps
       "color"
     >,
     VariantProps<typeof text> {
-  as?: "p" | "span" | "div";
+  as?: "p" | "span" | "div" | "h1" | "h2" | "h3";
 }
 
 export const Text = ({

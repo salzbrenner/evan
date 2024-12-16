@@ -44,12 +44,14 @@ export function FieldCircle({ pos, index, refArray, debug = false }: Props) {
     refArray.push(ref as unknown as SpringRef);
   }, []);
 
-  const [color, setColor] = useState(getColorsForBlob().gray40);
+  const [color, setColor] = useState(getColorsForBlob().textPrimary);
 
   useOnThemeChanged({
     onChange: useCallback((theme: "light" | "dark") => {
       const isDark = theme === "dark";
-      setColor(isDark ? getColorsForBlob().gray50 : getColorsForBlob().gray10);
+      setColor(
+        isDark ? getColorsForBlob().textPrimary : getColorsForBlob().gray10
+      );
     }, []),
   });
 
