@@ -61,8 +61,6 @@ export function ThemeToggle() {
   });
 
   async function onClick() {
-    console.log('$$$$$$ evan.log:: $$$$$$');
-
     switchTheme();
     darkRef.start();
     lightRef.start();

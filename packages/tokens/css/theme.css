@@ -2,9 +2,9 @@
   --hsl-base-color-gray-h: 0;
   --hsl-base-color-gray-s: 0%;
   --hsl-base-color-gray-l: 0%;
-  --hsl-base-color-text-primary-h: 0;
-  --hsl-base-color-text-primary-s: 0%;
-  --hsl-base-color-text-primary-l: 80%;
+  --hsl-base-color-text-primary-h: 30;
+  --hsl-base-color-text-primary-s: 12%;
+  --hsl-base-color-text-primary-l: 87%;
   --hsl-base-color-text-secondary-h: 0;
   --hsl-base-color-text-secondary-s: 0%;
   --hsl-base-color-text-secondary-l: 50%;
@@ -19,7 +19,7 @@
   --hsl-base-color-ui-accent-l: 25%;
   --hsl-base-color-ui-bg-h: 0;
   --hsl-base-color-ui-bg-s: 0%;
-  --hsl-base-color-ui-bg-l: 9%;
+  --hsl-base-color-ui-bg-l: 16%;
   --hsl-base-color-ui-success-h: 162;
   --hsl-base-color-ui-success-s: 46%;
   --hsl-base-color-ui-success-l: 65%;

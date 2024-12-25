@@ -1,46 +1,35 @@
 ---
-import { Text } from '@evan/ui/components';
 import { Blob, Field, HideLeva } from '../../../lab/index.ts';
 import { NavigationBar } from './NavIcon';
+import { Icon, IconTypes, Frame } from '@evan/ui/components';
 
-// type Props = {
-//     SIZE: string
-// }
-
-const SIZE = '218px';
-// const {
-//     // SIZE = '218px'
-// } = Astro.props;
+const SIZE = 218;
 ---
 
-<div class="border border-clr-text-primary">
-  <div transition:persist class=`w-[${SIZE + 2}px]`>
+<div transition:persist>
+  <HideLeva client:only="react" />
+  <Frame client:only="react" id="frame-logo" sector={91}>
+    <div class="flex justify-center items-center p-8">
+      <Icon type={IconTypes.logo} />
+    </div>
+  </Frame>
+  <Frame client:only="react" id="frame-1" SIZE={`${SIZE}px`} sector={60}>
+    <Field client:only="react" />
+  </Frame>
+  <Frame client:only="react" id="frame-0" SIZE={`${SIZE}px`} sector={108}>
     <div
       style={{
-        height: SIZE,
-        width: SIZE,
+        height: `${SIZE - 2}px`,
+        width: `${SIZE - 2}px`,
       }}
-      class="bg-clr-ui-bg border-b border-clr-text-primary overflow-hidden"
+      class="overflow-hidden rounded-b-md"
     >
       <Blob fov={30} client:only="react" />
     </div>
-    <div
-      style={{
-        height: SIZE,
-        width: SIZE,
-      }}
-      class="pt-[1px] overflow-hidden"
-    >
-      <div class="w-full h-full bg-clr-ui-bg">
-        <Field client:only="react" />
-      </div>
+  </Frame>
+  <Frame client:only="react" id="frame-nav" sector={222} disabledClose>
+    <div class="flex justify-center">
+      <NavigationBar currentPath={Astro.url.pathname} client:load />
     </div>
-    <HideLeva client:only="react" />
-  </div>
-  <div class="bg-clr-ui-bg flex justify-center border-t border-clr-text-primary">
-    <NavigationBar currentPath={Astro.url.pathname} client:load />
-  </div>
-  <div class="flex justify-center border-t border-clr-text-primary cursor-move">
-    <div class="bg-dot h-4 w-full bg-clr-ui-bg"></div>
-  </div>
+  </Frame>
 </div>

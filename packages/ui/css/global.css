@@ -2,3 +2,13 @@ html {
   background: var(--color-ui-bg);
   color: var(--color-text-primary);
 }
+
+::selection {
+  background: var(--color-text-primary);
+  color: var(--color-ui-bg);
+}
+
+::-moz-selection {
+  background: var(--color-text-primary);
+  color: var(--color-ui-bg);
+}

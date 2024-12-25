@@ -1,13 +1,13 @@
 :root.light {
-  --hsl-base-color-text-primary-h: 150;
-  --hsl-base-color-text-primary-s: 14%;
-  --hsl-base-color-text-primary-l: 15%;
+  --hsl-base-color-text-primary-h: 0;
+  --hsl-base-color-text-primary-s: 0%;
+  --hsl-base-color-text-primary-l: 16%;
   --hsl-base-color-text-secondary-h: 0;
   --hsl-base-color-text-secondary-s: 0%;
   --hsl-base-color-text-secondary-l: 40%;
-  --hsl-base-color-ui-bg-h: 60;
-  --hsl-base-color-ui-bg-s: 27%;
-  --hsl-base-color-ui-bg-l: 91%;
+  --hsl-base-color-ui-bg-h: 30;
+  --hsl-base-color-ui-bg-s: 12%;
+  --hsl-base-color-ui-bg-l: 87%;
   --hsl-base-color-ui-error-h: 8;
   --hsl-base-color-ui-error-s: 67%;
   --hsl-base-color-ui-error-l: 52%;

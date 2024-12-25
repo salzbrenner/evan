@@ -50,7 +50,7 @@ export function FieldCircle({ pos, index, refArray, debug = false }: Props) {
     onChange: useCallback((theme: "light" | "dark") => {
       const isDark = theme === "dark";
       setColor(
-        isDark ? getColorsForBlob().textPrimary : getColorsForBlob().gray10
+        isDark ? getColorsForBlob().textPrimary : getColorsForBlob().textPrimary
       );
     }, []),
   });

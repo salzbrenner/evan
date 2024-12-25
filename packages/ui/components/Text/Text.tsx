@@ -14,8 +14,8 @@ const text = cva("", {
       lg: [],
       // body text
       body: ["font-primary-sm md:font-primary"],
-      ['display-sm']: [],
-      ['display-lg']: [],
+      ["display-sm"]: [],
+      ["display-lg"]: [],
     },
     accent: {
       true: [],
@@ -29,10 +29,10 @@ const text = cva("", {
     intent: {
       link: [`hover:underline ${textDecorationCommon}`],
       highlightLink: [`underline ${textDecorationCommon}`],
-      inlineLink: [
-        `underline ${textDecorationCommon} text-clr-brand-primary`,
+      inlineLink: [`underline ${textDecorationCommon} text-clr-brand-primary`],
+      gradientLink: [
+        `underline ${textDecorationCommon} text-transparent bg-clip-text bg-gradient-to-br from-clr-gray-99 to-clr-ui-accent-30`,
       ],
-      gradientLink: [`underline ${textDecorationCommon} text-transparent bg-clip-text bg-gradient-to-br from-clr-gray-99 to-clr-ui-accent-30`],
     },
   },
   compoundVariants: [
@@ -83,7 +83,8 @@ const text = cva("", {
       accent: true,
       size: "xxs",
       strong: undefined,
-      className: "font-accent-xxs",
+      className:
+        "font-accent-xxs [mask-image:repeating-linear-gradient(to bottom, black, black 1px, rgb(0 0 0 / 0.5) 1px, rgb(0 0 0 / 0.5) 2px)]",
     },
     {
       accent: true,
@@ -119,7 +120,7 @@ const text = cva("", {
       accent: true,
       size: "display-lg",
       strong: undefined,
-      className: "font-accent-display-lg",
+      className: "font-accent-display-lg striped-mask",
     },
   ],
   defaultVariants: {

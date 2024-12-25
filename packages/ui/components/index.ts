@@ -6,3 +6,5 @@ export { Icon, IconTypes } from "./Icon/Icon";
 export { Text } from "./Text/Text";
 export { Heading } from "./Text/Heading";
 export { Toggle } from "./Toggle/Toggle";
+export { Draggable } from "./Draggable/Draggable";
+export { Frame } from "./Frame/Frame";

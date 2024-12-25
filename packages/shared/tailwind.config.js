@@ -61,7 +61,7 @@ module.exports = {
           "background-image": `radial-gradient(var(--color-text-primary) ${DOT_SIZE}, transparent 0)`,
           "background-color": "var(--color-ui-accent)",
           "background-size": `${DOT_SPACE} ${DOT_SPACE}`,
-        }
+        },
       });
     }),
     plugin(function ({ addUtilities }) {
@@ -90,9 +90,12 @@ module.exports = {
       const utilities = Object.entries(directions).reduce(
         (result, [shorthand, direction]) => {
           const variants = steps.map((step) => {
-            const className = `.gradient-mask-${shorthand}-${step}`;
             return {
-              [className]: {
+              [`.striped-mask`]: {
+                maskImage: `repeating-linear-gradient(#000,#000 1px,rgba(0,0,0,.5) 0,rgba(0,0,0,.5) 2px)`,
+                webkitMaskImage: `repeating-linear-gradient(#000,#000 1px,rgba(0,0,0,.5) 0,rgba(0,0,0,.5) 2px)`,
+              },
+              [`.gradient-mask-${shorthand}-${step}`]: {
                 maskImage: `linear-gradient(${direction}, rgba(0, 0, 0, 1.0) ${step}, transparent 100%)`,
                 webkitMaskImage: `linear-gradient(${direction}, rgba(0, 0, 0, 1.0) ${step}, transparent 100%)`,
               },
@@ -107,6 +110,6 @@ module.exports = {
         {}
       );
       addUtilities(utilities);
-    })
+    }),
   ],
 };

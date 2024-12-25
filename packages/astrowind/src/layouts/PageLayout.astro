@@ -1,12 +1,8 @@
 ---
 import Layout from '~/layouts/Layout.astro';
-import Header from '~/components/widgets/Header.astro';
 import LabCard from '~/components/LabCard.astro';
 import BodyContainer from '~/components/BodyContainer.astro';
-import { Text } from '@evan/ui/components';
-
-import { headerData, footerData } from '~/navigation';
-
+import { Frame, Text } from '@evan/ui/components';
 import type { MetaData } from '~/types';
 
 export interface Props {
@@ -18,27 +14,22 @@ const { metadata, title } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
-  <!-- <slot name="announcement">
-  </slot>
-  <slot name="header">
-    <Header {...headerData} isSticky showRssFeed showToggleTheme />
-  </slot> -->
   <div class="">
-    <main class="flex pl-4 gap-4">
+    <main class="flex pl-32 gap-4">
       <div class="pt-[228px] flex flex-col gap-4">
-        <div class="max-w-[420px] break-all">
-          <Text accent as="h1" size="display-lg">{title}</Text>
-          <Text accent size="display-lg">********</Text>
-        </div>
+        <Frame disabledClose absolute client:only="react" id="frame-title" sector={18}>
+          <div class="max-w-[600px] break-all px-8 py-12">
+            <Text accent as="h1" size="display-lg">{title}</Text>
+            <Text accent size="display-lg">**********</Text>
+          </div>
+        </Frame>
         <BodyContainer>
-          <div class="pt-32">
+          <div class="pt-64">
             <slot name="after-title" />
           </div>
         </BodyContainer>
       </div>
     </main>
-    <div class="fixed right-4 top-4">
-      <LabCard />
-    </div>
+    <LabCard />
   </div>
 </Layout>

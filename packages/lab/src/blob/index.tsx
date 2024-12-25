@@ -25,7 +25,7 @@ export function Blob({ fov = 60 }: { fov?: number }) {
     opacity: { value: 0.05, min: 0, max: 10, step: 0.01 },
   }));
 
-  const theme = useOnThemeChanged({
+  useOnThemeChanged({
     onChange: useCallback(
       (theme: "dark" | "light") => {
         const isDark = theme === "dark";

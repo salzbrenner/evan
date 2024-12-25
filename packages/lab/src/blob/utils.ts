@@ -30,6 +30,9 @@ export function getColorsForBlob() {
     gray50: getComputedStyle(document.documentElement).getPropertyValue(
       "--color-gray-50"
     ),
+    gray90: getComputedStyle(document.documentElement).getPropertyValue(
+      "--color-gray-90"
+    ),
     accent: getComputedStyle(document.documentElement).getPropertyValue(
       "--color-ui-accent"
     ),

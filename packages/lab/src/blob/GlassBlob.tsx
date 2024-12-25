@@ -35,7 +35,8 @@ export const GlassBlob = ({}) => {
           roughness: isDark ? 0.3 : 0.3,
           ior: isDark ? 4 : 1.35,
           attenuationDistance: isDark ? 20 : 20,
-          attenuationColor: isDark ? "#2e2e2e" : getColorsForBlob().brand,
+          // attenuationColor: isDark ? "#2e2e2e" : getColorsForBlob().brand,
+          attenuationColor: isDark ? "#2e2e2e" : getColorsForBlob().bg,
           color: isDark ? getColorsForBlob().bg : getColorsForBlob().bg,
         });
       },

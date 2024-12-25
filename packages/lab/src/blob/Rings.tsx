@@ -18,7 +18,7 @@ export const Rings = ({
   const [{ color }, set] = useDevControls("Rings", () => ({
     color: {
       label: "rings color",
-      value: hslToRgb(getColorsForBlob().brand),
+      value: hslToRgb(getColorsForBlob().textPrimary),
     },
   }));
   const { r, g, b } = color;
@@ -26,7 +26,7 @@ export const Rings = ({
   useOnThemeChanged({
     onChange: useCallback(() => {
       set({
-        color: hslToRgb(getColorsForBlob().brand),
+        color: hslToRgb(getColorsForBlob().gray90),
       });
     }, [set]),
   });
