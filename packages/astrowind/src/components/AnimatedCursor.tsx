@@ -53,6 +53,7 @@ export const AnimatedCursor = () => {
     const element = document.elementFromPoint(clientX, clientY);
 
     if (getSelector(element as HTMLElement)) {
+      console.log('$$$$$$ evan.log:: $$$$$$', element);
       setIsHovering(true);
     } else {
       setIsHovering(false);
@@ -133,10 +134,10 @@ export const AnimatedCursor = () => {
       }}
     >
       <animated.div
-      // style={{
-      //   ...outerSpingOpacity,
-      //   ...outerSpringHover,
-      // }}
+        style={{
+          ...outerSpingOpacity,
+          ...outerSpringHover,
+        }}
       >
         <animated.div
           style={{

@@ -1,7 +1,10 @@
 import { THEME, useSwitchTheme } from '@evan/ui/index';
 import { useSpring, useSpringRef, animated } from '@react-spring/web';
 
-const offset = 5;
+const offset = 8;
+const half = offset / 2;
+const oneAndHalf = offset * 1.5;
+const DURATION = 200;
 
 export function ThemeToggle() {
   const { theme, switchTheme } = useSwitchTheme();
@@ -9,12 +12,12 @@ export function ThemeToggle() {
   const lightRef = useSpringRef();
   const lightProps = useSpring({
     ref: lightRef,
-    from: { x: offset },
+    from: { x: isDarkTheme ? offset : 0 },
     to: [
       {
-        x: 0,
+        x: isDarkTheme ? -half : oneAndHalf,
         config: {
-          duration: 100,
+          duration: DURATION,
         },
       },
       {
@@ -24,9 +27,9 @@ export function ThemeToggle() {
         },
       },
       {
-        x: offset,
+        x: isDarkTheme ? 0 : offset,
         config: {
-          duration: 100,
+          duration: DURATION,
         },
       },
     ],
@@ -36,13 +39,13 @@ export function ThemeToggle() {
   const darkProps = useSpring({
     ref: darkRef,
     from: {
-      x: 0,
+      x: isDarkTheme ? 0 : offset,
     },
     to: [
       {
-        x: offset,
+        x: isDarkTheme ? oneAndHalf : -half,
         config: {
-          duration: 100,
+          duration: DURATION,
         },
       },
       {
@@ -52,9 +55,9 @@ export function ThemeToggle() {
         },
       },
       {
-        x: 0,
+        x: isDarkTheme ? offset : 0,
         config: {
-          duration: 100,
+          duration: DURATION,
         },
       },
     ],
@@ -67,14 +70,14 @@ export function ThemeToggle() {
   }
 
   return (
-    <button className="flex items-center justify-center  hover:bg-opacity-80 translate-x-[-10px]" onClick={onClick}>
+    <button className="w-6 h-4 relative" onClick={onClick}>
       <animated.div
         style={lightProps}
-        className="rounded-full w-4 h-4 border border-clr-ui-accent-30 bg-transparent dark:bg-clr-gray-55 dark:border-clr-gray-55"
+        className="absolute top-0 left-0 rounded-full w-4 h-4 border border-clr-text-primary border-dashed bg-[#E2DEDA]"
       />
       <animated.div
         style={darkProps}
-        className="rounded-full w-4 h-4 border border-clr-ui-accent-30 bg-clr-ui-accent-30 dark:bg-transparent dark:border-clr-ui-accent-55"
+        className="absolute top-0 left-0 rounded-full w-4 h-4 border border-clr-text-primary border-dashed bg-[#292929]"
       />
     </button>
   );

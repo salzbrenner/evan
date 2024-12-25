@@ -23,7 +23,6 @@ export function Frame({
     <div>
       <Draggable id={id} sector={sector} absolute={absolute}>
         {({ frameState }) => {
-          console.log("$$$$$$ evan.log::frameState $$$$$$", frameState);
           if (frameState === undefined || frameState.isOpen) {
             return (
               <>
@@ -56,7 +55,7 @@ function CloseButton(props: { id: string; disabled?: boolean }) {
   const { id, disabled } = props;
   return (
     <button
-      className={`w-3 h-3 bg-clr-text-primary rounded-full relative flex items-center justify-center cursor-pointer disabled:cursor-not-allowed disabled:opacity-50`}
+      className={`w-3 h-3 bg-clr-text-primary rounded-full relative flex items-center justify-center cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disable-animated-cursor`}
       onClick={() => {
         if (disabled) return;
         toggleFrameOpen(id, false);
